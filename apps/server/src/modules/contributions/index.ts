@@ -35,20 +35,27 @@ class ContributionManagerImpl implements ContributionsService {
       .findOne({ ref })
       .then(contribution => (contribution ? cleanForOutput(contribution) : null));
   }
+
+  getIconPathByRef(ref) {
+    return contributionsDBService.db.findOne({ ref }).then(contribution => {
+      return contribution?.schema?.iconPath || null;
+    });
+  }
 }
 
 export const ContributionManager = new ContributionManagerImpl();
 
 function cleanForOutput(contribution) {
-  return Object.assign(
-    {
-      id: contribution.id || contribution._id,
-      ref: contribution.ref,
-      homepage:
-        (contribution && contribution.schema && contribution.schema.homePage) || '',
-    },
-    contribution.schema
-  );
+  const { iconPath, ...schema } = contribution.schema;
+  if (iconPath) {
+    schema.icon = `icons/${contribution.ref}`;
+  }
+  return {
+    id: contribution.id || contribution._id,
+    ref: contribution.ref,
+    homepage: (contribution && contribution.schema && contribution.schema.homePage) || '',
+    ...schema,
+  };
 }
 
 function getDBSearchTerms(terms) {

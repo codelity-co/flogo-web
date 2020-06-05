@@ -1,4 +1,5 @@
 import { Container } from 'inversify';
+import send from 'koa-send';
 
 import { ContributionManager } from '../../../../modules/contributions';
 import {
@@ -7,8 +8,8 @@ import {
 } from '../../../../modules/engine';
 import { config } from '../../../../config';
 import { logger } from '../../../../common/logging';
-import { install as installContributionToEngine } from '../../../../modules/contrib-installer/microservice';
 import { ERROR_TYPES, ErrorManager } from '../../../../common/errors';
+import { install as installContributionToEngine } from '../../../../modules/contrib-installer/microservice';
 
 const CONTRIBUTION_TYPE = new Map([
   ['activity', 'flogo:activity'],
@@ -20,6 +21,7 @@ export function contribs(router, container: Container) {
   const engineProcessDirector = container.get(EngineProcessDirector);
   router.get(`/contributions/microservices`, listContributions);
   router.post(`/contributions/microservices`, installContribution(engineProcessDirector));
+  router.get(`/contributions/microservices/icons/:ref(.*)`, getIcon);
 }
 
 /**
@@ -54,6 +56,25 @@ async function listContributions(ctx) {
   ctx.body = {
     data: foundContributions || [],
   };
+}
+
+async function getIcon(ctx) {
+  const ref = ctx.params.ref;
+  if (!ref) {
+    // in theory this should never happen because if not ref provided then
+    // it won't match url `:ref/icon` and this handler won't be called
+  }
+
+  const iconPath = await ContributionManager.getIconPathByRef(ref);
+  if (!iconPath) {
+    throw ErrorManager.createRestNotFoundError('Contribution icon not found', {
+      title: 'Icon not found',
+      detail: 'No icon found for specified contribution ref',
+      value: ref,
+    });
+  }
+
+  await send(ctx, iconPath, { root: process.env.GOPATH });
 }
 
 /**
