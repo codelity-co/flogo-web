@@ -6799,7 +6799,7 @@ hsla-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/hsla-regex/-/hsla-regex-1.0.0.tgz#c1ce7a3168c8c6614033a4b5f7877f3b225f9c38"
   integrity sha1-wc56MWjIxmFAM6S194d/OyJfnDg=
 
-html-comment-regex@^1.1.0:
+html-comment-regex@^1.1.0, html-comment-regex@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/html-comment-regex/-/html-comment-regex-1.1.2.tgz#97d4688aeb5c81886a364faa0cad1dda14d433a7"
   integrity sha512-P+M65QY2JQ5Y0G9KKdlDpo0zK+/OHptU5AaBwUfAIDJZk1MYf32Frm84EcOytfJE0t5JvkAnKlmjsXDnWzCJmQ==
@@ -7443,6 +7443,13 @@ is-svg@^3.0.0:
   dependencies:
     html-comment-regex "^1.1.0"
 
+is-svg@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/is-svg/-/is-svg-4.2.1.tgz#095b496e345fec9211c2a7d5d021003e040d6f81"
+  integrity sha512-PHx3ANecKsKNl5y5+Jvt53Y4J7MfMpbNZkv384QNiswMKAWIbvcqbPz+sYbFKJI8Xv3be01GSFniPmoaP+Ai5A==
+  dependencies:
+    html-comment-regex "^1.1.2"
+
 is-symbol@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/is-symbol/-/is-symbol-1.0.3.tgz#38e1014b9e6329be0de9d24a414fd7441ec61937"
@@ -7495,6 +7502,11 @@ isbinaryfile@^3.0.0:
   resolved "https://registry.yarnpkg.com/isbinaryfile/-/isbinaryfile-3.0.3.tgz#5d6def3edebf6e8ca8cae9c30183a804b5f8be80"
   dependencies:
     buffer-alloc "^1.2.0"
+
+isbinaryfile@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/isbinaryfile/-/isbinaryfile-4.0.6.tgz#edcb62b224e2b4710830b67498c8e4e5a4d2610b"
+  integrity sha512-ORrEy+SNVqUhrCaal4hA4fBzhggQQ+BaLntyPOdoEiwlKZW9BZiJXjg3RMiruE4tPEI3pyVPpySHQF/dKWperg==
 
 isexe@^2.0.0:
   version "2.0.0"
@@ -11333,6 +11345,7 @@ resolve-from@^3.0.0:
 resolve-path@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/resolve-path/-/resolve-path-1.4.0.tgz#c4bda9f5efb2fce65247873ab36bb4d834fe16f7"
+  integrity sha1-xL2p9e+y/OZSR4c6s2u02DT+Fvc=
   dependencies:
     http-errors "~1.6.2"
     path-is-absolute "1.0.1"

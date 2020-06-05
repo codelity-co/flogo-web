@@ -5,7 +5,7 @@ import { build } from './build';
 
 import * as path from 'path';
 
-interface ListContributionDetails {
+export interface ListContributionDetails {
   name: string;
   //TODO: Maintain it as a type in core?
   type: 'flogo:action' | 'flogo:activity' | 'flogo:trigger' | 'flogo:function';
