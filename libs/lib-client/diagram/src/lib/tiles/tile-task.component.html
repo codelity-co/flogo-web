@@ -100,12 +100,15 @@
     [attr.data-diagram-task-id]="tile.task.id"
   >
     <div class="content__items">
-      <img
-        class=" content__icon content__icon-subflow"
-        *ngIf="tile.task?.features?.subflow; else defaultActivityIcon"
-        src="/assets/svg/subflow.svg"
-        alt="Subflow"
-      />
+      <img *ngIf="!!icon; else subflowIcon" alt="Activity icon" class="content__icon" [src]="icon">
+      <ng-template #subflowIcon>
+        <img
+          class=" content__icon content__icon-subflow"
+          *ngIf="tile.task?.features?.subflow; else defaultActivityIcon"
+          src="/assets/svg/subflow.svg"
+          alt="Subflow"
+        />
+      </ng-template>
       <ng-template #defaultActivityIcon>
         <i
           *ngIf="!isTerminal; else returnActivityIcon"

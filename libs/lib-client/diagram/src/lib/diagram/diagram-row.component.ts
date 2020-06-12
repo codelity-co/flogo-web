@@ -10,7 +10,14 @@ import {
 } from '@angular/core';
 import { CdkDragDrop, CdkDrag, CdkDragStart } from '@angular/cdk/drag-drop';
 
-import { DiagramAction, DiagramSelection, TaskTile, Tile, TileType } from '../interfaces';
+import {
+  DiagramAction,
+  DiagramSelection,
+  TaskTile,
+  Tile,
+  TileType,
+  IconProvider,
+} from '../interfaces';
 import { actionEventFactory } from '../action-event-factory';
 import { RowIndexService } from '../shared';
 import { rowAnimations } from './diagram-row.animations';
@@ -29,7 +36,10 @@ export class DiagramRowComponent implements OnChanges {
   @Input() selection: DiagramSelection;
   @Input() rowIndex: number;
   @Input() isDragging: boolean;
-  @HostBinding('class.is-readonly') @Input() isReadOnly = false;
+  @Input() iconProvider?: IconProvider;
+  @HostBinding('class.is-readonly')
+  @Input()
+  isReadOnly = false;
   @Output() action = new EventEmitter<DiagramAction>();
 
   tileTypes = TileType;

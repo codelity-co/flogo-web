@@ -13,7 +13,13 @@ import {
 
 import { FlowGraph, SingleEmissionSubject } from '@flogo-web/lib-client/core';
 
-import { DiagramAction, DiagramSelection, TaskTile, Tile } from '../interfaces';
+import {
+  DiagramAction,
+  DiagramSelection,
+  TaskTile,
+  Tile,
+  IconProvider,
+} from '../interfaces';
 import { EMPTY_MATRIX, RowIndexService } from '../shared';
 import { makeRenderableMatrix, TileMatrix } from '../renderable-model';
 import { diagramAnimations } from './diagram.animations';
@@ -36,6 +42,7 @@ export class DiagramComponent implements OnChanges, OnDestroy {
   @Input() flow: FlowGraph;
   @Input() selection: DiagramSelection;
   @Input() diagramId?: string;
+  @Input() iconProvider?: IconProvider;
   @Input() @HostBinding('class.flogo-diagram-is-readonly') isReadOnly = false;
   @Output() action = new EventEmitter<DiagramAction>();
   tileMatrix: TileMatrix;

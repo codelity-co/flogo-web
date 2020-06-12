@@ -3,6 +3,7 @@
   fgAddActivity
   [flow]="items$ | async"
   [selection]="currentSelection$ | async"
+  [iconProvider]="iconProvider$ | async"
   (action)="onDiagramAction($event)"
 >
 </flogo-diagram>

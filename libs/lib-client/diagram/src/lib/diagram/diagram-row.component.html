@@ -41,6 +41,7 @@
       [cdkDragData]="tile?.task?.id"
       [currentSelection]="selection"
       [isReadOnly]="isReadOnly"
+      [icon]="iconProvider?.getIconUrlById(tile?.task?.id)"
       (select)="onTaskSelected($event)"
       (branch)="onTaskAction($event)"
       (remove)="onTaskAction($event)"

@@ -22,6 +22,7 @@ import { FLOGO_TASK_TYPE } from '../../constants';
 
 import { FlowState } from './flow.state';
 import { determineRunnableStatus } from './views/determine-runnable-status';
+import { FlowSelectors } from '../index';
 
 export const selectFlowState = createFeatureSelector<FlowState>('flow');
 export const selectCurrentSelection = createSelector(
@@ -163,6 +164,19 @@ export const getCurrentNodes: MemoizedSelector<
     currentHandlerType
       ? (flowState[getGraphName(currentHandlerType)].nodes as GraphNodeDictionary)
       : null
+);
+
+export const getCurrentItemsAndSchemas: MemoizedSelector<
+  FlowState,
+  [Dictionary<Item>, Dictionary<ContribSchema>]
+> = createSelector(
+  selectFlowState,
+  getCurrentHandlerId,
+  selectSchemas,
+  (flowState, handlerId, schemas) => {
+    const items = flowState[getItemsDictionaryName(handlerId)];
+    return [items, schemas];
+  }
 );
 
 const isTaskSelection = (selection): selection is TaskSelection =>

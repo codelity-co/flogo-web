@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   HostBinding,
+  Input,
   OnChanges,
 } from '@angular/core';
 import { trigger } from '@angular/animations';
@@ -20,6 +21,7 @@ import { OpenCloseMenuAnimation } from './tile.animations';
 })
 export class TileTaskComponent extends AbstractTileTaskComponent implements OnChanges {
   @HostBinding('class.--with-branches') hasBranch = false;
+  @Input() icon?: string;
 
   constructor(svgFixer: SvgRefFixerService) {
     super(svgFixer);

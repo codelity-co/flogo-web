@@ -6,3 +6,4 @@ export { MicroServiceModelConverter } from './models/profiles/microservice-conve
 export * from './test-runner/run-orchestrator.service';
 export * from './interfaces';
 export * from './constants';
+export * from './icon-provider-creator.service';

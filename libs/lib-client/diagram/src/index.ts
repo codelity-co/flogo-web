@@ -10,6 +10,7 @@ export {
   TaskTile,
   TileType,
   InsertTile,
+  IconProvider,
 } from './lib/interfaces';
 export { DiagramComponent } from './lib/diagram/diagram.component';
 export {
