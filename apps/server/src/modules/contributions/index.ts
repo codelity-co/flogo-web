@@ -48,7 +48,7 @@ export const ContributionManager = new ContributionManagerImpl();
 function cleanForOutput(contribution) {
   const { iconPath, ...schema } = contribution.schema;
   if (iconPath) {
-    schema.icon = `icons/${contribution.ref}`;
+    schema.icon = `contributions/microservices/icons/${contribution.ref}`;
   }
   return {
     id: contribution.id || contribution._id,
