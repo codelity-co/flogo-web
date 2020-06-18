@@ -10,6 +10,8 @@ import {
 } from '@angular/core';
 import { Highlightable } from '@angular/cdk/a11y';
 import { CONTRIB_REFS } from '@flogo-web/core';
+import { ICON_ACTIVITY_DEFAULT, ICON_SUBFLOW } from '../../core';
+import { Activity } from '../core/task-add-options';
 
 @Component({
   selector: 'flogo-flow-task-add-activity',
@@ -17,15 +19,23 @@ import { CONTRIB_REFS } from '@flogo-web/core';
   styleUrls: ['./activity.component.less'],
 })
 export class ActivityComponent implements Highlightable, OnChanges {
-  @Input() activity;
+  @Input() activity: Activity;
   @Output() selected = new EventEmitter();
   @HostBinding('class.is-active') isHighlighted = false;
   @HostBinding('class.is-subflow') isSubflow: boolean;
   disabled = false;
+  iconUrl: string;
 
-  ngOnChanges({ activity }: SimpleChanges) {
-    if (activity) {
-      this.isSubflow = activity.currentValue.ref === CONTRIB_REFS.SUBFLOW;
+  ngOnChanges({ activity: activityChange }: SimpleChanges) {
+    if (activityChange) {
+      const activity = activityChange.currentValue;
+      this.isSubflow = activity.ref === CONTRIB_REFS.SUBFLOW;
+      this.iconUrl = ICON_ACTIVITY_DEFAULT;
+      if (activity.icon) {
+        this.iconUrl = activity.icon;
+      } else if (this.isSubflow) {
+        this.iconUrl = ICON_SUBFLOW;
+      }
     }
   }
 

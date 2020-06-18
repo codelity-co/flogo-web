@@ -11,13 +11,15 @@ import { FocusTrapFactory } from '@angular/cdk/a11y';
 import { Observable, ReplaySubject } from 'rxjs';
 
 import { CONTRIB_REFS } from '@flogo-web/core';
+import { HttpUtilsService } from '@flogo-web/lib-client/core';
 import { FlogoInstallerComponent } from '@flogo-web/lib-client/contrib-installer';
 
 import { filterActivitiesBy } from './core/filter-activities-by';
 import { Activity, TaskAddOptions } from './core/task-add-options';
 import { ModalService } from '@flogo-web/lib-client/modal';
-import { delay, take, switchMap, filter } from 'rxjs/operators';
+import { delay, take, switchMap, filter, map } from 'rxjs/operators';
 import { SubflowSelectionParams, SubFlowComponent } from '../sub-flow';
+import { act } from '@ngrx/effects';
 
 export const TASKADD_OPTIONS = new InjectionToken<TaskAddOptions>('flogo-flow-task-add');
 
@@ -35,7 +37,8 @@ export class TaskAddComponent implements OnInit, AfterViewInit {
     @Inject(TASKADD_OPTIONS) public params: TaskAddOptions,
     private modalService: ModalService,
     private elementRef: ElementRef,
-    private focusTrap: FocusTrapFactory
+    private focusTrap: FocusTrapFactory,
+    private httpUtilsService: HttpUtilsService
   ) {
     this.filterText$ = new ReplaySubject<string>(1);
   }
@@ -47,7 +50,9 @@ export class TaskAddComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.filteredActivities$ = filterActivitiesBy(
-      this.params.activities$,
+      this.params.activities$.pipe(
+        map(activities => activities.map(this.addIconApiPrefix.bind(this)))
+      ),
       this.filterText$
     );
     this.filterText$.next('');
@@ -110,5 +115,15 @@ export class TaskAddComponent implements OnInit, AfterViewInit {
 
   private updateWindowState() {
     this.params.updateActiveState(this.isInstallOpen || this.isSubflowOpen);
+  }
+
+  private addIconApiPrefix(activity) {
+    if (activity.icon) {
+      activity = {
+        ...activity,
+        icon: this.httpUtilsService.apiPrefix(activity.icon),
+      };
+    }
+    return activity;
   }
 }

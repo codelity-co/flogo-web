@@ -6,7 +6,11 @@ import { select, Store } from '@ngrx/store';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 import { Resource, ActivitySchema } from '@flogo-web/core';
-import { SingleEmissionSubject, Dictionary } from '@flogo-web/lib-client/core';
+import {
+  SingleEmissionSubject,
+  Dictionary,
+  HttpUtilsService,
+} from '@flogo-web/lib-client/core';
 import {
   isMapperActivity,
   isAcceptableIterateValue,
@@ -31,6 +35,8 @@ import {
   Task,
   FLOGO_TASK_TYPE,
   FlowResource,
+  ICON_ACTIVITY_DEFAULT,
+  ICON_SUBFLOW,
 } from '../core';
 import { FlowState, FlowActions, FlowSelectors } from '../core/state';
 import {
@@ -120,6 +126,7 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
   isTaskDetailEdited: boolean;
   ismapperActivity: boolean;
   installedFunctions: InstalledFunctionSchema[];
+  iconUrl: string;
   private inputMapperStateSubscription: Subscription;
   private activitySettingsStateSubscription: Subscription;
   private contextChange$ = SingleEmissionSubject.create();
@@ -129,7 +136,8 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private flowsService: FlowsService,
     private mapperControllerFactory: MapperControllerFactory,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private httpUtilsService: HttpUtilsService
   ) {
     this.isSubflowType = false;
     this.resetState();
@@ -320,12 +328,18 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
     const isSubflowItem = (item: Item): item is ItemSubflow => isSubflowTask(item.type);
     this.isSubflowType = isSubflowItem(selectedItem);
     let subflowSchema = null;
+    this.iconUrl = ICON_ACTIVITY_DEFAULT;
+    if (activitySchema.icon) {
+      this.iconUrl = this.httpUtilsService.apiPrefix(activitySchema.icon);
+    }
+
     if (isSubflowItem(selectedItem)) {
       subflowSchema = state.linkedSubflows[selectedItem.settings.flowPath];
       if (subflowSchema) {
         this.appId = state.appId;
         this.actionId = state.id;
         this.createSubflowConfig(subflowSchema);
+        this.iconUrl = ICON_SUBFLOW;
       } else {
         return this.notificationsService.error({
           key: 'SUBFLOW:REFERENCE-ERROR-TEXT',

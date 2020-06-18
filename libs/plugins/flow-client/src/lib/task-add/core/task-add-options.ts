@@ -12,6 +12,7 @@ export interface TaskAddOptions {
 export interface Activity {
   title: string;
   ref: string;
+  icon?: string;
 }
 
 interface AppAndFlowInfo {

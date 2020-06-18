@@ -292,6 +292,7 @@ export const getInstalledActivities = createSelector(
       .map(schema => ({
         title: schema.title,
         ref: schema.ref,
+        icon: schema.icon,
       }))
       .sort((activity1, activity2) => {
         if (activity1.ref === CONTRIB_REFS.SUBFLOW) {
