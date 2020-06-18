@@ -6,8 +6,12 @@ import { Subscription, of } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 
-import { ActivitySchema } from '@flogo-web/core';
-import { Dictionary, SingleEmissionSubject } from '@flogo-web/lib-client/core';
+import { ActivitySchema, ICON_ACTIVITY_DEFAULT } from '@flogo-web/core';
+import {
+  Dictionary,
+  SingleEmissionSubject,
+  HttpUtilsService,
+} from '@flogo-web/lib-client/core';
 import { hasStageWithSameName } from '@flogo-web/plugins/stream-core';
 
 import {
@@ -80,6 +84,7 @@ export class StageConfiguratorComponent implements OnInit, OnDestroy {
   settingsController: MapperController;
   outputMapperController: MapperController;
   installedFunctions: InstalledFunctionSchema[];
+  iconUrl: string;
 
   private inputMapperStateSubscription: Subscription;
   private activitySettingsStateSubscription: Subscription;
@@ -89,7 +94,8 @@ export class StageConfiguratorComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<FlogoStreamState>,
-    private mapperControllerFactory: MapperControllerFactory
+    private mapperControllerFactory: MapperControllerFactory,
+    private httpUtilsService: HttpUtilsService
   ) {}
 
   ngOnInit(): void {
@@ -127,6 +133,11 @@ export class StageConfiguratorComponent implements OnInit, OnDestroy {
 
     this.isValidTaskName = true;
     this.isTaskDetailEdited = false;
+
+    this.iconUrl = ICON_ACTIVITY_DEFAULT;
+    if (activitySchema && activitySchema.icon) {
+      this.iconUrl = this.httpUtilsService.apiPrefix(activitySchema.icon);
+    }
 
     this.resetState();
 

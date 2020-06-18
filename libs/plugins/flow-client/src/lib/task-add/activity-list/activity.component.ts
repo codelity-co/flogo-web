@@ -9,8 +9,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Highlightable } from '@angular/cdk/a11y';
-import { CONTRIB_REFS } from '@flogo-web/core';
-import { ICON_ACTIVITY_DEFAULT, ICON_SUBFLOW } from '../../core';
+import { CONTRIB_REFS, ICON_ACTIVITY_DEFAULT } from '@flogo-web/core';
+import { ICON_SUBFLOW } from '../../core';
 import { Activity } from '../core/task-add-options';
 
 @Component({

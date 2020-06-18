@@ -49,6 +49,4 @@ export const MAPPING_TYPE = {
   OBJECT_TEMPLATE: TYPE_OBJECT_TEMPLATE,
 };
 
-export const ICON_ACTIVITY_DEFAULT =
-  '/assets/svg/flogo.flows.detail.diagram.activity.icon.svg';
 export const ICON_SUBFLOW = '/assets/svg/subflow.svg';

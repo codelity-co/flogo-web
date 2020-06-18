@@ -1,5 +1,5 @@
 import { Observable, ReplaySubject } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import {
   Component,
   Inject,
@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { FocusTrapFactory } from '@angular/cdk/a11y';
 
+import { HttpUtilsService } from '@flogo-web/lib-client/core';
 import { FlogoInstallerComponent } from '@flogo-web/lib-client/contrib-installer';
 import { ModalService } from '@flogo-web/lib-client/modal';
 
@@ -34,7 +35,8 @@ export class StageAddComponent implements OnInit, AfterViewInit {
     @Inject(STAGEADD_OPTIONS) public control: StageAddOptions,
     private modalService: ModalService,
     private elementRef: ElementRef,
-    private focusTrap: FocusTrapFactory
+    private focusTrap: FocusTrapFactory,
+    private httpUtilsService: HttpUtilsService
   ) {
     this.filterText$ = new ReplaySubject<string>(1);
   }
@@ -45,8 +47,9 @@ export class StageAddComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    const addIconPrefix = activity => this.addIconApiPrefix(activity);
     this.filteredActivities$ = filterActivitiesBy(
-      this.control.activities$,
+      this.control.activities$.pipe(map(activities => activities.map(addIconPrefix))),
       this.filterText$
     );
     this.filterText$.next('');
@@ -81,5 +84,15 @@ export class StageAddComponent implements OnInit, AfterViewInit {
 
   private updateWindowState() {
     this.control.updateActiveState(this.isInstallOpen);
+  }
+
+  private addIconApiPrefix(activity) {
+    if (activity.icon) {
+      activity = {
+        ...activity,
+        icon: this.httpUtilsService.apiPrefix(activity.icon),
+      };
+    }
+    return activity;
   }
 }

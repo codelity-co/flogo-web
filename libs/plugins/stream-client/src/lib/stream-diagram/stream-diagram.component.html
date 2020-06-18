@@ -15,6 +15,7 @@
       [cdkDragData]="tile?.task?.id"
       [tile]="tile"
       [currentSelection]="currentSelection"
+      [icon]="iconIndex[tile?.task?.id]"
       (select)="selectStage($event)"
       (remove)="onDiagramAction($event)"
       (configure)="onDiagramAction($event)"
@@ -27,6 +28,7 @@
         <flogo-diagram-tile-preview
           [id]="tile?.task?.id"
           [title]="tile?.task?.title"
+          [icon]="iconIndex[tile?.task?.id]"
         ></flogo-diagram-tile-preview>
       </ng-template>
     </flogo-diagram-tile-task>

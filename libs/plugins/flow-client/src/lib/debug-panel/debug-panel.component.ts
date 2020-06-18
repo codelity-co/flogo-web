@@ -1,14 +1,6 @@
 import { isEmpty, fromPairs } from 'lodash';
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  SecurityContext,
-} from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder } from '@angular/forms';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { select, Store } from '@ngrx/store';
 import { combineLatest, Observable, pipe } from 'rxjs';
 import {
@@ -23,7 +15,7 @@ import {
   tap,
 } from 'rxjs/operators';
 
-import { ActivitySchema } from '@flogo-web/core';
+import { ActivitySchema, ICON_ACTIVITY_DEFAULT } from '@flogo-web/core';
 import {
   Dictionary,
   StepAttribute,
@@ -42,7 +34,7 @@ import { debugPanelAnimations } from './debug-panel.animations';
 import { mergeFormWithOutputs } from './utils';
 import { FieldsInfo } from './fields-info';
 import { DebugActivityTask, combineToDebugActivity } from './debug-activity-task';
-import { ICON_ACTIVITY_DEFAULT, ICON_SUBFLOW } from '../core';
+import { ICON_SUBFLOW } from '../core';
 
 const mapFormInputChangesToSaveAction = (
   store,
@@ -89,8 +81,7 @@ export class DebugPanelComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private attributeFormBuilder: FormBuilderService,
     private testRunner: TestRunnerService,
-    private httpUtilsService: HttpUtilsService,
-    private sanitizer: DomSanitizer
+    private httpUtilsService: HttpUtilsService
   ) {}
 
   ngOnInit() {

@@ -1,15 +1,18 @@
-@background-size: 24px;
 
 :host {
-  display: block;
-  background: url('/assets/svg/flogo.flows.detail.diagram.activity.icon.svg') no-repeat
-    16px;
-  background-size: @background-size;
+  display: flex;
+  align-items: center;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .title {
-  padding-left: @background-size + 8px;
+  padding-left: 8px;
+}
+
+
+.icon {
+  width: 24px;
+  height: auto;
 }

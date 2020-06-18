@@ -10,4 +10,5 @@ export interface StageAddOptions {
 export interface Activity {
   title: string;
   ref: string;
+  icon: string;
 }

@@ -1,8 +1,6 @@
 <div *ngIf="simulateActivity" class="activity column">
   <div class="activity__details">
-    <div class="activity__icon">
-      <i class="activity-gear flogo-icon-activity-gear"></i>
-    </div>
+    <img class="activity__icon" [src]="iconUrl" alt="Activity icon">
     <div class="activity__name">
       <span>{{ simulateActivity.name }}</span>
       <a

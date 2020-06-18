@@ -19,7 +19,6 @@ import { Activity, TaskAddOptions } from './core/task-add-options';
 import { ModalService } from '@flogo-web/lib-client/modal';
 import { delay, take, switchMap, filter, map } from 'rxjs/operators';
 import { SubflowSelectionParams, SubFlowComponent } from '../sub-flow';
-import { act } from '@ngrx/effects';
 
 export const TASKADD_OPTIONS = new InjectionToken<TaskAddOptions>('flogo-flow-task-add');
 

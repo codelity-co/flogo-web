@@ -5,7 +5,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { trigger, transition, style, animate } from '@angular/animations';
 
-import { Resource, ActivitySchema } from '@flogo-web/core';
+import { Resource, ActivitySchema, ICON_ACTIVITY_DEFAULT } from '@flogo-web/core';
 import {
   SingleEmissionSubject,
   Dictionary,
@@ -35,7 +35,6 @@ import {
   Task,
   FLOGO_TASK_TYPE,
   FlowResource,
-  ICON_ACTIVITY_DEFAULT,
   ICON_SUBFLOW,
 } from '../core';
 import { FlowState, FlowActions, FlowSelectors } from '../core/state';

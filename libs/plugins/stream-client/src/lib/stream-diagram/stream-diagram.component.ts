@@ -1,10 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
-import { DiagramGraph, SingleEmissionSubject } from '@flogo-web/lib-client/core';
+import {
+  DiagramGraph,
+  SingleEmissionSubject,
+  HttpUtilsService,
+} from '@flogo-web/lib-client/core';
 import {
   DiagramAction,
   DiagramActionType,
@@ -25,7 +29,9 @@ import {
   StreamActions,
   getDiagramSelection,
   getStagesAsTiles,
+  indexIconByItemId,
 } from '../core/state';
+
 const MAX_TILES = 10;
 @Component({
   selector: 'flogo-stream-diagram',
@@ -43,11 +49,13 @@ export class StreamDiagramComponent implements OnDestroy {
   availableSlots: number;
   placeholders = [];
   isDragging: boolean;
+  iconIndex: { [itemId: string]: string } = {};
   private ngOnDestroy$ = SingleEmissionSubject.create();
 
   constructor(
     private store: Store<StreamStoreState>,
-    private dragService: DragTileService
+    private dragService: DragTileService,
+    private httpUtilsService: HttpUtilsService
   ) {
     this.items$ = this.store.pipe(select(selectGraph), takeUntil(this.ngOnDestroy$));
     this.store
@@ -68,6 +76,14 @@ export class StreamDiagramComponent implements OnDestroy {
         };
         this.updateAvailableSlots(streamTiles);
       });
+
+    this.store
+      .pipe(
+        select(indexIconByItemId(path => this.httpUtilsService.apiPrefix(path))),
+        takeUntil(this.ngOnDestroy$)
+      )
+      .subscribe(iconIndex => (this.iconIndex = iconIndex));
+
     this.dragService.isDragging$
       .pipe(takeUntil(this.ngOnDestroy$))
       .subscribe(isDragging => (this.isDragging = isDragging));

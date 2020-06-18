@@ -109,9 +109,11 @@ export const getSelectedStageInfo = createSelector(
   (currentSelection, items, schemas) => {
     if (isTaskSelection(currentSelection) && items[currentSelection.taskId]) {
       const stage = items[currentSelection.taskId];
+      const schema = schemas[stage.ref];
       return {
         ...stage,
-        schemaHomepage: schemas[stage.ref],
+        schemaHomepage: schema && schema.homepage,
+        icon: schemas && schema.icon,
       };
     }
     return null;
@@ -186,6 +188,7 @@ export const getInstalledActivities = createSelector(
       .map(schema => ({
         title: schema.title,
         ref: schema.ref,
+        icon: schema.icon,
       }))
       .sort((activity1, activity2) =>
         ('' + activity1.title).localeCompare(activity2.title)
@@ -201,6 +204,24 @@ export const selectSimulation = createSelector(
   selectStreamState,
   (state: FlogoStreamState) => state.simulation
 );
+
+export function indexIconByItemId(prefixIconPath: (string) => string) {
+  const getIconIndexByItemId = createSelector(
+    selectItems,
+    selectSchemas,
+    (items, schemas) => {
+      return Object.entries(items).reduce((all, [itemId, { ref }]) => {
+        let icon = schemas && schemas[ref] ? schemas[ref].icon : null;
+        if (icon) {
+          icon = prefixIconPath(icon);
+        }
+        all[itemId] = icon;
+        return all;
+      }, {});
+    }
+  );
+  return getIconIndexByItemId;
+}
 
 export const getSimulationDetails = createSelector(
   selectActionId,

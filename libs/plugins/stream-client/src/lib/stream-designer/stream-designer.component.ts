@@ -6,9 +6,9 @@ import {
 } from '@angular/animations';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 import { ModalService } from '@flogo-web/lib-client/modal';
-import { SingleEmissionSubject } from '@flogo-web/lib-client/core';
+import { SingleEmissionSubject, HttpUtilsService } from '@flogo-web/lib-client/core';
 import { ContribInstallerService } from '@flogo-web/lib-client/contrib-installer';
 import { StreamMetadata } from '@flogo-web/plugins/stream-core';
 import {
@@ -53,7 +53,8 @@ export class StreamDesignerComponent implements OnInit, OnDestroy {
     private streamService: StreamService,
     private contribInstallerService: ContribInstallerService,
     private modalService: ModalService,
-    private simulation: SimulatorService
+    private simulation: SimulatorService,
+    private httpUtilsService: HttpUtilsService
   ) {}
 
   ngOnInit() {
@@ -79,9 +80,19 @@ export class StreamDesignerComponent implements OnInit, OnDestroy {
       select(StreamSelectors.selectSimulatorPanelOpen)
     );
 
-    this.selectedStageInfo$ = this.store.pipe(
-      select(StreamSelectors.getSelectedStageInfo)
-    );
+    this.selectedStageInfo$ = this.store
+      .pipe(select(StreamSelectors.getSelectedStageInfo))
+      .pipe(
+        map(selectedStage => {
+          if (selectedStage && selectedStage.icon) {
+            return {
+              ...selectedStage,
+              icon: this.httpUtilsService.apiPrefix(selectedStage.icon),
+            };
+          }
+          return selectedStage;
+        })
+      );
   }
 
   changePanelState(isSimulatorOpen: boolean) {
