@@ -55,22 +55,28 @@
 
 .activity__info-group {
   width: @info-width;
-  margin-top: 1rem;
+  margin-top: 2rem;
   border-right: 1px solid @light-grey;
 
   padding: 0 1.25rem 1.25rem 1.25rem;
-  background: url(/assets/svg/flogo.icon.gears.circle.svg) no-repeat @padding-width 1rem;
-  background-size: @activity-icon-width;
+  //background: url(/assets/svg/flogo.icon.gears.circle.svg) no-repeat @padding-width 1rem;
+  //background-size: @activity-icon-width;
 }
 
 .activity__name {
-  margin-top: 1rem;
   font-weight: 600;
 }
 
 .activity__name,
 .activity__id {
   padding-left: (@padding-width / 2 + @activity-icon-width);
+}
+
+.activity__icon {
+  margin-top: 3px;
+  width: @activity-icon-width;
+  height: auto;
+  float: left;
 }
 
 .schema-homepage {

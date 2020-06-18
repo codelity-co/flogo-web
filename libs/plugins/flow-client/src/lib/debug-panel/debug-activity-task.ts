@@ -5,6 +5,7 @@ import { ItemActivityTask } from '../core/interfaces/flow';
 
 export interface DebugActivityTask extends ItemActivityTask {
   schemaHomepage: string;
+  icon: string;
 }
 
 export function combineToDebugActivity(): OperatorFunction<
@@ -14,7 +15,9 @@ export function combineToDebugActivity(): OperatorFunction<
   return (source: Observable<[ActivitySchema, ItemActivityTask]>) =>
     source.pipe(
       map(([schema, activity]) =>
-        activity && schema ? { ...activity, schemaHomepage: schema.homepage } : null
+        activity && schema
+          ? { ...activity, schemaHomepage: schema.homepage, icon: schema.icon }
+          : null
       )
     );
 }

@@ -31,7 +31,7 @@ import {
   HttpUtilsService,
 } from '@flogo-web/lib-client/core';
 
-import { isMapperActivity } from '@flogo-web/plugins/flow-core';
+import { isMapperActivity, isSubflowTask } from '@flogo-web/plugins/flow-core';
 import { FlowSelectors, FlowState } from '../core/state';
 import { TestRunnerService } from '../core/test-runner/test-runner.service';
 import { ItemActivityTask } from '../core/interfaces/flow';
@@ -42,6 +42,7 @@ import { debugPanelAnimations } from './debug-panel.animations';
 import { mergeFormWithOutputs } from './utils';
 import { FieldsInfo } from './fields-info';
 import { DebugActivityTask, combineToDebugActivity } from './debug-activity-task';
+import { ICON_ACTIVITY_DEFAULT, ICON_SUBFLOW } from '../core';
 
 const mapFormInputChangesToSaveAction = (
   store,
@@ -79,7 +80,7 @@ export class DebugPanelComponent implements OnInit, OnDestroy {
   executionErrors: Array<string>;
   isEndOfFlow$: Observable<boolean>;
   isRestartableTask$: Observable<boolean>;
-  iconUrl$: Observable<string | null>;
+  iconUrl = ICON_ACTIVITY_DEFAULT;
 
   private destroy$ = SingleEmissionSubject.create();
 
@@ -108,7 +109,8 @@ export class DebugPanelComponent implements OnInit, OnDestroy {
     this.activity$ = combineLatest([schema$, selectedActivity$]).pipe(
       combineToDebugActivity(),
       shareReplay(1),
-      takeUntil(this.destroy$)
+      takeUntil(this.destroy$),
+      tap(activity => this.updateIcon(activity))
     );
     this.isEndOfFlow$ = schema$.pipe(map(isMapperActivity));
     const form$: Observable<null | FieldsInfo> = schema$.pipe(
@@ -120,9 +122,6 @@ export class DebugPanelComponent implements OnInit, OnDestroy {
       FlowSelectors.getSelectedActivityExecutionResult
     );
     this.activityHasRun$ = executionResult$.pipe(map(Boolean), takeUntil(this.destroy$));
-    this.iconUrl$ = schema$.pipe(
-      map(schema => (schema && schema.icon ? this.makeCssUrl(schema.icon) : null))
-    );
     this.fields$ = combineLatest([form$, selectedActivity$, executionResult$]).pipe(
       this.mergeToFormFields(),
       shareReplay(1),
@@ -214,10 +213,15 @@ export class DebugPanelComponent implements OnInit, OnDestroy {
     };
   }
 
-  private makeCssUrl(apiPath) {
-    return this.sanitizer.sanitize(
-      SecurityContext.STYLE,
-      `url(${this.httpUtilsService.apiPrefix(apiPath)})`
-    );
+  private updateIcon(activity: DebugActivityTask) {
+    let iconUrl = ICON_ACTIVITY_DEFAULT;
+    if (activity) {
+      if (activity.icon) {
+        iconUrl = this.httpUtilsService.apiPrefix(activity.icon);
+      } else if (isSubflowTask(activity)) {
+        iconUrl = ICON_SUBFLOW;
+      }
+    }
+    this.iconUrl = iconUrl;
   }
 }
