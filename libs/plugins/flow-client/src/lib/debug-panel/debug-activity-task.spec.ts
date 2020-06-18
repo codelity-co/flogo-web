@@ -13,6 +13,7 @@ describe('debug-panel.debug-activity-task.combineToDebugActivity', function() {
         id: 'my-schema',
         name: 'my-schema',
         homepage: 'https://my.activity.homepage.com',
+        icon: 'some-icon',
       },
       { id: 'activity1', name: 'my activity', return: true },
     ]);
@@ -21,6 +22,7 @@ describe('debug-panel.debug-activity-task.combineToDebugActivity', function() {
       name: 'my activity',
       return: true,
       schemaHomepage: 'https://my.activity.homepage.com',
+      icon: 'some-icon',
     });
   });
 
