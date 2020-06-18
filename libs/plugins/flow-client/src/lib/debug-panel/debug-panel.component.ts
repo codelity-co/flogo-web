@@ -1,6 +1,14 @@
 import { isEmpty, fromPairs } from 'lodash';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  SecurityContext,
+} from '@angular/core';
 import { AbstractControl, FormBuilder } from '@angular/forms';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { select, Store } from '@ngrx/store';
 import { combineLatest, Observable, pipe } from 'rxjs';
 import {
@@ -12,6 +20,7 @@ import {
   take,
   takeUntil,
   withLatestFrom,
+  tap,
 } from 'rxjs/operators';
 
 import { ActivitySchema } from '@flogo-web/core';
@@ -19,6 +28,7 @@ import {
   Dictionary,
   StepAttribute,
   SingleEmissionSubject,
+  HttpUtilsService,
 } from '@flogo-web/lib-client/core';
 
 import { isMapperActivity } from '@flogo-web/plugins/flow-core';
@@ -69,6 +79,7 @@ export class DebugPanelComponent implements OnInit, OnDestroy {
   executionErrors: Array<string>;
   isEndOfFlow$: Observable<boolean>;
   isRestartableTask$: Observable<boolean>;
+  iconUrl$: Observable<string | null>;
 
   private destroy$ = SingleEmissionSubject.create();
 
@@ -76,7 +87,9 @@ export class DebugPanelComponent implements OnInit, OnDestroy {
     private store: Store<FlowState>,
     private formBuilder: FormBuilder,
     private attributeFormBuilder: FormBuilderService,
-    private testRunner: TestRunnerService
+    private testRunner: TestRunnerService,
+    private httpUtilsService: HttpUtilsService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -107,6 +120,9 @@ export class DebugPanelComponent implements OnInit, OnDestroy {
       FlowSelectors.getSelectedActivityExecutionResult
     );
     this.activityHasRun$ = executionResult$.pipe(map(Boolean), takeUntil(this.destroy$));
+    this.iconUrl$ = schema$.pipe(
+      map(schema => (schema && schema.icon ? this.makeCssUrl(schema.icon) : null))
+    );
     this.fields$ = combineLatest([form$, selectedActivity$, executionResult$]).pipe(
       this.mergeToFormFields(),
       shareReplay(1),
@@ -196,5 +212,12 @@ export class DebugPanelComponent implements OnInit, OnDestroy {
         output: outputs && outputs.fieldsWithControlType,
       },
     };
+  }
+
+  private makeCssUrl(apiPath) {
+    return this.sanitizer.sanitize(
+      SecurityContext.STYLE,
+      `url(${this.httpUtilsService.apiPrefix(apiPath)})`
+    );
   }
 }

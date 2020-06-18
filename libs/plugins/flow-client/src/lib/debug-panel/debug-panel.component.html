@@ -1,6 +1,6 @@
 <div class="js-debug-panel-content debug-panel__content content">
   <div *ngIf="activity$ | async as activity; else emptyText" class="activity">
-    <div class="activity__info-group">
+    <div class="activity__info-group" [style.background-image]="iconUrl$ | async">
       <div class="activity__name">
         <span>{{ activity.name }}</span>
         <a
