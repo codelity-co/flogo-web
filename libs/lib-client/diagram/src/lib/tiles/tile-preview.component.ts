@@ -11,6 +11,10 @@ export class TilePreviewComponent {
   title: string;
   @Input()
   id: string;
+  @Input()
+  isSubflow?: boolean;
+  @Input()
+  icon?: string;
 
   constructor(private svgFixer: SvgRefFixerService) {}
 

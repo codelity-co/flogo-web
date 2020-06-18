@@ -1,0 +1,16 @@
+<ng-container [ngSwitch]="mode">
+  <img *ngSwitchCase="Mode.CustomIcon" alt="Activity icon" class="icon" [src]="iconUrl">
+  <img
+    *ngSwitchCase="Mode.Subflow"
+    class="icon icon--subflow"
+    src="/assets/svg/subflow.svg"
+    alt="Subflow"
+  />
+  <img
+    *ngSwitchCase="Mode.Terminal"
+    class="icon icon--return"
+    src="/assets/svg/flogo-return-activity.svg"
+    alt="Return"
+  />
+  <i class="icon icon--activity flogo-icon-activity-gear" *ngSwitchDefault></i>
+</ng-container>

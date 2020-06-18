@@ -55,6 +55,8 @@
         <flogo-diagram-tile-preview
           [id]="tile?.task?.id"
           [title]="tile?.task?.title"
+          [icon]="iconProvider?.getIconUrlById(tile?.task?.id)"
+          [isSubflow]="tile?.task?.features?.subflow"
         ></flogo-diagram-tile-preview>
       </ng-template>
     </flogo-diagram-tile-task>

@@ -14,6 +14,7 @@ import { TileSsvgComponent } from './tiles/tiles-svg';
 import { DragTileService } from './drag-tiles';
 import { TilePlaceholderComponent } from './tiles/tile-placeholder.component';
 import { TilePreviewComponent } from './tiles/tile-preview.component';
+import { TileIconComponent } from './tiles/tile-icon.component';
 
 @NgModule({
   imports: [CommonModule, LanguageModule, DragDropModule],
@@ -35,6 +36,7 @@ import { TilePreviewComponent } from './tiles/tile-preview.component';
     TileSsvgComponent,
     TilePlaceholderComponent,
     TilePreviewComponent,
+    TileIconComponent,
   ],
   providers: [DragTileService],
 })
