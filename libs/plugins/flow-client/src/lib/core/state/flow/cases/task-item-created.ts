@@ -9,14 +9,14 @@ export function taskItemCreated(
   state: FlowState,
   payload: PayloadOf<TaskItemCreated>
 ): FlowState {
-  const { handlerType, item, node } = payload;
+  const { handlerType, item, node, insertBetween } = payload;
   const graphName = getGraphName(handlerType);
   const itemsDictionaryName = getItemsDictionaryName(handlerType);
   const itemsDictionary = state[itemsDictionaryName];
   state = {
     ...state,
     currentSelection: makeTaskSelection(handlerType, node.id),
-    [graphName]: addNewNode(state[graphName], node),
+    [graphName]: addNewNode(state[graphName], node, insertBetween),
     [itemsDictionaryName]: {
       ...itemsDictionary,
       [item.id]: { ...item },

@@ -22,7 +22,7 @@ export function stageItemCreated(
   };
   return state;
 }
-
+// ppaidi-todo - edit below method
 function addNewNode(graph: DiagramGraph, newNode: GraphNode): DiagramGraph {
   const parents = newNode.parents || [];
   const [parentId] = parents;

@@ -90,6 +90,7 @@ export class FlogoFlowDiagramComponent {
           new FlowActions.SelectCreateItem({
             handlerType: this.currentDiagramId,
             parentItemId: (<DiagramActionChild>diagramAction).parentId,
+            insertBetween: (<DiagramActionChild>diagramAction).insertBetween,
           })
         );
       }

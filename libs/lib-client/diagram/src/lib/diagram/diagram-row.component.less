@@ -9,12 +9,33 @@
   .tile-container();
 }
 
+.tile--group {
+  display: flex;
+}
+
 .tile--slot {
   flex-shrink: 0;
   opacity: 0;
   transition: opacity 0.25s ease-out;
+  margin-left: 13px;
   &.is-selected {
     opacity: 1;
+  }
+}
+
+.tile__add-between {
+  position: absolute;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  margin: 20px 0 0 2px;
+  .btn-insert {
+    height: 18px;
+    width: 18px;
+  }
+  .btn-insert__icon {
+    height: 5.5px;
+    width: 5.5px;
   }
 }
 
@@ -29,6 +50,7 @@
 
 .tile--branch {
   z-index: 2;
+  margin-left: 13px;
 }
 
 :host:not(.is-readonly) {

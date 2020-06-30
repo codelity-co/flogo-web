@@ -32,34 +32,44 @@
     [ngForOf]="groupedTiles?.dropZone"
     [ngForTrackBy]="trackTileBy"
   >
-    <flogo-diagram-tile-task
-      cdkDrag
-      cdkDragBoundary="flogo-diagram"
-      @tileTask
-      [class.is-disabled]="isDragging && disableTile(tile?.task?.id)"
-      [tile]="tile"
-      [cdkDragData]="tile?.task?.id"
-      [currentSelection]="selection"
-      [isReadOnly]="isReadOnly"
-      [icon]="iconProvider?.getIconUrlById(tile?.task?.id)"
-      (select)="onTaskSelected($event)"
-      (branch)="onTaskAction($event)"
-      (remove)="onTaskAction($event)"
-      (configure)="onTaskAction($event)"
-      (cdkDragStarted)="onTaskDragStart($event)"
-    >
-      <flogo-diagram-tile-placeholder
-        *cdkDragPlaceholder
-      ></flogo-diagram-tile-placeholder>
-      <ng-template cdkDragPreview [matchSize]="true">
-        <flogo-diagram-tile-preview
-          [id]="tile?.task?.id"
-          [title]="tile?.task?.title"
-          [icon]="iconProvider?.getIconUrlById(tile?.task?.id)"
-          [isSubflow]="tile?.task?.features?.subflow"
-        ></flogo-diagram-tile-preview>
-      </ng-template>
-    </flogo-diagram-tile-task>
+    <div class="tile--group">
+      <flogo-diagram-tile-insert
+        @tileInsert
+        class="tile--slot tile__add-between"
+        [hidden]="isDragging"
+        [tile]="tile"
+        [currentSelection]="selection"
+        (select)="onInsertSelected($event, true)"
+      ></flogo-diagram-tile-insert>
+      <flogo-diagram-tile-task
+        cdkDrag
+        cdkDragBoundary="flogo-diagram"
+        @tileTask
+        [class.is-disabled]="isDragging && disableTile(tile?.task?.id)"
+        [tile]="tile"
+        [cdkDragData]="tile?.task?.id"
+        [currentSelection]="selection"
+        [isReadOnly]="isReadOnly"
+        [icon]="iconProvider?.getIconUrlById(tile?.task?.id)"
+        (select)="onTaskSelected($event)"
+        (branch)="onTaskAction($event)"
+        (remove)="onTaskAction($event)"
+        (configure)="onTaskAction($event)"
+        (cdkDragStarted)="onTaskDragStart($event)"
+      >
+        <flogo-diagram-tile-placeholder
+          *cdkDragPlaceholder
+        ></flogo-diagram-tile-placeholder>
+        <ng-template cdkDragPreview [matchSize]="true">
+          <flogo-diagram-tile-preview
+            [id]="tile?.task?.id"
+            [title]="tile?.task?.title"
+            [icon]="iconProvider?.getIconUrlById(tile?.task?.id)"
+            [isSubflow]="tile?.task?.features?.subflow"
+          ></flogo-diagram-tile-preview>
+        </ng-template>
+      </flogo-diagram-tile-task>
+    </div>
   </ng-template>
 </div>
 <ng-template
@@ -95,6 +105,6 @@
     [hidden]="isDragging"
     [tile]="tile"
     [currentSelection]="selection"
-    (select)="onInsertSelected($event)"
+    (select)="onInsertSelected($event, false)"
   ></flogo-diagram-tile-insert>
 </ng-template>

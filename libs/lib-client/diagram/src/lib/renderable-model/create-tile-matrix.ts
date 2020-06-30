@@ -25,7 +25,7 @@ export function createTileMatrix(
     if (!!node) {
       hasBranch = !!node.children.find(child => nodes[child].type === NodeType.Branch);
       return {
-        ...tileFactory.makeTask(node, index >= maxTileIndex),
+        ...tileFactory.makeTask(node, index >= maxTileIndex, node.parents[0]),
         hasBranch: hasBranch,
       };
     } else {

@@ -48,7 +48,7 @@ export class SelectItem implements BaseFlowAction {
 
 export class SelectCreateItem implements BaseFlowAction {
   readonly type = ActionType.SelectCreateItem;
-  constructor(public payload: { handlerType: HandlerType; parentItemId: string }) {}
+  constructor(public payload: { handlerType: HandlerType; parentItemId: string; insertBetween: boolean }) {}
 }
 
 export class ClearSelection implements BaseFlowAction {
@@ -75,6 +75,7 @@ export class TaskItemCreated implements BaseFlowAction {
       item: ItemTask;
       node: GraphNode;
       subflowSchema?: Resource;
+      insertBetween: boolean;
     }
   ) {}
 }

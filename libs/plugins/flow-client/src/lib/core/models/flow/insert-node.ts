@@ -1,28 +1,61 @@
-import { FlowGraph, GraphNode } from '@flogo-web/lib-client/core';
+import { FlowGraph, GraphNode, NodeType } from '@flogo-web/lib-client/core';
+import { BRANCH_PREFIX } from '@flogo-web/lib-client/diagram';
 
 export function insertNode(
   flowGraph: FlowGraph,
   node: GraphNode,
-  parentId?: string
+  parentId?: string,
+  insertBetween?:boolean,
 ): FlowGraph {
-  const parent = flowGraph.nodes[parentId];
+  let parent = flowGraph.nodes[parentId];
   let nodes = flowGraph.nodes;
+  let rootId = flowGraph.rootId;
   if (parent) {
+    if (insertBetween) {
+      const nonBranchChild = getNonBranchChild(parent);
+      node = {
+        ...node,
+        children: [...nonBranchChild]
+      }
+      parent = { ...parent, children: [...getBranchChildren(parent), node.id] };
+    } else {
+      parent = { ...parent, children: [...parent.children, node.id] };
+    }
     nodes = {
       ...nodes,
-      [parent.id]: { ...parent, children: [...parent.children, node.id] },
+      [parent.id]: { ...parent },
     };
   } else {
-    flowGraph = {
-      ...flowGraph,
-      rootId: node.id,
-    };
+    if (insertBetween) {
+      const child = {
+        ...nodes[flowGraph.rootId],
+        parents : [node.id]
+      }
+      node = {
+        ...node,
+        children: [flowGraph.rootId]
+      }
+      nodes = {
+        ...nodes,
+        [child.id] : child
+      }
+    }
+    rootId = node.id;
   }
   return {
     ...flowGraph,
+    rootId,
     nodes: {
       ...nodes,
       [node.id]: node,
     },
   };
+}
+
+function getNonBranchChild(node) {
+  return node.children.filter( child => !child.startsWith(BRANCH_PREFIX))
+}
+
+function getBranchChildren(node) {
+  return node.children.filter( child => child.startsWith(BRANCH_PREFIX))
 }

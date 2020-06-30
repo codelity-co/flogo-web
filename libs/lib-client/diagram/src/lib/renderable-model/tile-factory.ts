@@ -16,11 +16,12 @@ export function makeInsertTile(parentId: string): InsertTile {
   };
 }
 
-export function makeTaskTile(task: GraphNode, isTerminalInRow = false): TaskTile {
+export function makeTaskTile(task: GraphNode, isTerminalInRow = false, parentId: string): TaskTile {
   return {
     type: TileType.Task,
     isTerminalInRow,
     task,
+    parentId
   };
 }
 

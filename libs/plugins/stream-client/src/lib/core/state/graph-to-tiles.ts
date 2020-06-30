@@ -5,6 +5,8 @@ export const graphToTiles = (graph: DiagramGraph, maxTileCount: number) => {
   let currentId = graph.rootId;
   const tiles: TaskTile[] = [];
   while (currentId) {
+    //ppaidi-todo
+    const parentId = null;
     const currentStage = graph.nodes[currentId];
     if (
       tiles.length >= maxTileCount - 1 &&
@@ -15,11 +17,13 @@ export const graphToTiles = (graph: DiagramGraph, maxTileCount: number) => {
         type: TileType.Task,
         task: currentStage,
         isTerminalInRow: true,
+        parentId
       });
     } else if (currentStage) {
       tiles.push({
         type: TileType.Task,
         task: currentStage,
+        parentId
       });
     }
     let nextStageId = null;
