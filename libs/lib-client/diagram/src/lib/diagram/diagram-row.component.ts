@@ -76,7 +76,7 @@ export class DiagramRowComponent implements OnChanges {
     return this.rowIndex - parentRowIndex;
   }
 
-  onInsertSelected(parentId: string, insertBetween:boolean) {
+  onInsertSelected(parentId: string, insertBetween: boolean) {
     this.action.emit(actionEventFactory.insert(parentId, insertBetween));
   }
 

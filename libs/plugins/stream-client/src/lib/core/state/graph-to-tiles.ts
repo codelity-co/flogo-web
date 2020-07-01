@@ -17,13 +17,13 @@ export const graphToTiles = (graph: DiagramGraph, maxTileCount: number) => {
         type: TileType.Task,
         task: currentStage,
         isTerminalInRow: true,
-        parentId
+        parentId,
       });
     } else if (currentStage) {
       tiles.push({
         type: TileType.Task,
         task: currentStage,
-        parentId
+        parentId,
       });
     }
     let nextStageId = null;

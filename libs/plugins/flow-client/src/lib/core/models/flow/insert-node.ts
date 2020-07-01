@@ -5,7 +5,7 @@ export function insertNode(
   flowGraph: FlowGraph,
   node: GraphNode,
   parentId?: string,
-  insertBetween?:boolean,
+  insertBetween?: boolean
 ): FlowGraph {
   let parent = flowGraph.nodes[parentId];
   let nodes = flowGraph.nodes;
@@ -15,8 +15,8 @@ export function insertNode(
       const nonBranchChild = getNonBranchChild(parent);
       node = {
         ...node,
-        children: [...nonBranchChild]
-      }
+        children: [...nonBranchChild],
+      };
       parent = { ...parent, children: [...getBranchChildren(parent), node.id] };
     } else {
       parent = { ...parent, children: [...parent.children, node.id] };
@@ -29,16 +29,16 @@ export function insertNode(
     if (insertBetween) {
       const child = {
         ...nodes[flowGraph.rootId],
-        parents : [node.id]
-      }
+        parents: [node.id],
+      };
       node = {
         ...node,
-        children: [flowGraph.rootId]
-      }
+        children: [flowGraph.rootId],
+      };
       nodes = {
         ...nodes,
-        [child.id] : child
-      }
+        [child.id]: child,
+      };
     }
     rootId = node.id;
   }
@@ -53,9 +53,9 @@ export function insertNode(
 }
 
 function getNonBranchChild(node) {
-  return node.children.filter( child => !child.startsWith(BRANCH_PREFIX))
+  return node.children.filter(child => !child.startsWith(BRANCH_PREFIX));
 }
 
 function getBranchChildren(node) {
-  return node.children.filter( child => child.startsWith(BRANCH_PREFIX))
+  return node.children.filter(child => child.startsWith(BRANCH_PREFIX));
 }

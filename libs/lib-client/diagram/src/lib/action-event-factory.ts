@@ -2,11 +2,11 @@ import { DiagramActionType, DiagramActionMove } from './interfaces';
 import { DiagramActionChild, DiagramActionSelf } from './interfaces';
 
 export const actionEventFactory = {
-  insert(parentId: string, insertBetween:boolean): DiagramActionChild {
+  insert(parentId: string, insertBetween: boolean): DiagramActionChild {
     return {
       type: DiagramActionType.Insert,
       parentId,
-      insertBetween
+      insertBetween,
     };
   },
   move(id: string, parentId: string): DiagramActionMove {

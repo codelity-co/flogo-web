@@ -3,7 +3,11 @@ import { insertNode } from './insert-node';
 
 export type NewNode = { id: string } & Partial<GraphNode>;
 
-export function addNewNode(flowGraph: FlowGraph, newNode: NewNode, insertBetween: boolean) {
+export function addNewNode(
+  flowGraph: FlowGraph,
+  newNode: NewNode,
+  insertBetween: boolean
+) {
   const parents = newNode.parents || [];
   const [parentId] = parents;
   const node: GraphNode = {

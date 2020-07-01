@@ -33,7 +33,7 @@ All notable changes to this project's dependencies will be documented in this fi
   - [@nrwl/jest@9.0.1](https://nx.dev) [MIT] - Was 8.4.12
   - [@nrwl/node@9.0.1](https://nx.dev) [MIT] - Was 8.4.12
   - [@nrwl/workspace@9.0.1](https://nx.dev) [MIT] - Was 8.4.12
-  - [@schematics/angular@9.0.2]( https://github.com/angular/angular-cli) [MIT] - Was ^8.2.2
+  - [@schematics/angular@9.0.2](https://github.com/angular/angular-cli) [MIT] - Was ^8.2.2
   - [@types/node@~10.12.20](https://github.com/DefinitelyTyped/DefinitelyType) [MIT] - Was 10.12.10
   - [cypress@^3.8.2](https://github.com/cypress-io/cypress) [MIT] - Was 3.4.0
   - [jest-preset-angular@8.0.0](https://github.com/thymikee/jest-preset-angular) [MIT] - Was 7.1.1
@@ -52,7 +52,6 @@ All notable changes to this project's dependencies will be documented in this fi
   - @angular/compiler
   - @angular/compiler-cli
   - koa-router
-
 
 ## v0.10.0
 

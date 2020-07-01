@@ -28,7 +28,7 @@ interface TileDropAllowStatus {
 }
 
 const maxIndexInRow = MAX_ROW_LENGTH - 1;
-const DRAG_CURSOR_STYLE_CLASS = 'cursor-grabbing'
+const DRAG_CURSOR_STYLE_CLASS = 'cursor-grabbing';
 
 @Injectable()
 export class DragTileService {

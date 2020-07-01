@@ -21,7 +21,7 @@ export function makeTaskSelection(
 export function makeInsertSelection(
   handlerType: HandlerType,
   parentId: string,
-  insertBetween?:boolean
+  insertBetween?: boolean
 ): InsertTaskSelection {
   return {
     type: SelectionType.InsertTask,
