@@ -55,7 +55,9 @@ describe('Component: TaskAddComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FakeRootLanguageModule, TaskAddModule,
+      imports: [
+        FakeRootLanguageModule,
+        TaskAddModule,
         StoreModule.forRoot({
           flow: featureReducer,
         }),

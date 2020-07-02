@@ -3,7 +3,8 @@ import {
   ContributionType,
   ContributionSchema as ContribSchema,
   FunctionsSchema,
-  CONTRIB_REFS, ActivitySchema,
+  CONTRIB_REFS,
+  ActivitySchema,
 } from '@flogo-web/core';
 import { Dictionary, FlowGraph, GraphNodeDictionary } from '@flogo-web/lib-client/core';
 import { DiagramSelectionType } from '@flogo-web/lib-client/diagram';
@@ -148,7 +149,7 @@ export const getSelectionForInsertTask = createSelector(
   selectCurrentSelection,
   (currentSelection: InsertTaskSelection) => {
     if (currentSelection && currentSelection.type === SelectionType.InsertTask) {
-      return {...currentSelection};
+      return { ...currentSelection };
     } else {
       return null;
     }

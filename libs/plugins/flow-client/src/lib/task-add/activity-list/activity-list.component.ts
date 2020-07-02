@@ -48,10 +48,9 @@ export class ActivityListComponent implements OnChanges, AfterViewInit, OnDestro
   currentSelection: InsertTaskSelection;
 
   constructor(private elementRef: ElementRef, private store: Store<FlowState>) {
-    this.store.pipe(
-      select(getSelectionForInsertTask),
-      takeUntil(this.destroy$)
-    ).subscribe(selection => this.currentSelection = selection);
+    this.store
+      .pipe(select(getSelectionForInsertTask), takeUntil(this.destroy$))
+      .subscribe(selection => (this.currentSelection = selection));
   }
 
   ngAfterViewInit() {
