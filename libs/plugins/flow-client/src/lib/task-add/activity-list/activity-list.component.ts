@@ -13,6 +13,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { takeUntil } from 'rxjs/operators';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { UP_ARROW, DOWN_ARROW, ENTER } from '@angular/cdk/keycodes';
@@ -20,6 +21,8 @@ import { SingleEmissionSubject } from '@flogo-web/lib-client/core';
 
 import { Activity } from '../core/task-add-options';
 import { ActivityComponent } from './activity.component';
+import { FlowState, getSelectionForInsertTask } from '../../core/state';
+import { InsertTaskSelection } from '../../core/models';
 
 @Component({
   selector: 'flogo-flow-activity-list',
@@ -42,8 +45,14 @@ export class ActivityListComponent implements OnChanges, AfterViewInit, OnDestro
   private isClicking: boolean;
   private keyboardEventsManager: ActiveDescendantKeyManager<ActivityComponent>;
   private destroy$ = SingleEmissionSubject.create();
+  currentSelection: InsertTaskSelection;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef, private store: Store<FlowState>) {
+    this.store.pipe(
+      select(getSelectionForInsertTask),
+      takeUntil(this.destroy$)
+    ).subscribe(selection => this.currentSelection = selection);
+  }
 
   ngAfterViewInit() {
     this.keyboardEventsManager = new ActiveDescendantKeyManager(this.optionListItems);

@@ -36,7 +36,7 @@
       <flogo-diagram-tile-insert
         @tileInsert
         class="tile--slot tile__add-between"
-        [hidden]="isDragging"
+        [hidden]="hideInsertTile(tile?.task?.id)"
         [tile]="tile"
         [currentSelection]="selection"
         (select)="onInsertSelected($event, true)"

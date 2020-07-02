@@ -3,7 +3,7 @@ import {
   ContributionType,
   ContributionSchema as ContribSchema,
   FunctionsSchema,
-  CONTRIB_REFS,
+  CONTRIB_REFS, ActivitySchema,
 } from '@flogo-web/core';
 import { Dictionary, FlowGraph, GraphNodeDictionary } from '@flogo-web/lib-client/core';
 import { DiagramSelectionType } from '@flogo-web/lib-client/diagram';
@@ -141,6 +141,17 @@ export const getCurrentHandlerType = createSelector(
       return currentSelection.handlerType;
     }
     return null;
+  }
+);
+
+export const getSelectionForInsertTask = createSelector(
+  selectCurrentSelection,
+  (currentSelection: InsertTaskSelection) => {
+    if (currentSelection && currentSelection.type === SelectionType.InsertTask) {
+      return {...currentSelection};
+    } else {
+      return null;
+    }
   }
 );
 
@@ -289,9 +300,10 @@ export const getInstalledActivities = createSelector(
   (schemas: Dictionary<ContribSchema>): Activity[] => {
     const activities = Object.values(schemas)
       .filter(schema => schema.type === ContributionType.Activity)
-      .map(schema => ({
+      .map((schema: ActivitySchema) => ({
         title: schema.title,
         ref: schema.ref,
+        isReturnType: !!schema.return,
         icon: schema.icon,
       }))
       .sort((activity1, activity2) => {

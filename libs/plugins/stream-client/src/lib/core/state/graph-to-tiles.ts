@@ -5,9 +5,8 @@ export const graphToTiles = (graph: DiagramGraph, maxTileCount: number) => {
   let currentId = graph.rootId;
   const tiles: TaskTile[] = [];
   while (currentId) {
-    //ppaidi-todo
-    const parentId = null;
     const currentStage = graph.nodes[currentId];
+    const parentId = currentStage && currentStage.parents[0];
     if (
       tiles.length >= maxTileCount - 1 &&
       currentStage &&

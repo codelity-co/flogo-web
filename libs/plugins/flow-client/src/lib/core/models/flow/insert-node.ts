@@ -26,6 +26,7 @@ export function insertNode(
       [parent.id]: { ...parent },
     };
   } else {
+    // case when adding a tile before the root tile of the diagram
     if (insertBetween) {
       const child = {
         ...nodes[flowGraph.rootId],
@@ -52,10 +53,10 @@ export function insertNode(
   };
 }
 
-function getNonBranchChild(node) {
-  return node.children.filter(child => !child.startsWith(BRANCH_PREFIX));
-}
-
 function getBranchChildren(node) {
   return node.children.filter(child => child.startsWith(BRANCH_PREFIX));
+}
+
+function getNonBranchChild(node) {
+  return node.children.filter(child => !child.startsWith(BRANCH_PREFIX));
 }

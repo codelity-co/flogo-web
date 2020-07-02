@@ -12,6 +12,7 @@ export interface TaskAddOptions {
 export interface Activity {
   title: string;
   ref: string;
+  isReturnType: boolean;
   icon?: string;
 }
 

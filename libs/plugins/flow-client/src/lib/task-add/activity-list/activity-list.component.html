@@ -3,6 +3,7 @@
   role="option"
   class="list-item qa-activities"
   [activity]="activity"
+  [hidden]="currentSelection?.insertBetween && activity.isReturnType"
   (selected)="selectActivity.emit(activity)"
 >
 </flogo-flow-task-add-activity>

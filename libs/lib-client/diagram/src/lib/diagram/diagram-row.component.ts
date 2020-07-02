@@ -56,6 +56,8 @@ export class DiagramRowComponent implements OnChanges {
     return id && !this.dragService.getTileDropAllowStatus(id).allow;
   };
 
+  hideInsertTile = id => !this.dragService.getTileDropAllowStatus(id).allow || this.isDragging;
+
   constructor(
     private rowIndexService: RowIndexService,
     private dragService: DragTileService
