@@ -1,17 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
+import { StoreModule } from '@ngrx/store';
 
 import { CONTRIB_REFS } from '@flogo-web/core';
 import { ContributionsService } from '@flogo-web/lib-client/core';
 import { FakeRootLanguageModule } from '@flogo-web/lib-client/language/testing';
+import { ContribInstallerService } from '@flogo-web/lib-client/contrib-installer';
+import { ModalService } from '@flogo-web/lib-client/modal';
 
 import { FlogoFlowService } from '../core';
 import { TASKADD_OPTIONS, TaskAddComponent } from './task-add.component';
 import { TaskAddModule } from './task-add.module';
 import { TaskAddOptions } from './core/task-add-options';
-import { ContribInstallerService } from '@flogo-web/lib-client/contrib-installer';
-import { ModalService } from '@flogo-web/lib-client/modal';
+import { featureReducer } from '../core/state';
 
 describe('Component: TaskAddComponent', () => {
   let component: TaskAddComponent;
@@ -22,14 +24,17 @@ describe('Component: TaskAddComponent', () => {
       {
         ref: 'some_path_to_repo/activity/log',
         title: 'Log message',
+        isReturnType: false,
       },
       {
         ref: 'some_path_to_repo/activity/counter',
         title: 'Counter',
+        isReturnType: false,
       },
       {
         ref: CONTRIB_REFS.SUBFLOW,
         title: 'Start a subflow',
+        isReturnType: false,
       },
     ]),
     appAndFlowInfo$: of({
@@ -50,7 +55,11 @@ describe('Component: TaskAddComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FakeRootLanguageModule, TaskAddModule],
+      imports: [FakeRootLanguageModule, TaskAddModule,
+        StoreModule.forRoot({
+          flow: featureReducer,
+        }),
+      ],
       providers: [
         {
           provide: TASKADD_OPTIONS,
