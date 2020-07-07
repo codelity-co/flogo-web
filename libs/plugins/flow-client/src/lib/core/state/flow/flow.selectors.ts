@@ -23,7 +23,7 @@ import { FLOGO_TASK_TYPE } from '../../constants';
 
 import { FlowState } from './flow.state';
 import { determineRunnableStatus } from './views/determine-runnable-status';
-import { FlowSelectors } from '../index';
+import { isInsertBetween } from '../../models/flow/is-insert-between';
 
 export const selectFlowState = createFeatureSelector<FlowState>('flow');
 export const selectCurrentSelection = createSelector(
@@ -145,20 +145,12 @@ export const getCurrentHandlerType = createSelector(
   }
 );
 
-export const getSelectionForInsertTask = createSelector(
+export const getTaskInsertType = createSelector(
   selectCurrentSelection,
   selectFlowState,
   (currentSelection: InsertTaskSelection, flowState: FlowState) => {
     if (currentSelection && currentSelection.type === SelectionType.InsertTask) {
-      const parentId = currentSelection.parentId;
-      const mainGraph = flowState.mainGraph;
-      if (parentId) {
-        const node = mainGraph.nodes[parentId];
-        const nonBranchChild = node.children.filter( child => !child.startsWith(BRANCH_PREFIX));
-        return nonBranchChild.length > 0;
-      } else {
-        return !!mainGraph.rootId;
-      }
+      return isInsertBetween(currentSelection.parentId, flowState.mainGraph);
     } else {
       return null;
     }

@@ -21,7 +21,7 @@ import { SingleEmissionSubject } from '@flogo-web/lib-client/core';
 
 import { Activity } from '../core/task-add-options';
 import { ActivityComponent } from './activity.component';
-import { FlowState, getSelectionForInsertTask } from '../../core/state';
+import { FlowState, getTaskInsertType } from '../../core/state';
 
 @Component({
   selector: 'flogo-flow-activity-list',
@@ -48,8 +48,8 @@ export class ActivityListComponent implements OnChanges, AfterViewInit, OnDestro
 
   constructor(private elementRef: ElementRef, private store: Store<FlowState>) {
     this.store
-      .pipe(select(getSelectionForInsertTask), takeUntil(this.destroy$))
-      .subscribe(isInBetween => (this.isInsertInBetween = isInBetween));
+      .pipe(select(getTaskInsertType), takeUntil(this.destroy$))
+      .subscribe(isInBetween => this.isInsertInBetween = isInBetween);
   }
 
   ngAfterViewInit() {

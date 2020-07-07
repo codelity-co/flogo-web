@@ -1,6 +1,5 @@
 import { FlowGraph, GraphNode } from '@flogo-web/lib-client/core';
-import { BRANCH_PREFIX } from '@flogo-web/lib-client/diagram';
-import { isNil } from 'lodash';
+import { isInsertBetween, categorizeChildren } from './is-insert-between';
 
 export function insertNode(
   flowGraph: FlowGraph,
@@ -10,9 +9,9 @@ export function insertNode(
   let parent = flowGraph.nodes[parentId];
   let nodes = flowGraph.nodes;
   let rootId = flowGraph.rootId;
+  const isInBetween = isInsertBetween(parent?.id, flowGraph);
   if (parent) {
     const { branches, nonBranches } = categorizeChildren(parent);
-    const isInBetween = nonBranches.length > 0;
     if (isInBetween) {
       node = {
         ...node,
@@ -29,7 +28,7 @@ export function insertNode(
   } else {
     // Case: adding a tile before the root tile of the diagram
     // If parent is null and diagram has rootId
-    if (!isNil(rootId)) {
+    if (isInBetween) {
       const child = {
         ...nodes[flowGraph.rootId],
         parents: [node.id],
@@ -53,19 +52,4 @@ export function insertNode(
       [node.id]: node,
     },
   };
-}
-
-function categorizeChildren(node) {
-  return {
-    branches: getBranchChildren(node),
-    nonBranches: getNonBranchChild(node),
-  }
-}
-
-function getBranchChildren(node) {
-  return node.children.filter(child => child.startsWith(BRANCH_PREFIX));
-}
-
-function getNonBranchChild(node) {
-  return node.children.filter(child => !child.startsWith(BRANCH_PREFIX));
 }
