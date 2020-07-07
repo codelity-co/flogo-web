@@ -81,7 +81,6 @@ export class TaskItemCreated implements BaseFlowAction {
       item: ItemTask;
       node: GraphNode;
       subflowSchema?: Resource;
-      insertBetween: boolean;
     }
   ) {}
 }

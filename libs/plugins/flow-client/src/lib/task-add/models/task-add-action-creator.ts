@@ -71,7 +71,6 @@ function createNewTask(
     item,
     node,
     subflowSchema: activityData.flowData,
-    insertBetween: selection.insertBetween,
   };
 }
 
