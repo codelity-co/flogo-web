@@ -20,7 +20,6 @@ export interface DiagramActionSelf extends DiagramAction {
 export interface DiagramActionChild extends DiagramAction {
   type: DiagramActionType.Insert | DiagramActionType.Branch;
   parentId: string;
-  insertBetween?: boolean;
 }
 
 export interface DiagramActionMove extends DiagramAction {

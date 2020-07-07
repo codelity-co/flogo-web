@@ -52,7 +52,6 @@ export class SelectCreateItem implements BaseFlowAction {
     public payload: {
       handlerType: HandlerType;
       parentItemId: string;
-      insertBetween: boolean;
     }
   ) {}
 }

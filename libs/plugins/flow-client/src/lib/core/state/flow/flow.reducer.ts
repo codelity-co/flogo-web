@@ -45,7 +45,6 @@ export function flowReducer(
         currentSelection: selectionFactory.makeInsertSelection(
           action.payload.handlerType,
           action.payload.parentItemId,
-          action.payload.insertBetween
         ),
       };
     }

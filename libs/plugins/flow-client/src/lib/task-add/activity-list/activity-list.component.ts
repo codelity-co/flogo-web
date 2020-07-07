@@ -22,7 +22,6 @@ import { SingleEmissionSubject } from '@flogo-web/lib-client/core';
 import { Activity } from '../core/task-add-options';
 import { ActivityComponent } from './activity.component';
 import { FlowState, getSelectionForInsertTask } from '../../core/state';
-import { InsertTaskSelection } from '../../core/models';
 
 @Component({
   selector: 'flogo-flow-activity-list',
@@ -45,12 +44,12 @@ export class ActivityListComponent implements OnChanges, AfterViewInit, OnDestro
   private isClicking: boolean;
   private keyboardEventsManager: ActiveDescendantKeyManager<ActivityComponent>;
   private destroy$ = SingleEmissionSubject.create();
-  currentSelection: InsertTaskSelection;
+  isInsertInBetween: boolean;
 
   constructor(private elementRef: ElementRef, private store: Store<FlowState>) {
     this.store
       .pipe(select(getSelectionForInsertTask), takeUntil(this.destroy$))
-      .subscribe(selection => (this.currentSelection = selection));
+      .subscribe(isInBetween => (this.isInsertInBetween = isInBetween));
   }
 
   ngAfterViewInit() {

@@ -18,7 +18,6 @@ export interface InsertTaskSelection {
   type: SelectionType.InsertTask;
   parentId: string;
   handlerType: HandlerType;
-  insertBetween: boolean;
 }
 
 export interface TriggerSelection {

@@ -39,7 +39,7 @@
         [hidden]="hideInsertTile(tile?.task?.id)"
         [tile]="tile"
         [currentSelection]="selection"
-        (select)="onInsertSelected($event, true)"
+        (select)="onInsertSelected($event)"
       ></flogo-diagram-tile-insert>
       <flogo-diagram-tile-task
         cdkDrag
@@ -105,6 +105,6 @@
     [hidden]="isDragging"
     [tile]="tile"
     [currentSelection]="selection"
-    (select)="onInsertSelected($event, false)"
+    (select)="onInsertSelected($event)"
   ></flogo-diagram-tile-insert>
 </ng-template>

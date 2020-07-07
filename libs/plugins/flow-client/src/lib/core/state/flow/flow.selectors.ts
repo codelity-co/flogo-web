@@ -7,7 +7,7 @@ import {
   ActivitySchema,
 } from '@flogo-web/core';
 import { Dictionary, FlowGraph, GraphNodeDictionary } from '@flogo-web/lib-client/core';
-import { DiagramSelectionType } from '@flogo-web/lib-client/diagram';
+import { BRANCH_PREFIX, DiagramSelectionType } from '@flogo-web/lib-client/diagram';
 
 import { getGraphName, getItemsDictionaryName, nodesContainErrors } from '../utils';
 
@@ -147,9 +147,18 @@ export const getCurrentHandlerType = createSelector(
 
 export const getSelectionForInsertTask = createSelector(
   selectCurrentSelection,
-  (currentSelection: InsertTaskSelection) => {
+  selectFlowState,
+  (currentSelection: InsertTaskSelection, flowState: FlowState) => {
     if (currentSelection && currentSelection.type === SelectionType.InsertTask) {
-      return { ...currentSelection };
+      const parentId = currentSelection.parentId;
+      const mainGraph = flowState.mainGraph;
+      if (parentId) {
+        const node = mainGraph.nodes[parentId];
+        const nonBranchChild = node.children.filter( child => !child.startsWith(BRANCH_PREFIX));
+        return nonBranchChild.length > 0;
+      } else {
+        return !!mainGraph.rootId;
+      }
     } else {
       return null;
     }
