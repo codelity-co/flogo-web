@@ -11,7 +11,12 @@ import {
   HostBinding,
 } from '@angular/core';
 
-import { DiagramSelection, DiagramSelectionType } from '@flogo-web/lib-client/diagram';
+import {
+  BUTTON_INSERT_CLASS,
+  DiagramSelection,
+  DiagramSelectionType,
+  SELECTED_INSERT_TILE_CLASS,
+} from '@flogo-web/lib-client/diagram';
 
 import { AddActivityService } from './add-activity.service';
 
@@ -53,7 +58,9 @@ export class AddStageDirective implements OnInit, OnChanges, OnDestroy {
       } else {
         setTimeout(() => {
           this.buttonOpacity = 1;
-          const selectedInsertTile = this.el.nativeElement;
+          const selectedInsertTile = this.el.nativeElement.querySelector(
+            `.${SELECTED_INSERT_TILE_CLASS} .${BUTTON_INSERT_CLASS}`
+          );
           this.addStageService.open(selectedInsertTile, currentSelection.taskId);
         }, BRANCH_ANIMATION_DURATION);
       }

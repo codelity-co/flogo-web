@@ -32,7 +32,6 @@ function graphUpdate(state, item): FlogoStreamState {
   const graphName = GRAPH_NAME;
   const graph = state[graphName];
   const currentNode = graph.nodes[item.id];
-  // @ts-ignore  ---> ppaidi-todo: remove ts-ignore
   const newNodeState: GraphNode = {
     ...currentNode,
     ...item,

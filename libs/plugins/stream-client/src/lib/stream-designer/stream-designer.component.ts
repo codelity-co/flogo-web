@@ -10,6 +10,7 @@ import { takeUntil, map } from 'rxjs/operators';
 import { ModalService } from '@flogo-web/lib-client/modal';
 import { SingleEmissionSubject, HttpUtilsService } from '@flogo-web/lib-client/core';
 import { ContribInstallerService } from '@flogo-web/lib-client/contrib-installer';
+import { DiagramSelection } from '@flogo-web/lib-client/diagram';
 import { StreamMetadata } from '@flogo-web/plugins/stream-core';
 import {
   ChangeDescription,
@@ -46,6 +47,7 @@ export class StreamDesignerComponent implements OnInit, OnDestroy {
   currentSimulationStage$: Observable<string | number>;
   // todo: add type
   selectedStageInfo$: Observable<any>;
+  currentSelection$: Observable<DiagramSelection>;
   private ngOnDestroy$ = SingleEmissionSubject.create();
 
   constructor(
@@ -59,6 +61,8 @@ export class StreamDesignerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.simulation.init();
+
+    this.currentSelection$ = this.store.pipe(select(StreamSelectors.getDiagramSelection));
 
     this.store
       .pipe(select(StreamSelectors.selectStreamState))
@@ -76,6 +80,7 @@ export class StreamDesignerComponent implements OnInit, OnDestroy {
       .subscribe(contribDetails =>
         this.store.dispatch(new ContributionInstalled(contribDetails))
       );
+
     this.isSimulatorOpen$ = this.store.pipe(
       select(StreamSelectors.selectSimulatorPanelOpen)
     );

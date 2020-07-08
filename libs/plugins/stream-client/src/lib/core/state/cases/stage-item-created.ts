@@ -39,21 +39,36 @@ function addNewNode(graph: DiagramGraph, newNode: GraphNode): DiagramGraph {
     },
     status: {},
   };
-  const parent = graph.nodes[parentId];
   let nodes = graph.nodes;
+  let rootId = graph.rootId;
+  const parent = graph.nodes[parentId];
+  const isInsertBetween = parentId ? parent.children.length > 0 : !!rootId;
   if (parent) {
+    if (isInsertBetween) {
+      node.children = [...parent.children];
+    }
     nodes = {
       ...nodes,
       [parent.id]: { ...parent, children: [node.id] },
     };
   } else {
-    graph = {
-      ...graph,
-      rootId: node.id,
-    };
+    // case when adding a tile before the root tile of the diagram
+    if (isInsertBetween) {
+      const child = {
+        ...nodes[graph.rootId],
+        parents: [node.id],
+      };
+      node.children = [graph.rootId];
+      nodes = {
+        ...nodes,
+        [child.id]: child,
+      };
+    }
+    rootId = node.id;
   }
   return {
     ...graph,
+    rootId,
     nodes: {
       ...nodes,
       [node.id]: node,

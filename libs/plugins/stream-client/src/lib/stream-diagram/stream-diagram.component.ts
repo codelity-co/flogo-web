@@ -1,14 +1,9 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { takeUntil, map } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
-import {
-  DiagramGraph,
-  SingleEmissionSubject,
-  HttpUtilsService,
-} from '@flogo-web/lib-client/core';
+import { SingleEmissionSubject, HttpUtilsService } from '@flogo-web/lib-client/core';
 import {
   DiagramAction,
   DiagramActionType,
@@ -25,9 +20,7 @@ import {
 
 import {
   StreamStoreState,
-  selectGraph,
   StreamActions,
-  getDiagramSelection,
   getStagesAsTiles,
   indexIconByItemId,
 } from '../core/state';
@@ -39,8 +32,7 @@ const MAX_TILES = 10;
   styleUrls: ['./stream-diagram.component.less'],
 })
 export class StreamDiagramComponent implements OnDestroy {
-  items$: Observable<DiagramGraph>;
-  currentSelection: DiagramSelection;
+  @Input() currentSelection: DiagramSelection;
   tiles: Tile[];
   // by default should be the root tile
   insertTile: InsertTile;
@@ -52,18 +44,15 @@ export class StreamDiagramComponent implements OnDestroy {
   iconIndex: { [itemId: string]: string } = {};
   private ngOnDestroy$ = SingleEmissionSubject.create();
 
+  get hideInsertTile(): boolean {
+    return this.availableSlots > 0;
+  }
+
   constructor(
     private store: Store<StreamStoreState>,
     private dragService: DragTileService,
     private httpUtilsService: HttpUtilsService
   ) {
-    this.items$ = this.store.pipe(select(selectGraph), takeUntil(this.ngOnDestroy$));
-    this.store
-      .pipe(select(getDiagramSelection), takeUntil(this.ngOnDestroy$))
-      .subscribe(currentSelection => {
-        this.currentSelection = currentSelection;
-      });
-
     this.store
       .pipe(select(getStagesAsTiles(MAX_TILES)), takeUntil(this.ngOnDestroy$))
       .subscribe((streamTiles: TaskTile[]) => {
@@ -109,9 +98,11 @@ export class StreamDiagramComponent implements OnDestroy {
         break;
     }
   }
-  addStage() {
-    this.store.dispatch(new StreamActions.SelectCreateStage(this.insertTile.parentId));
+
+  addStage(parentId) {
+    this.store.dispatch(new StreamActions.SelectCreateStage(parentId));
   }
+
   selectStage(taskTile: TaskTile) {
     this.store.dispatch(new StreamActions.SelectStage(taskTile.task.id));
   }

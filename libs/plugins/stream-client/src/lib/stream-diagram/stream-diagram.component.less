@@ -11,6 +11,11 @@
   --add-button-width: 48px;
 }
 
+.tile {
+  display: flex;
+  position: relative;
+}
+
 .tiles-wrapper{
   display: flex;
   padding: 8px;
@@ -25,6 +30,19 @@
     .add-button:before {
       opacity: 0.5;
     }
+  }
+}
+
+.tile__add-between {
+  position: absolute;
+  z-index: 6;
+  height: 18px;
+  width: 18px;
+  margin: 20px 0 0 2px;
+  background-color: #f0f0f0;
+  opacity: 0;
+  &.is-selected {
+    opacity: 1;
   }
 }
 
