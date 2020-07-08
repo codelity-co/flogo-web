@@ -14,7 +14,7 @@ export function categorizeChildren(node) {
   return {
     branches: getBranchChildren(node),
     nonBranches: getNonBranchChild(node),
-  }
+  };
 }
 
 function getBranchChildren(node) {

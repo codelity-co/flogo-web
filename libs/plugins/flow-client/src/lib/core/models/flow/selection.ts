@@ -20,7 +20,7 @@ export function makeTaskSelection(
 
 export function makeInsertSelection(
   handlerType: HandlerType,
-  parentId: string,
+  parentId: string
 ): InsertTaskSelection {
   return {
     type: SelectionType.InsertTask,

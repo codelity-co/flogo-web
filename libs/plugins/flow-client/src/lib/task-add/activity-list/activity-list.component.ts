@@ -49,7 +49,7 @@ export class ActivityListComponent implements OnChanges, AfterViewInit, OnDestro
   constructor(private elementRef: ElementRef, private store: Store<FlowState>) {
     this.store
       .pipe(select(getTaskInsertType), takeUntil(this.destroy$))
-      .subscribe(isInBetween => this.isInsertInBetween = isInBetween);
+      .subscribe(isInBetween => (this.isInsertInBetween = isInBetween));
   }
 
   ngAfterViewInit() {

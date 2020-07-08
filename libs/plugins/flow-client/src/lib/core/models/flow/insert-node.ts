@@ -4,7 +4,7 @@ import { isInsertBetween, categorizeChildren } from './is-insert-between';
 export function insertNode(
   flowGraph: FlowGraph,
   node: GraphNode,
-  parentId?: string,
+  parentId?: string
 ): FlowGraph {
   let parent = flowGraph.nodes[parentId];
   let nodes = flowGraph.nodes;
