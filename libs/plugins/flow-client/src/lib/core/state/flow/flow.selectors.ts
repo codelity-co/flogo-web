@@ -7,7 +7,7 @@ import {
   ActivitySchema,
 } from '@flogo-web/core';
 import { Dictionary, FlowGraph, GraphNodeDictionary } from '@flogo-web/lib-client/core';
-import { BRANCH_PREFIX, DiagramSelectionType } from '@flogo-web/lib-client/diagram';
+import { DiagramSelectionType } from '@flogo-web/lib-client/diagram';
 
 import { getGraphName, getItemsDictionaryName, nodesContainErrors } from '../utils';
 
@@ -252,13 +252,6 @@ export const getCurrentActivityExecutionErrors = createSelector(
     return activity && nodes ? nodes[activity.id].status.executionErrored : null;
   }
 );
-
-export const getAllNodes = createSelector(selectFlowState, flowState => {
-  return {
-    errorNodes: flowState.errorGraph.nodes,
-    mainNodes: flowState.mainGraph.nodes,
-  };
-});
 
 export const getGraph = (handlerType: HandlerType) => {
   const graphName = getGraphName(handlerType);

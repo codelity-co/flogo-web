@@ -26,8 +26,7 @@ export function insertNode(
       [parent.id]: { ...parent },
     };
   } else {
-    // Case: adding a tile before the root tile of the diagram
-    // If parent is null and diagram has rootId
+    // case: adding a tile before the root tile of the diagram
     if (isInBetween) {
       const child = {
         ...nodes[flowGraph.rootId],
