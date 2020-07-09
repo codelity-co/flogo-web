@@ -45,7 +45,14 @@ function addNewNode(graph: DiagramGraph, newNode: GraphNode): DiagramGraph {
   const isInsertBetween = parentId ? parent.children.length > 0 : !!rootId;
   if (parent) {
     if (isInsertBetween) {
+      const child = {
+        ...nodes[parent.children[0]],
+      };
       node.children = [...parent.children];
+      nodes = {
+        ...nodes,
+        [child.id]: { ...child, parents: [node.id] },
+      };
     }
     nodes = {
       ...nodes,
