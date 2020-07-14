@@ -78,18 +78,27 @@
   [ngForOf]="groupedTiles?.postDropZone"
   [ngForTrackBy]="trackTileBy"
 >
-  <flogo-diagram-tile-task
-    *ngIf="tile.type === tileTypes.Task"
-    @tileTask
-    [class.is-disabled]="isDragging"
-    [tile]="tile"
-    [currentSelection]="selection"
-    [isReadOnly]="isReadOnly"
-    (select)="onTaskSelected($event)"
-    (branch)="onTaskAction($event)"
-    (remove)="onTaskAction($event)"
-    (configure)="onTaskAction($event)"
-  ></flogo-diagram-tile-task>
+  <div *ngIf="tile.type === tileTypes.Task" class="tile--group">
+    <flogo-diagram-tile-insert
+      @tileInsert
+      class="tile--slot tile__add-between"
+      [hidden]="hideInsertTile(tile.task?.id)"
+      [tile]="tile"
+      [currentSelection]="selection"
+      (select)="onInsertSelected($event)"
+    ></flogo-diagram-tile-insert>
+    <flogo-diagram-tile-task
+      @tileTask
+      [class.is-disabled]="isDragging"
+      [tile]="tile"
+      [currentSelection]="selection"
+      [isReadOnly]="isReadOnly"
+      (select)="onTaskSelected($event)"
+      (branch)="onTaskAction($event)"
+      (remove)="onTaskAction($event)"
+      (configure)="onTaskAction($event)"
+    ></flogo-diagram-tile-task>
+  </div>
   <div
     *ngIf="tile.type == tileTypes.Placeholder"
     @tileGeneric

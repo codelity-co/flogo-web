@@ -1,4 +1,5 @@
 import { FlowGraph, GraphNode } from '@flogo-web/lib-client/core';
+import { BRANCH_PREFIX } from '@flogo-web/lib-client/diagram';
 import { isInsertBetween, categorizeChildren } from './is-insert-between';
 
 export function insertNode(
@@ -9,7 +10,8 @@ export function insertNode(
   let parent = flowGraph.nodes[parentId];
   let nodes = flowGraph.nodes;
   let rootId = flowGraph.rootId;
-  const isInBetween = isInsertBetween(parent?.id, flowGraph);
+  const isInBetween =
+    !node.id.startsWith(BRANCH_PREFIX) && isInsertBetween(parent?.id, flowGraph);
   if (parent) {
     const { branches, nonBranches } = categorizeChildren(parent);
     if (isInBetween) {
