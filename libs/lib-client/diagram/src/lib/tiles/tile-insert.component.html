@@ -1,4 +1,9 @@
-<div role="button" [class]="btnInsertClass" (click)="onClick()">
+<div
+  role="button"
+  [class]="btnInsertClass"
+  [ngClass]="{ 'btn-insert-between': insertBetween }"
+  (click)="onClick()"
+>
   <svg
     class="btn-insert__icon"
     version="1.1"

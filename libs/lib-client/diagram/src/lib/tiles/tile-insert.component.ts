@@ -1,3 +1,4 @@
+import { isNil } from 'lodash';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -21,6 +22,7 @@ import { DiagramSelection, InsertTile, DiagramSelectionType } from '../interface
 })
 export class TileInsertComponent implements OnChanges {
   @Input() tile: InsertTile;
+  @Input() insertBetween: boolean;
   @Input() currentSelection: DiagramSelection;
   @Output() select = new EventEmitter<string>();
   @HostBinding('class.is-selected')
@@ -47,11 +49,14 @@ export class TileInsertComponent implements OnChanges {
     if (!this.currentSelection) {
       return false;
     }
-    const { type, taskId, diagramId } = this.currentSelection;
+    const { type, taskId } = this.currentSelection;
     const forRoot = this.isRootInsert;
-    return (
-      type === DiagramSelectionType.Insert &&
-      ((taskId && taskId === this.tile.parentId) || forRoot)
-    );
+    if (type === DiagramSelectionType.Insert) {
+      if (taskId) {
+        return taskId === this.tile.parentId || forRoot;
+      } else {
+        return isNil(this.tile.parentId);
+      }
+    }
   }
 }

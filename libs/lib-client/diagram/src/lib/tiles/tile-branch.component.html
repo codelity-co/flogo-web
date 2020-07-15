@@ -1,10 +1,10 @@
 <div class="branch">
-  <div
-    class="branch-child-link"
-    (fgClickOutside)="closeBranchOptions()"
-    (click)="openBranchOptions()"
-  >
-    <div class="branch-option-container">
+  <div class="branch-child-link">
+    <div
+      class="branch-option-container"
+      (fgClickOutside)="closeBranchOptions()"
+      (click)="openBranchOptions()"
+    >
       <i
         class="flogo-icon-menu-horizontal menu-icon-close"
         [hidden]="displayBranchOptions"

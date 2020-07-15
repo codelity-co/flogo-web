@@ -32,6 +32,18 @@
   width: @tile-placeholder-dimension / 3;
 }
 
+.btn-insert-between {
+  height: 18px;
+  width: 18px;
+  .btn-insert__icon {
+    height: 6.5px;
+    width: 6.5px;
+  }
+  &:hover {
+    transform: scale(1.8);
+  }
+}
+
 :host(.is-selected) {
   .btn-insert,
   .btn-insert:hover {
@@ -40,5 +52,10 @@
     background-color: var(--diagram-secondary, @tile-color-bg--selected);
     color: @color-bg;
     border: none;
+  }
+
+  .btn-insert-between,
+  .btn-insert-between:hover {
+    transform: scale(1.8);
   }
 }
