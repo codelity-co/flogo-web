@@ -1,5 +1,6 @@
 @import '../_styles';
 @import '~@flogo-web/assets/styles/_drag-drop-animation';
+@import '~@flogo-web/assets/styles/_mixins';
 
 :host {
   .row();
@@ -15,16 +16,9 @@
 }
 
 .tile__add-between {
-  position: absolute;
-  z-index: 6;
-  left: 1px;
-  height: 18px;
-  width: 18px;
-  margin: 20px 0 0 2px;
-  background-color: #e2e9ed;
-  opacity: 0;
-  &.is-selected {
-    opacity: 1;
+  .btn-insert-between(#e2e9ed);
+  &--align-center {
+    left: -2px;
   }
 }
 

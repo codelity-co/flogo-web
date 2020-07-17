@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { CdkDragDrop, CdkDrag, CdkDragStart } from '@angular/cdk/drag-drop';
-
+import { BRANCH_PREFIX } from '@flogo-web/lib-client/diagram';
 import {
   DiagramAction,
   DiagramSelection,
@@ -58,6 +58,15 @@ export class DiagramRowComponent implements OnChanges {
 
   hideInsertTile = id =>
     !this.dragService.getTileDropAllowStatus(id).allow || this.isDragging;
+
+  isPrevTileHasBranch = (tile: TaskTile) => {
+    const parent = tile.parentId;
+    if(parent && !parent.startsWith(BRANCH_PREFIX)) {
+      const parentTile: TaskTile = <TaskTile>this.groupedTiles.dropZone.find( (eachTile: TaskTile) => eachTile.task.id === parent);
+      return parentTile.task.children.find( child => child.startsWith(BRANCH_PREFIX));
+    }
+    return false;
+  }
 
   constructor(
     private rowIndexService: RowIndexService,

@@ -1,5 +1,6 @@
 @import (reference) '~@flogo-web/assets/styles/_variables';
 @import '~@flogo-web/assets/styles/_drag-drop-animation';
+@import '~@flogo-web/assets/styles/_mixins';
 
 :host {
   background-color: #eaeaea;;
@@ -34,17 +35,7 @@
 }
 
 .tile__add-between {
-  position: absolute;
-  z-index: 6;
-  left: 1px;
-  height: 18px;
-  width: 18px;
-  margin: 20px 0 0 2px;
-  background-color: #f0f0f0;
-  opacity: 0;
-  &.is-selected {
-    opacity: 1;
-  }
+  .btn-insert-between(#f0f0f0);
 }
 
 flogo-diagram {
