@@ -182,23 +182,10 @@
 
 .main-branch-link {
   border-top: solid 4px @branch-color-primary;
-  width: 28px;
+  width: 34px;
   position: absolute;
-  right: -20px;
+  right: -26px;
   top: (@tile-height / 2)-2;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: -6px;
-    right: -7px;
-    border-radius: 50%;
-    z-index: 5;
-    width: 8px;
-    height: 8px;
-    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
-    background-color: @branch-color-primary;
-  }
 }
 
 :host(.--with-branches) {
@@ -248,10 +235,6 @@
   }
   .main-branch-link {
     border-top: solid 4px @color-secondary;
-    &::after {
-      background-color: @color-secondary;
-      border: solid 2px @color-secondary;
-    }
   }
 }
 
