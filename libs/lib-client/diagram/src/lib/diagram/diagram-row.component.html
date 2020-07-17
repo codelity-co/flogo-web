@@ -82,10 +82,11 @@
   <div *ngIf="tile.type === tileTypes.Task" class="tile--group">
     <flogo-diagram-tile-insert
       @tileInsert
-      class="tile--slot tile__add-between"
+      class="tile__add-between"
       [hidden]="hideInsertTile(tile.task?.id)"
       [tile]="tile"
       [currentSelection]="selection"
+      [insertBetween]="true"
       (select)="onInsertSelected($event)"
     ></flogo-diagram-tile-insert>
     <flogo-diagram-tile-task
