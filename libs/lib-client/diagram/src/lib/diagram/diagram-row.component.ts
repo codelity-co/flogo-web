@@ -9,7 +9,6 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { CdkDragDrop, CdkDrag, CdkDragStart } from '@angular/cdk/drag-drop';
-import { BRANCH_PREFIX } from '@flogo-web/lib-client/diagram';
 import {
   DiagramAction,
   DiagramSelection,
@@ -23,6 +22,7 @@ import { RowIndexService } from '../shared';
 import { rowAnimations } from './diagram-row.animations';
 import { trackTileByFn } from '../tiles/track-tile-by';
 import { DragTileService, DragTilePosition, TilesGroupedByZone } from '../drag-tiles';
+import { BRANCH_PREFIX } from '../constants';
 
 @Component({
   selector: 'flogo-diagram-row',
