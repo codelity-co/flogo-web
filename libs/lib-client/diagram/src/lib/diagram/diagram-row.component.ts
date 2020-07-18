@@ -9,6 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { CdkDragDrop, CdkDrag, CdkDragStart } from '@angular/cdk/drag-drop';
+
 import {
   DiagramAction,
   DiagramSelection,
@@ -61,12 +62,16 @@ export class DiagramRowComponent implements OnChanges {
 
   isPrevTileHasBranch = (tile: TaskTile) => {
     const parent = tile.parentId;
-    if(parent && !parent.startsWith(BRANCH_PREFIX)) {
-      const parentTile: TaskTile = <TaskTile>this.groupedTiles.dropZone.find( (eachTile: TaskTile) => eachTile.task.id === parent);
-      return parentTile.task.children.find( child => child.startsWith(BRANCH_PREFIX));
+    if (parent && !parent.startsWith(BRANCH_PREFIX)) {
+      const parentTile: TaskTile = <TaskTile>(
+        this.groupedTiles.dropZone.find(
+          (eachTile: TaskTile) => eachTile.task.id === parent
+        )
+      );
+      return parentTile.task.children.find(child => child.startsWith(BRANCH_PREFIX));
     }
     return false;
-  }
+  };
 
   constructor(
     private rowIndexService: RowIndexService,

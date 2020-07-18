@@ -36,7 +36,7 @@
       <flogo-diagram-tile-insert
         @tileInsert
         class="tile__add-between"
-        [ngClass]="{'tile__add-between--align-center': isPrevTileHasBranch(tile)}"
+        [ngClass]="{ 'tile__add-between--align-center': isPrevTileHasBranch(tile) }"
         [hidden]="hideInsertTile(tile?.task?.id)"
         [tile]="tile"
         [currentSelection]="selection"
