@@ -50,10 +50,9 @@ export class TileInsertComponent implements OnChanges {
       return false;
     }
     const { type, taskId } = this.currentSelection;
-    const forRoot = this.isRootInsert;
     if (type === DiagramSelectionType.Insert) {
       if (taskId) {
-        return taskId === this.tile.parentId || forRoot;
+        return taskId === this.tile.parentId;
       } else {
         return isNil(this.tile.parentId);
       }
