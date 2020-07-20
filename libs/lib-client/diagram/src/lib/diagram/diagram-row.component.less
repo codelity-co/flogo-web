@@ -26,7 +26,7 @@
   flex-shrink: 0;
   opacity: 0;
   transition: opacity 0.25s ease-out;
-  margin-left: 12px;
+  margin-left: @tile-left-margin;
   &.is-selected {
     opacity: 1;
   }
@@ -41,8 +41,8 @@
   }
 }
 
-.tile--branch {
-  margin-left: 12px;
+.tile--task-placeholder {
+  margin-left: @tile-left-margin;
 }
 
 :host:not(.is-readonly) {
