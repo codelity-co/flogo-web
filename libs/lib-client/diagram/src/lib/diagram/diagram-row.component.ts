@@ -57,8 +57,8 @@ export class DiagramRowComponent implements OnChanges {
     return id && !this.dragService.getTileDropAllowStatus(id).allow;
   };
 
-  hideInsertTile = id =>
-    !this.dragService.getTileDropAllowStatus(id).allow || this.isDragging;
+  showInsertBtn = id =>
+    this.dragService.getTileDropAllowStatus(id).allow && !this.isDragging;
 
   isPrevTileHasBranch = (tile: TaskTile) => {
     const parent = tile.parentId;
