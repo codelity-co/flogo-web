@@ -124,6 +124,14 @@ flogo-modal-body {
         overflow: hidden;
         white-space: nowrap;
       }
+      .flogo-icon-trigger-margin {
+        margin: 0 18px 2px 8px;
+      }
+    }
+    .trigger-icon {
+      position: absolute;
+      left: 12px;
+      top: 25%;
     }
     .trigger-icon-background {
       z-index: 0;
@@ -147,19 +155,9 @@ flogo-modal-body {
 
 :host ::ng-deep flogo-modal-body {
   .triggers-container {
-    .trigger-icon {
-      position: absolute;
-      left: 12px;
-      top: 25%;
-    }
     .flogo-icon-trigger {
       font-size: 20px;
       color: #062e79;
-    }
-    .trigger-banner {
-      .flogo-icon-trigger {
-        margin: 0 18px 2px 8px;
-      }
     }
   }
 }

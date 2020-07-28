@@ -43,7 +43,10 @@
             >
               <div class="trigger-details">
                 <div class="trigger-banner">
-                  <flogo-trigger-icon icon=""></flogo-trigger-icon>
+                  <flogo-trigger-icon
+                    class="flogo-icon-trigger-margin"
+                    [icon]="getTriggerIconUrl(trigger.ref)">
+                  </flogo-trigger-icon>
                   <div class="trigger-title" title="{{ trigger.name }}">
                     {{ trigger.name }}
                   </div>
@@ -90,7 +93,8 @@
                 </svg>
                 <flogo-trigger-icon
                   class="trigger-icon"
-                  icon=""></flogo-trigger-icon>
+                  [icon]="getTriggerIconUrl(trigger.ref)">
+                </flogo-trigger-icon>
                 <div>
                   <div>{{ trigger.title }}</div>
                   <div class="trigger-ref">{{ trigger.ref }}</div>

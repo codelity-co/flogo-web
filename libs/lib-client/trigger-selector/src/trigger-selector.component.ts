@@ -5,6 +5,7 @@ import {
   TriggersService,
   Trigger,
   ContributionsService,
+  HttpUtilsService,
   FLOGO_CONTRIB_TYPE,
 } from '@flogo-web/lib-client/core';
 import { TriggerSchema } from '@flogo-web/core';
@@ -39,11 +40,20 @@ export class TriggerSelectorComponent implements OnInit {
   private installedTriggers: TriggerSchema[] = [];
   private appId: string;
 
+  getTriggerIconUrl = (ref) => {
+    const triggerSchema = this.installedTriggers.find(schema => {
+      return schema.ref === ref;
+    });
+    const iconUrl = triggerSchema ? triggerSchema.icon : null;
+    return iconUrl ? this.httpUtils.apiPrefix(iconUrl) : null;
+  }
+
   constructor(
     private control: ModalControl<TriggerMetaData>,
     private modalService: ModalService,
     private triggerService: TriggersService,
-    private contribService: ContributionsService
+    private contribService: ContributionsService,
+    private httpUtils: HttpUtilsService
   ) {
     this.appId = this.control.data.appId;
 
