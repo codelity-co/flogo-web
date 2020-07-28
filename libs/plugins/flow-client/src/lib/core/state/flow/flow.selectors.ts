@@ -179,16 +179,17 @@ export const getCurrentNodes: MemoizedSelector<
       : null
 );
 
-export const getCurrentItemsAndSchemas: MemoizedSelector<
+export const getCurrentItemsTriggersAndSchemas: MemoizedSelector<
   FlowState,
   [Dictionary<Item>, Dictionary<ContribSchema>]
 > = createSelector(
   selectFlowState,
   getCurrentHandlerId,
+  selectTriggers,
   selectSchemas,
-  (flowState, handlerId, schemas) => {
+  (flowState, handlerId, triggers, schemas) => {
     const items = flowState[getItemsDictionaryName(handlerId)];
-    return [items, schemas];
+    return [{...items, ...triggers}, schemas];
   }
 );
 

@@ -49,7 +49,7 @@
   </flogo-designer-header>
 
   <ng-template #flowContent>
-    <flogo-flow-triggers></flogo-flow-triggers>
+    <flogo-flow-triggers [iconProvider]="iconProvider"></flogo-flow-triggers>
     <flogo-flow-params-schema-button
       role="button"
       [flowMetadata]="flowState?.metadata"
@@ -58,6 +58,7 @@
     <div class="diagram-container">
       <flogo-flow-diagram
         class="diagram"
+        [iconProvider]="iconProvider"
         (deleteTask)="onDeleteTask($event)"
       ></flogo-flow-diagram>
     </div>

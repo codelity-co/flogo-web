@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
@@ -17,7 +17,6 @@ import {
 import { HandlerType } from '../core/models';
 import { newBranchId } from '../core/models/flow/id-generator';
 import { FlowState, FlowActions, FlowSelectors } from '../core/state';
-import { IconProviderCreator } from '../core';
 
 @Component({
   selector: 'flogo-flow-diagram',
@@ -38,15 +37,14 @@ export class FlogoFlowDiagramComponent {
     handlerType: HandlerType;
     itemId: string;
   }>();
+  @Input() iconProvider?: IconProvider;
   items$: Observable<FlowGraph>;
   currentSelection$: Observable<DiagramSelection>;
-  iconProvider$: Observable<IconProvider>;
   currentDiagramId: HandlerType;
   private ngOnDestroy$ = SingleEmissionSubject.create();
 
   constructor(
     private store: Store<FlowState>,
-    private iconProviderCreator: IconProviderCreator
   ) {
     this.items$ = this.store.pipe(
       select(FlowSelectors.getCurrentGraph),
@@ -55,11 +53,6 @@ export class FlogoFlowDiagramComponent {
     this.currentSelection$ = this.store.pipe(
       select(FlowSelectors.getSelectionForCurrentHandler),
       takeUntil(this.ngOnDestroy$)
-    );
-    this.iconProvider$ = this.store.select(FlowSelectors.getCurrentItemsAndSchemas).pipe(
-      map(([items, schemas]) => {
-        return items && schemas ? this.iconProviderCreator.create(items, schemas) : null;
-      })
     );
     this.store
       .pipe(select(FlowSelectors.getCurrentHandlerId), takeUntil(this.ngOnDestroy$))

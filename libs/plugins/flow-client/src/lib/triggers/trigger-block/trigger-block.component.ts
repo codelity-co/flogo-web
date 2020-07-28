@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IconProvider } from '@flogo-web/lib-client/diagram';
 import { Trigger, TRIGGER_MENU_OPERATION } from '../../core';
 
 export interface TriggerMenuSelectionEvent {
@@ -16,6 +17,8 @@ export class TriggerBlockComponent {
   trigger: Trigger;
   @Input()
   isSelected: boolean;
+  @Input()
+  iconProvider?: IconProvider;
   @Output()
   menuItemSelected: EventEmitter<TriggerMenuSelectionEvent> = new EventEmitter<
     TriggerMenuSelectionEvent

@@ -1,5 +1,5 @@
 import { uniq, fromPairs, isArray } from 'lodash';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { from } from 'rxjs';
 import { filter, takeUntil, mergeMap, reduce, switchMap } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
@@ -34,6 +34,7 @@ import {
   TriggerSelectorComponent,
   TriggerSelectorResult,
 } from '@flogo-web/lib-client/trigger-selector';
+import { IconProvider } from '@flogo-web/lib-client/diagram';
 
 function settingsToObject(
   settings: { name: string; value?: any }[],
@@ -48,6 +49,8 @@ function settingsToObject(
   styleUrls: ['triggers.component.less'],
 })
 export class FlogoFlowTriggersPanelComponent implements OnInit, OnDestroy {
+  @Input() iconProvider?: IconProvider;
+
   actionId: string;
   appDetails: {
     appId: string;

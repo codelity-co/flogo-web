@@ -1,5 +1,5 @@
 import { cloneDeep, isEmpty } from 'lodash';
-import { takeUntil, switchMap, take, filter } from 'rxjs/operators';
+import { takeUntil, switchMap, filter, map } from 'rxjs/operators';
 import { Component, HostBinding, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -28,6 +28,7 @@ import {
   MetadataAttribute,
   FLOGO_TASK_TYPE,
   FlogoFlowService as FlowsService,
+  IconProviderCreator,
 } from './core';
 import { HandlerType, SelectionType, mergeItemWithSchema } from './core/models';
 import { FlowActions, FlowState, FlowSelectors } from './core/state';
@@ -36,6 +37,7 @@ import { of } from 'rxjs';
 import { ContribInstallerService } from '@flogo-web/lib-client/contrib-installer';
 import { Store, select } from '@ngrx/store';
 import { ModalService } from '@flogo-web/lib-client/modal';
+import { IconProvider } from '@flogo-web/lib-client/diagram';
 import { taskIdsOfCurrentStep } from './core/test-runner/taskids-current-step';
 
 interface TaskContext {
@@ -64,6 +66,7 @@ export class FlowComponent implements OnInit, OnDestroy {
   SELECTOR_FOR_CURRENT_ELEMENT = 'flogo-diagram-tile-task.is-selected';
   @HostBinding('@initialAnimation') initialAnimation = true;
   flowState: FlowState;
+  iconProvider: IconProvider;
   runnableInfo: {
     disabled: boolean;
     disableReason?: string;
@@ -95,10 +98,17 @@ export class FlowComponent implements OnInit, OnDestroy {
     private notifications: NotificationsService,
     private contribInstallerService: ContribInstallerService,
     private store: Store<FlowState>,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private iconProviderCreator: IconProviderCreator
   ) {
     this._isDiagramEdited = false;
     this.app = null;
+
+    this.store.select(FlowSelectors.getCurrentItemsTriggersAndSchemas).pipe(
+      map(([items, schemas]) => {
+        return items && schemas ? this.iconProviderCreator.create(items, schemas) : null;
+      })
+    ).subscribe(iconProvider => this.iconProvider = iconProvider );
   }
 
   get flowId() {

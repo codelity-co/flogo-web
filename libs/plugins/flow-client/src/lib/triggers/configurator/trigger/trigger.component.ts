@@ -6,6 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { IconProvider } from '@flogo-web/lib-client/diagram';
 import { TriggerStatus } from '../interfaces';
 
 @Component({
@@ -18,6 +19,7 @@ export class ConfigureTriggerComponent {
   selectedTriggerId: string;
   @Input()
   triggerData: TriggerStatus;
+  @Input() iconProvider?: IconProvider;
   @Output()
   selectTrigger: EventEmitter<string> = new EventEmitter<string>();
 
