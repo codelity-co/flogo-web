@@ -1,0 +1,4 @@
+<img [src]="icon" alt="Trigger icon" *ngIf="icon; else defaultIcon">
+<ng-template #defaultIcon>
+  <i class="flogo-icon-trigger"></i>
+</ng-template>

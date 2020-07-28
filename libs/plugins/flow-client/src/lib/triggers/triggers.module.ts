@@ -13,6 +13,7 @@ import {
   TriggerSelectorComponent,
   TriggerSelectorModule,
 } from '@flogo-web/lib-client/trigger-selector';
+import { TriggerIconModule } from '@flogo-web/lib-client/trigger-icon';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import {
     TriggersConfiguratorModule,
     ContribInstallerModule,
     TriggerSelectorModule,
+    TriggerIconModule
   ],
   declarations: [TriggerBlockComponent, FlogoFlowTriggersPanelComponent],
   exports: [FlogoFlowTriggersPanelComponent],

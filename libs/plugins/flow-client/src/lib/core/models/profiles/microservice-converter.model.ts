@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { fromPairs, isUndefined, uniqueId, pick } from 'lodash';
 import {
   Resource,
-  FunctionsSchema,
-  ActivitySchema,
+  ContributionSchema,
   TriggerSchema,
   ValueType,
 } from '@flogo-web/core';
@@ -11,7 +10,6 @@ import {
   Dictionary,
   ErrorService,
   ContributionsService,
-  FLOGO_CONTRIB_TYPE,
 } from '@flogo-web/lib-client/core';
 import { BRANCH_PREFIX } from '@flogo-web/lib-client/diagram';
 import {
@@ -102,11 +100,10 @@ export class MicroServiceModelConverter {
   convertToWebFlowModel(resource: ApiFlowResource, subflowSchema: Dictionary<Resource>) {
     this.subflowSchemaRegistry = subflowSchema;
     this.verifyHasProperTasks(resource);
-    return Promise.all([this.getAllActivitySchemas(), this.getAllFunctionSchemas()]).then(
-      ([allActivitySchemas, allFunctionSchemas]) => {
+    return this.getAllContribSchemas().then(
+      (allContribSchemas) => {
         return this.processFlowObj(resource, [
-          ...allActivitySchemas,
-          ...allFunctionSchemas,
+          ...allContribSchemas
         ]);
       }
     );
@@ -214,12 +211,8 @@ export class MicroServiceModelConverter {
     return itemTrigger;
   }
 
-  private getAllActivitySchemas(): Promise<ActivitySchema[]> {
-    return this.contribService.listContribs<ActivitySchema>(FLOGO_CONTRIB_TYPE.ACTIVITY);
-  }
-
-  private getAllFunctionSchemas(): Promise<FunctionsSchema[]> {
-    return this.contribService.listContribs<FunctionsSchema>(FLOGO_CONTRIB_TYPE.FUNCTION);
+  private getAllContribSchemas(): Promise<ContributionSchema[]> {
+    return this.contribService.listContribs<ContributionSchema>();
   }
 
   private cleanDanglingSubflowMappings(items: Dictionary<Item>) {

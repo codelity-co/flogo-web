@@ -17,17 +17,6 @@
   .bg-placeholder {
     fill: @color-trigger-bg-color;
   }
-
-  .flogo-icon-trigger {
-    display: block;
-    color: #1b4874;
-    font-size: 20px;
-  }
-
-  .flogo-icon-trigger {
-    margin: (14px - @trigger-icon-clickable-padding)
-      (16px - @trigger-icon-clickable-padding);
-  }
 }
 
 .trigger-icon-background {
@@ -102,14 +91,29 @@
   }
 }
 
-.trigger_block--selected {
+:host ::ng-deep {
   .trigger {
     .flogo-icon-trigger {
-      color: #fff;
+      display: block;
+      color: #1b4874;
+      font-size: 20px;
+    }
+
+    .flogo-icon-trigger {
+      margin: (14px - @trigger-icon-clickable-padding)
+        (16px - @trigger-icon-clickable-padding);
     }
   }
 
-  .bg-placeholder {
-    fill: @color-trigger-selected-bg-color;
+  .trigger_block--selected {
+    .trigger {
+      .flogo-icon-trigger {
+        color: #fff;
+      }
+    }
+
+    .bg-placeholder {
+      fill: @color-trigger-selected-bg-color;
+    }
   }
 }

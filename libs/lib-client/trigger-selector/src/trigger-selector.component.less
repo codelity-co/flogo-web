@@ -119,9 +119,6 @@ flogo-modal-body {
         right: -8px;
         transition: border-left-color 0.2s ease;
       }
-      .flogo-icon-trigger {
-        margin: 0px 18px 2px 8px;
-      }
       .trigger-title {
         text-overflow: ellipsis;
         overflow: hidden;
@@ -137,6 +134,19 @@ flogo-modal-body {
         fill: #b3d9ef;
       }
     }
+  }
+  .install-new {
+    color: #0081cb;
+    margin-left: 8px;
+    cursor: pointer;
+  }
+  flogo-search {
+    min-width: 264px;
+  }
+}
+
+:host ::ng-deep flogo-modal-body {
+  .triggers-container {
     .trigger-icon {
       position: absolute;
       left: 12px;
@@ -146,13 +156,10 @@ flogo-modal-body {
       font-size: 20px;
       color: #062e79;
     }
-  }
-  .install-new {
-    color: #0081cb;
-    margin-left: 8px;
-    cursor: pointer;
-  }
-  flogo-search {
-    min-width: 264px;
+    .trigger-banner {
+      .flogo-icon-trigger {
+        margin: 0 18px 2px 8px;
+      }
+    }
   }
 }
