@@ -104,11 +104,16 @@ export class FlowComponent implements OnInit, OnDestroy {
     this._isDiagramEdited = false;
     this.app = null;
 
-    this.store.select(FlowSelectors.getCurrentItemsTriggersAndSchemas).pipe(
-      map(([items, schemas]) => {
-        return items && schemas ? this.iconProviderCreator.create(items, schemas) : null;
-      })
-    ).subscribe(iconProvider => this.iconProvider = iconProvider );
+    this.store
+      .select(FlowSelectors.getCurrentItemsTriggersAndSchemas)
+      .pipe(
+        map(([items, schemas]) => {
+          return items && schemas
+            ? this.iconProviderCreator.create(items, schemas)
+            : null;
+        })
+      )
+      .subscribe(iconProvider => (this.iconProvider = iconProvider));
   }
 
   get flowId() {

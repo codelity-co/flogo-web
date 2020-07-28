@@ -24,7 +24,7 @@ import { TriggerIconModule } from '@flogo-web/lib-client/trigger-icon';
     TriggersConfiguratorModule,
     ContribInstallerModule,
     TriggerSelectorModule,
-    TriggerIconModule
+    TriggerIconModule,
   ],
   declarations: [TriggerBlockComponent, FlogoFlowTriggersPanelComponent],
   exports: [FlogoFlowTriggersPanelComponent],

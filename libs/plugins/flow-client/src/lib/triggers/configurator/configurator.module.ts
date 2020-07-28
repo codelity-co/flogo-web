@@ -40,7 +40,7 @@ import {
     FlogoSharedModule,
     MapperModule,
     MonacoEditorModule,
-    TriggerIconModule
+    TriggerIconModule,
   ],
   declarations: [
     TriggerDetailComponent,

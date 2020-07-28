@@ -40,13 +40,13 @@ export class TriggerSelectorComponent implements OnInit {
   private installedTriggers: TriggerSchema[] = [];
   private appId: string;
 
-  getTriggerIconUrl = (ref) => {
+  getTriggerIconUrl = ref => {
     const triggerSchema = this.installedTriggers.find(schema => {
       return schema.ref === ref;
     });
     const iconUrl = triggerSchema ? triggerSchema.icon : null;
     return iconUrl ? this.httpUtils.apiPrefix(iconUrl) : null;
-  }
+  };
 
   constructor(
     private control: ModalControl<TriggerMetaData>,

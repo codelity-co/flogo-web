@@ -189,7 +189,7 @@ export const getCurrentItemsTriggersAndSchemas: MemoizedSelector<
   selectSchemas,
   (flowState, handlerId, triggers, schemas) => {
     const items = flowState[getItemsDictionaryName(handlerId)];
-    return [{...items, ...triggers}, schemas];
+    return [{ ...items, ...triggers }, schemas];
   }
 );
 

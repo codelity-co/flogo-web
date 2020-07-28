@@ -1,7 +1,8 @@
 <div class="trigger-content" [class.has-error]="!triggerData?.isValid">
   <flogo-trigger-icon
     class="trigger-icon"
-    [icon]="iconProvider?.getIconUrlById(triggerData?.id)"></flogo-trigger-icon>
+    [icon]="iconProvider?.getIconUrlById(triggerData?.id)"
+  ></flogo-trigger-icon>
   <div class="trigger-label">
     <span class="trigger-name">{{ triggerData?.name }}</span>
     <sup class="trigger-modified" *ngIf="triggerData?.isDirty">*</sup>

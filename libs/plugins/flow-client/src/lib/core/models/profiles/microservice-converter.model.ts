@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { fromPairs, isUndefined, uniqueId, pick } from 'lodash';
-import {
-  Resource,
-  ContributionSchema,
-  TriggerSchema,
-  ValueType,
-} from '@flogo-web/core';
+import { Resource, ContributionSchema, TriggerSchema, ValueType } from '@flogo-web/core';
 import {
   Dictionary,
   ErrorService,
@@ -100,13 +95,9 @@ export class MicroServiceModelConverter {
   convertToWebFlowModel(resource: ApiFlowResource, subflowSchema: Dictionary<Resource>) {
     this.subflowSchemaRegistry = subflowSchema;
     this.verifyHasProperTasks(resource);
-    return this.getAllContribSchemas().then(
-      (allContribSchemas) => {
-        return this.processFlowObj(resource, [
-          ...allContribSchemas
-        ]);
-      }
-    );
+    return this.getAllContribSchemas().then(allContribSchemas => {
+      return this.processFlowObj(resource, [...allContribSchemas]);
+    });
   }
 
   verifyHasProperTasks(flow: ApiFlowResource) {

@@ -43,9 +43,7 @@ export class FlogoFlowDiagramComponent {
   currentDiagramId: HandlerType;
   private ngOnDestroy$ = SingleEmissionSubject.create();
 
-  constructor(
-    private store: Store<FlowState>,
-  ) {
+  constructor(private store: Store<FlowState>) {
     this.items$ = this.store.pipe(
       select(FlowSelectors.getCurrentGraph),
       takeUntil(this.ngOnDestroy$)
