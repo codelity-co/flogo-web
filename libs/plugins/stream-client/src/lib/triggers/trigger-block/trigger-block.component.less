@@ -18,13 +18,7 @@
     fill: @color-trigger-bg-color;
   }
 
-  .flogo-icon-trigger {
-    display: block;
-    color: #1b4874;
-    font-size: 28px;
-  }
-
-  .flogo-icon-trigger {
+  .flogo-icon-trigger-margin {
     margin: (18px - @trigger-icon-clickable-padding)
       (18px - @trigger-icon-clickable-padding);
   }
@@ -99,14 +93,24 @@
   }
 }
 
-.trigger_block--selected {
+:host ::ng-deep {
   .trigger {
     .flogo-icon-trigger {
-      color: #fff;
+      display: block;
+      color: #1b4874;
+      font-size: 28px;
     }
   }
 
-  .bg-placeholder {
-    fill: @color-trigger-selected-bg-color;
+  .trigger_block--selected {
+    .trigger {
+      .flogo-icon-trigger {
+        color: #fff;
+      }
+    }
+
+    .bg-placeholder {
+      fill: @color-trigger-selected-bg-color;
+    }
   }
 }

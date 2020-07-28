@@ -18,6 +18,7 @@
         class="js-trigger-element"
         *ngFor="let trigger of triggerStatuses$ | async"
         [triggerData]="trigger"
+        [iconIndex]="iconIndex"
         [selectedTriggerId]="selectedTriggerId"
         (selectTrigger)="changeTriggerSelection($event)"
       >

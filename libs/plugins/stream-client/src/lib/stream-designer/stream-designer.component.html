@@ -60,7 +60,7 @@
   </flogo-context-panel-area>
 
   <ng-template #streamContent>
-    <flogo-stream-triggers></flogo-stream-triggers>
+    <flogo-stream-triggers [iconIndex]="iconIndex"></flogo-stream-triggers>
     <flogo-stream-params-schema-button
       role="button"
       [streamMetadata]="streamState?.metadata"
@@ -69,6 +69,7 @@
     <flogo-stream-diagram
       fgAddStage
       [currentSelection]="currentSelection$ | async"
+      [iconIndex]="iconIndex"
     ></flogo-stream-diagram>
     <flogo-stream-stage-configurator></flogo-stream-stage-configurator>
   </ng-template>

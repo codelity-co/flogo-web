@@ -3,8 +3,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { PortalModule } from '@angular/cdk/portal';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 import { SharedModule as FlogoSharedModule } from '@flogo-web/lib-client/common';
+import { TriggerIconModule } from '@flogo-web/lib-client/trigger-icon';
 
 import { MapperModule } from '../../shared/mapper';
 import { MonacoEditorModule } from '@flogo-web/editor';
@@ -28,7 +30,6 @@ import {
   SettingsFormFieldComponent,
   ConfirmEditionComponent,
 } from './trigger-detail';
-import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     MapperModule,
     MonacoEditorModule,
     OverlayModule,
+    TriggerIconModule
   ],
   declarations: [
     TriggerDetailComponent,

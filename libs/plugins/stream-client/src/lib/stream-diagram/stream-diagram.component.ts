@@ -33,6 +33,8 @@ const MAX_TILES = 10;
 })
 export class StreamDiagramComponent implements OnDestroy {
   @Input() currentSelection: DiagramSelection;
+  @Input() iconIndex: { [itemId: string]: string };
+
   tiles: Tile[];
   // by default should be the root tile
   insertTile: InsertTile;
@@ -41,7 +43,6 @@ export class StreamDiagramComponent implements OnDestroy {
   availableSlots: number;
   placeholders = [];
   isDragging: boolean;
-  iconIndex: { [itemId: string]: string } = {};
   private ngOnDestroy$ = SingleEmissionSubject.create();
 
   get hideInsertTile(): boolean {
@@ -51,7 +52,6 @@ export class StreamDiagramComponent implements OnDestroy {
   constructor(
     private store: Store<StreamStoreState>,
     private dragService: DragTileService,
-    private httpUtilsService: HttpUtilsService
   ) {
     this.store
       .pipe(select(getStagesAsTiles(MAX_TILES)), takeUntil(this.ngOnDestroy$))
@@ -65,13 +65,6 @@ export class StreamDiagramComponent implements OnDestroy {
         };
         this.updateAvailableSlots(streamTiles);
       });
-
-    this.store
-      .pipe(
-        select(indexIconByItemId(path => this.httpUtilsService.apiPrefix(path))),
-        takeUntil(this.ngOnDestroy$)
-      )
-      .subscribe(iconIndex => (this.iconIndex = iconIndex));
 
     this.dragService.isDragging$
       .pipe(takeUntil(this.ngOnDestroy$))

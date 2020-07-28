@@ -26,10 +26,11 @@
     *ngFor="let trigger of triggersList; trackBy: trackTriggerBy"
     [isSelected]="currentTrigger?.id === trigger.id"
     [trigger]="trigger"
+    [iconIndex]="iconIndex"
     (menuItemSelected)="handleMenuSelection($event)"
   ></flogo-stream-triggers-trigger-block>
   <div class="trigger trigger--add" title="Add Trigger" (click)="openAddTriggerModal()">
     <div class="trigger-content"><i class="flogo-icon-add"></i></div>
   </div>
-  <flogo-stream-triggers-configuration></flogo-stream-triggers-configuration>
+  <flogo-stream-triggers-configuration [iconIndex]="iconIndex"></flogo-stream-triggers-configuration>
 </div>

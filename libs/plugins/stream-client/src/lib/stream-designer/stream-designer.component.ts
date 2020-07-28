@@ -21,6 +21,7 @@ import {
   StreamService,
   StreamSelectors,
   StreamActions,
+  indexIconByItemId,
   StreamStoreState as AppState,
 } from '../core';
 import { ParamsSchemaComponent } from '../params-schema';
@@ -44,6 +45,7 @@ export class StreamDesignerComponent implements OnInit, OnDestroy {
     left: '182px',
   };
   simulationId: 0;
+  iconIndex: { [itemId: string]: string } = {};
   currentSimulationStage$: Observable<string | number>;
   // todo: add type
   selectedStageInfo$: Observable<any>;
@@ -57,7 +59,14 @@ export class StreamDesignerComponent implements OnInit, OnDestroy {
     private modalService: ModalService,
     private simulation: SimulatorService,
     private httpUtilsService: HttpUtilsService
-  ) {}
+  ) {
+    this.store
+      .pipe(
+        select(indexIconByItemId(path => this.httpUtilsService.apiPrefix(path))),
+        takeUntil(this.ngOnDestroy$)
+      )
+      .subscribe(iconIndex => (this.iconIndex = iconIndex));
+  }
 
   ngOnInit() {
     this.simulation.init();

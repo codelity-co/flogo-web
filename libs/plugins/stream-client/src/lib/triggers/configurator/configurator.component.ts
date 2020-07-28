@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
@@ -27,6 +27,8 @@ import { TRIGGER_STATUS_TOKEN } from './confirmation/status.token';
   providers: [ConfirmationService],
 })
 export class ConfiguratorComponent implements OnInit, OnDestroy {
+  @Input() iconIndex: { [itemId: string]: string };
+
   isConfiguratorInitialized$: Observable<boolean>;
   triggerStatuses$: Observable<TriggerStatus[]>;
   currentTriggerDetailStatus: TriggerStatus;

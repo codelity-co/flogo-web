@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { switchMap, takeUntil, skip } from 'rxjs/operators';
 import { Subscription, of } from 'rxjs';
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 import { ActivitySchema, ICON_ACTIVITY_DEFAULT } from '@flogo-web/core';
@@ -69,6 +69,8 @@ const SETTINGS_TAB_INFO = {
   ],
 })
 export class StageConfiguratorComponent implements OnInit, OnDestroy {
+  @Input() iconIndex: { [itemId: string]: string };
+
   streamState: FlogoStreamState;
   activitySchemaUrl: string;
   currentTile: Item;

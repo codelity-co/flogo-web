@@ -18,6 +18,7 @@ export class ConfigureTriggerComponent {
   selectedTriggerId: string;
   @Input()
   triggerData: TriggerStatus;
+  @Input() iconIndex: { [itemId: string]: string };
   @Output()
   selectTrigger: EventEmitter<string> = new EventEmitter<string>();
 

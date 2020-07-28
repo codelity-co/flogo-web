@@ -1,5 +1,5 @@
 import { fromPairs, isArray, uniq } from 'lodash';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   HandlersService,
   SingleEmissionSubject,
@@ -45,6 +45,8 @@ function settingsToObject(
   styleUrls: ['triggers.component.less'],
 })
 export class FlogoStreamTriggersPanelComponent implements OnInit, OnDestroy {
+  @Input() iconIndex: { [itemId: string]: string };
+
   appId: string;
   actionId: string;
   triggersList: RenderableTrigger[] = [];
