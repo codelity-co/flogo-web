@@ -29,9 +29,18 @@
   }
 }
 
-:host(:hover),
+:host(:hover) {
+  .trigger-content {
+    background-color: @color-trigger-bg-color-hover;
+  }
+
+  &:after {
+    border-left-color: @color-trigger-bg-color-hover;
+  }
+}
+
 :host(.is-selected) {
-  color: #fff;
+  color: @color-white;
 
   .trigger-content {
     background-color: @color-primary;

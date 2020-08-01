@@ -17,6 +17,12 @@
   .bg-placeholder {
     fill: @color-trigger-bg-color;
   }
+
+  &:hover {
+    .bg-placeholder {
+      fill: @color-trigger-bg-color-hover;
+    }
+  }
 }
 
 .trigger-icon-background {
@@ -29,21 +35,8 @@
   margin-right: 3px;
 }
 
-.icon-svg__def {
-  display: block;
-}
-
 .trigger_block {
   position: relative;
-
-  &:hover {
-    .flogo-icon-trigger {
-      color: #fff;
-      &:hover {
-        color: @pumpkin-orange;
-      }
-    }
-  }
 
   .trigger_menu {
     transform: scale(0);
@@ -91,8 +84,8 @@
   }
 }
 
-  .trigger_block--selected {
-    .bg-placeholder {
-      fill: @color-trigger-selected-bg-color;
-    }
+.trigger_block--selected {
+  .bg-placeholder {
+    fill: @color-trigger-selected-bg-color;
   }
+}
