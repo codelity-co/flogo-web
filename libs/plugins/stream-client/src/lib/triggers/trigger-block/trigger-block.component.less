@@ -14,7 +14,11 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-  background-color: #b3d9ef;
+  background-color: @color-trigger-bg-color;
+
+  &:hover {
+  background-color: @color-trigger-hover-bg-color;
+  }
 }
 
 .trigger-content {
@@ -24,15 +28,6 @@
 
 .trigger_block {
   position: relative;
-
-  &:hover {
-    .flogo-icon-trigger {
-      color: #fff;
-      &:hover {
-        color: @pumpkin-orange;
-      }
-    }
-  }
 
   .trigger_menu {
     transform: scale(0);
@@ -80,4 +75,8 @@
   }
 }
 
-.trigger_block--selected {}
+.trigger_block--selected {
+  .trigger {
+    background-color: @color-trigger-selected-bg-color;
+  }
+}

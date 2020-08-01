@@ -29,16 +29,25 @@
   }
 }
 
-:host(:hover),
-:host(.is-selected) {
-  color: #fff;
-
+:host(:hover) {
   .trigger-content {
-    background-color: @color-primary;
+    background-color: @color-trigger-hover-bg-color;
   }
 
   &:after {
-    border-left-color: @color-primary;
+    border-left-color: @color-trigger-hover-bg-color;
+  }
+}
+
+:host(.is-selected) {
+  color: @color-white;
+
+  .trigger-content {
+    background-color: @color-trigger-selected-bg-color;
+  }
+
+  &:after {
+    border-left-color: @color-trigger-selected-bg-color;
   }
 }
 
