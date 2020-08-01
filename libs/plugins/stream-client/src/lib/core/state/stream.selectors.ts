@@ -210,11 +210,11 @@ export function indexIconByItemId(prefixIconPath: (string) => string) {
     selectItems,
     selectTriggers,
     selectSchemas,
-    (mainItems,triggers, schemas) => {
+    (mainItems, triggers, schemas) => {
       const items = {
         ...mainItems,
-        ...triggers
-      }
+        ...triggers,
+      };
       return Object.entries(items).reduce((all, [itemId, { ref }]) => {
         let icon = schemas && schemas[ref] ? schemas[ref].icon : null;
         if (icon) {

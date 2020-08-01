@@ -3,7 +3,11 @@ import { By } from '@angular/platform-browser';
 import { ContributionType, TriggerSchema } from '@flogo-web/core';
 import { ModalControl, ModalModule, ModalService } from '@flogo-web/lib-client/modal';
 import { SearchModule } from '@flogo-web/lib-client/search';
-import { ContributionsService, HttpUtilsService, TriggersService } from '@flogo-web/lib-client/core';
+import {
+  ContributionsService,
+  HttpUtilsService,
+  TriggersService,
+} from '@flogo-web/lib-client/core';
 import { TriggerSelectorComponent } from './trigger-selector.component';
 import { FakeTranslatePipe } from '@flogo-web/lib-client/language/testing';
 

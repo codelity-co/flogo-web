@@ -20,7 +20,7 @@ import { ICON_TRIGGER_DEFAULT } from '@flogo-web/core';
         height: 32px;
         width: 32px;
       }
-    `
+    `,
   ],
 })
 export class TriggerIconComponent extends Component {

@@ -51,7 +51,7 @@ export class StreamDiagramComponent implements OnDestroy {
 
   constructor(
     private store: Store<StreamStoreState>,
-    private dragService: DragTileService,
+    private dragService: DragTileService
   ) {
     this.store
       .pipe(select(getStagesAsTiles(MAX_TILES)), takeUntil(this.ngOnDestroy$))

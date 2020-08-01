@@ -41,7 +41,7 @@ import {
     MapperModule,
     MonacoEditorModule,
     OverlayModule,
-    TriggerIconModule
+    TriggerIconModule,
   ],
   declarations: [
     TriggerDetailComponent,
