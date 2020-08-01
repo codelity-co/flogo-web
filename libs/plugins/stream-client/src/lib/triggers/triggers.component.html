@@ -24,7 +24,6 @@
   </svg>
   <flogo-stream-triggers-trigger-block
     *ngFor="let trigger of triggersList; trackBy: trackTriggerBy"
-    [isSelected]="currentTrigger?.id === trigger.id"
     [trigger]="trigger"
     [iconIndex]="iconIndex"
     (menuItemSelected)="handleMenuSelection($event)"

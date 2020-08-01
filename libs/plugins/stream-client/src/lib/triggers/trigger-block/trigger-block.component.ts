@@ -15,8 +15,6 @@ export interface TriggerMenuSelectionEvent {
 export class TriggerBlockComponent {
   @Input()
   trigger: Trigger;
-  @Input()
-  isSelected: boolean;
   @Input() iconIndex: { [itemId: string]: string };
   @Output()
   menuItemSelected: EventEmitter<TriggerMenuSelectionEvent> = new EventEmitter<

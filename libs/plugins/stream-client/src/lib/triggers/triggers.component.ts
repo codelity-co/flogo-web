@@ -68,7 +68,6 @@ export class FlogoStreamTriggersPanelComponent implements OnInit, OnDestroy {
       .subscribe(triggerState => {
         this.triggersList = triggerState.triggers;
         this.actionId = triggerState.actionId;
-        //this.currentTrigger = triggerState.currentTrigger;
         this.appId = triggerState.appId;
       });
   }
