@@ -57,7 +57,6 @@ export class FlogoFlowTriggersPanelComponent implements OnInit, OnDestroy {
     metadata?: FlowMetadata;
   };
   triggersList: RenderableTrigger[] = [];
-  currentTrigger: RenderableTrigger;
   control: ModalControl;
 
   private ngDestroy$ = SingleEmissionSubject.create();
@@ -76,7 +75,6 @@ export class FlogoFlowTriggersPanelComponent implements OnInit, OnDestroy {
     this.store
       .pipe(select(getTriggersState), takeUntil(this.ngDestroy$))
       .subscribe(triggerState => {
-        this.currentTrigger = triggerState.currentTrigger;
         this.actionId = triggerState.actionId;
         this.triggersList = triggerState.triggers;
         // todo: possibly flatten this structure out but some sub components depend on it right now

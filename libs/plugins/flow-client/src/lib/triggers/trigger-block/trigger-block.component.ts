@@ -16,8 +16,6 @@ export class TriggerBlockComponent {
   @Input()
   trigger: Trigger;
   @Input()
-  isSelected: boolean;
-  @Input()
   iconProvider?: IconProvider;
   @Output()
   menuItemSelected: EventEmitter<TriggerMenuSelectionEvent> = new EventEmitter<
