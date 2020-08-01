@@ -1,6 +1,6 @@
 <flogo-modal (close)="closeTriggerSelector()">
   <flogo-modal-header>
-    <span class="trigger-selector__logo"> <i class="flogo-icon-trigger"></i></span>
+    <flogo-trigger-icon class="trigger-selector__logo"></flogo-trigger-icon>
 
     <span class="trigger-selector__title">{{
       'TRIGGER-SELECTOR:SELECT-TRIGGER-TO-START' | translate
@@ -43,9 +43,8 @@
             >
               <div class="trigger-details">
                 <div class="trigger-banner">
-                  <flogo-trigger-icon
-                    class="flogo-icon-trigger-margin"
-                    [icon]="getTriggerIconUrl(trigger.ref)"
+                  <flogo-trigger-icon class="flogo-icon-trigger-margin"
+                    [iconUrl]="getTriggerIconUrl(trigger.ref)"
                   >
                   </flogo-trigger-icon>
                   <div class="trigger-title" title="{{ trigger.name }}">
@@ -92,9 +91,8 @@
                     class="bg-placeholder"
                   ></use>
                 </svg>
-                <flogo-trigger-icon
-                  class="trigger-icon"
-                  [icon]="getTriggerIconUrl(trigger.ref)"
+                <flogo-trigger-icon class="trigger-icon"
+                  [iconUrl]="getTriggerIconUrl(trigger.ref)"
                 >
                 </flogo-trigger-icon>
                 <div>

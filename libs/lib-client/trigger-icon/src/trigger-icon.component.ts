@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ICON_TRIGGER_DEFAULT } from '@flogo-web/core';
 
 @Component({
   selector: 'flogo-trigger-icon',
@@ -6,12 +7,24 @@ import { Component, Input } from '@angular/core';
   styles: [
     `
       .trigger-icon {
-        height: 24px;
-        width: 24px;
+        height: 20px;
+        width: 20px;
       }
     `,
+    `
+      :host {
+        display: flex;
+        padding: 6px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        height: 32px;
+        width: 32px;
+      }
+    `
   ],
 })
 export class TriggerIconComponent extends Component {
-  @Input() icon: string;
+  @Input() iconUrl?: string;
+
+  defaultIconUrl = ICON_TRIGGER_DEFAULT;
 }

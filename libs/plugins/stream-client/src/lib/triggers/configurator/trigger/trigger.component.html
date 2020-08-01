@@ -1,7 +1,6 @@
 <div class="trigger-content" [class.has-error]="!triggerData?.isValid">
-  <flogo-trigger-icon
-    class="trigger-icon"
-    [icon]="iconIndex[triggerData.id]"
+  <flogo-trigger-icon class="trigger-icon-margin"
+    [iconUrl]="iconIndex[triggerData.id]"
   ></flogo-trigger-icon>
   <div class="trigger-label">
     <span class="trigger-name">{{ triggerData?.name }}</span>
