@@ -22,7 +22,6 @@ enum Mode {
 export class ActivityIconComponent implements OnChanges {
   @Input() isSubflow?: boolean;
   @Input() isTerminal?: boolean;
-  @Input() isCustom?: boolean;
   @Input() iconUrl?: string;
   @Input() customAltText?: string;
   @HostBinding('class.is-default') isDefault: boolean;
