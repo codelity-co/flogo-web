@@ -72,7 +72,7 @@ export class MicroServiceModelConverter {
     };
   }
 
-  getTriggerSchema(trigger) {
+  validateTriggerSchema(trigger) {
     if (!trigger.ref) {
       throw this.errorService.makeOperationalError(
         'Trigger: Wrong input json file',
@@ -85,11 +85,8 @@ export class MicroServiceModelConverter {
           value: trigger,
         }
       );
-    } else {
-      return this.contribService
-        .getContributionDetails(trigger.ref)
-        .then((schema: TriggerSchema) => this.normalizeTriggerSchema(schema));
     }
+    return true;
   }
 
   convertToWebFlowModel(resource: ApiFlowResource, subflowSchema: Dictionary<Resource>) {
@@ -230,7 +227,7 @@ export class MicroServiceModelConverter {
     return isSubflowTask(item.type);
   }
 
-  private normalizeTriggerSchema(schema: TriggerSchema): TriggerSchema {
+  normalizeTriggerSchema(schema: TriggerSchema): TriggerSchema {
     if (!schema.handler) {
       schema.handler = {
         settings: [],

@@ -1,10 +1,9 @@
 import { uniq, fromPairs, isArray } from 'lodash';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { from } from 'rxjs';
-import { filter, takeUntil, mergeMap, reduce, switchMap } from 'rxjs/operators';
+import { filter, takeUntil, switchMap } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 
-import { TriggerSchema } from '@flogo-web/core';
+import { ContributionSchema, TriggerSchema } from '@flogo-web/core';
 import {
   Dictionary,
   SingleEmissionSubject,
@@ -35,6 +34,7 @@ import {
   TriggerSelectorResult,
 } from '@flogo-web/lib-client/trigger-selector';
 import { IconProvider } from '@flogo-web/lib-client/diagram';
+import { selectSchemas } from '../core/state';
 
 function settingsToObject(
   settings: { name: string; value?: any }[],
@@ -145,22 +145,28 @@ export class FlogoFlowTriggersPanelComponent implements OnInit, OnDestroy {
   }
 
   private openTriggerMapper(selectedTrigger: Trigger) {
+    let allContribSchemas: Dictionary<ContributionSchema>;
+    this.store.pipe(
+      select(selectSchemas),
+      takeUntil(this.ngDestroy$)
+    ).subscribe(schemas => {
+      allContribSchemas = schemas;
+    })
+
     const refs = uniq(this.triggersList.map(trigger => trigger.ref));
-    from(refs)
-      .pipe(
-        mergeMap(ref => this.converterService.getTriggerSchema({ ref })),
-        reduce((schemas: Dictionary<TriggerSchema>, schema: TriggerSchema) => {
-          return { ...schemas, [schema.ref]: schema };
-        }, {})
-      )
-      .subscribe(triggerSchemas => {
-        this.store.dispatch(
-          new TriggerConfigureActions.OpenConfigureWithSelection({
-            triggerId: selectedTrigger.id,
-            triggerSchemas,
-          })
-        );
-      });
+    const triggerSchemas = refs.reduce((schemas, ref) => {
+      if(this.converterService.validateTriggerSchema( {ref})) {
+        const triggerSchema = <TriggerSchema>allContribSchemas[ref];
+        schemas[ref] = this.converterService.normalizeTriggerSchema(triggerSchema);
+      }
+      return schemas;
+    }, {});
+    this.store.dispatch(
+      new TriggerConfigureActions.OpenConfigureWithSelection({
+        triggerId: selectedTrigger.id,
+        triggerSchemas,
+      })
+    );
   }
 
   private deleteHandlerForTrigger(triggerId) {
