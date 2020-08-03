@@ -9,7 +9,7 @@ export class MicroServiceModelConverter {
     private errorService: ErrorService
   ) {}
 
-  getTriggerSchema(trigger) {
+  validateTriggerSchema(trigger) {
     if (!trigger.ref) {
       throw this.errorService.makeOperationalError(
         'Trigger: Wrong input json file',
@@ -22,14 +22,11 @@ export class MicroServiceModelConverter {
           value: trigger,
         }
       );
-    } else {
-      return this.contribService
-        .getContributionDetails(trigger.ref)
-        .then((schema: TriggerSchema) => this.normalizeTriggerSchema(schema));
     }
+    return true;
   }
 
-  private normalizeTriggerSchema(schema: TriggerSchema): TriggerSchema {
+  normalizeTriggerSchema(schema: TriggerSchema): TriggerSchema {
     if (!schema.handler) {
       schema.handler = {
         settings: [],
