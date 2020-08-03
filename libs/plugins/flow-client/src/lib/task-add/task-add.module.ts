@@ -10,6 +10,7 @@ import { TaskAddComponent } from './task-add.component';
 import { AddActivityService } from './add-activity.service';
 import { ActivityListComponent } from './activity-list/activity-list.component';
 import { ActivityComponent } from './activity-list/activity.component';
+import { ActivityIconModule } from '@flogo-web/lib-client/activity-icon';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { ActivityComponent } from './activity-list/activity.component';
     TranslateModule,
     ContribInstallerModule,
     SubFlowModule,
+    ActivityIconModule,
   ],
   declarations: [
     AddActivityDirective,

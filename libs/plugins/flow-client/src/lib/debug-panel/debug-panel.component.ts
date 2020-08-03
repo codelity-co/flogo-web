@@ -205,7 +205,7 @@ export class DebugPanelComponent implements OnInit, OnDestroy {
   }
 
   private updateIcon(activity: DebugActivityTask) {
-    let iconUrl = ICON_ACTIVITY_DEFAULT;
+    let iconUrl;
     if (activity) {
       if (activity.icon) {
         iconUrl = this.httpUtilsService.apiPrefix(activity.icon);

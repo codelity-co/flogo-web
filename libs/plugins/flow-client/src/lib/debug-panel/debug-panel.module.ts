@@ -6,9 +6,9 @@ import { FieldsComponent } from './fields/fields.component';
 import { ErrorComponent } from './error/error.component';
 
 import { DebugPanelComponent } from './debug-panel.component';
-
+import { ActivityIconModule } from '@flogo-web/lib-client/activity-icon';
 @NgModule({
-  imports: [NgCommonModule, SharedModule, DynamicFormModule],
+  imports: [NgCommonModule, SharedModule, DynamicFormModule, ActivityIconModule],
   declarations: [FieldsComponent, ErrorComponent, DebugPanelComponent],
   exports: [DebugPanelComponent],
 })

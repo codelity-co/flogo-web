@@ -1,7 +1,11 @@
 <div class="js-debug-panel-content debug-panel__content content">
   <div *ngIf="activity$ | async as activity; else emptyText" class="activity">
     <div class="activity__info-group">
-      <img class="activity__icon" [src]="iconUrl" alt="Activity icon" />
+      <flogo-activity-icon
+        [iconUrl]="iconUrl"
+        [customAltText]="'Activity icon'"
+        [isTerminal]="isTerminal"
+      ></flogo-activity-icon>
       <div class="activity__name">
         <span>{{ activity.name }}</span>
         <a

@@ -23,14 +23,14 @@ export class ActivityComponent implements Highlightable, OnChanges {
   @Output() selected = new EventEmitter();
   @HostBinding('class.is-active') isHighlighted = false;
   @HostBinding('class.is-subflow') isSubflow: boolean;
+  @Input() iconUrl: string;
+  isCustom = false;
   disabled = false;
-  iconUrl: string;
 
   ngOnChanges({ activity: activityChange }: SimpleChanges) {
     if (activityChange) {
       const activity = activityChange.currentValue;
       this.isSubflow = activity.ref === CONTRIB_REFS.SUBFLOW;
-      this.iconUrl = ICON_ACTIVITY_DEFAULT;
       if (activity.icon) {
         this.iconUrl = activity.icon;
       } else if (this.isSubflow) {
