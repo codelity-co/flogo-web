@@ -24,15 +24,15 @@ export class ActivityIconComponent implements OnChanges {
   @Input() isTerminal?: boolean;
   @Input() iconUrl?: string;
   @Input() customAltText?: string;
-  @HostBinding('class.is-default') isDefault: boolean;
   Mode = Mode;
   mode: Mode = Mode.Default;
 
+  @HostBinding('class.is-default')
+  get isDefault() {
+    return this.mode === Mode.Default;
+  }
+
   ngOnChanges() {
-    this.isDefault = true;
-    if (this.isTerminal || this.isSubflow || this.iconUrl) {
-      this.isDefault = false;
-    }
     if (this.iconUrl) {
       this.mode = Mode.CustomIcon;
     } else if (this.isSubflow) {
