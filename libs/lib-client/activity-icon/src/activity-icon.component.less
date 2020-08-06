@@ -1,15 +1,18 @@
 @import '~@flogo-web/assets/styles/_variables';
 
 :host {
-  
-  background-color: @color-bg;
   border-radius: 4px;
+  background-color: @color-bg;
   display:inline-flex;
   align-items: center;
 }
 
 :host(.is-default) {
   background-color: @color-secondary;
+}
+
+:host(.is-terminal) {
+  background-color: #36bfbb;
 }
 
 .icon {
@@ -20,8 +23,4 @@
   padding: 3px;
 }
 
-.icon--return {
-  border-radius: 4px;
-  background-color: #36bfbb;
-}
 

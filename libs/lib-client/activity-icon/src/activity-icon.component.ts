@@ -21,7 +21,6 @@ enum Mode {
 })
 export class ActivityIconComponent implements OnChanges {
   @Input() isSubflow?: boolean;
-  @Input() isTerminal?: boolean;
   @Input() iconUrl?: string;
   @Input() customAltText?: string;
   Mode = Mode;
@@ -30,6 +29,17 @@ export class ActivityIconComponent implements OnChanges {
   @HostBinding('class.is-default')
   get isDefault() {
     return this.mode === Mode.Default;
+  }
+
+  @Input()
+  @HostBinding('class.is-terminal')
+  get isTerminal() {
+    return this.mode === Mode.Terminal;
+  }
+  set isTerminal(isTerminal) {
+    if (isTerminal) {
+      this.mode = Mode.Terminal;
+    }
   }
 
   ngOnChanges() {
