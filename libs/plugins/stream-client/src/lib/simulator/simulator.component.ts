@@ -11,7 +11,7 @@ import {
 import { Observable, Subscription } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { Metadata, ValueType, ICON_ACTIVITY_DEFAULT } from '@flogo-web/core';
+import { Metadata, ValueType } from '@flogo-web/core';
 import { SingleEmissionSubject } from '@flogo-web/lib-client/core';
 import { SimulatorService } from './simulator.service';
 
@@ -38,7 +38,7 @@ export class SimulatorComponent implements OnInit, OnChanges, OnDestroy {
   isInputEmpty = true;
   isOutputEmpty = true;
 
-  iconUrl = ICON_ACTIVITY_DEFAULT;
+  iconUrl: string;
 
   private updateSubs: Subscription[] = [];
   private destroy$ = SingleEmissionSubject.create();
@@ -62,9 +62,8 @@ export class SimulatorComponent implements OnInit, OnChanges, OnDestroy {
     if (currentStageIdChange) {
       this.updateEvents();
     }
-
     if (activityChange && this.simulateActivity) {
-      this.iconUrl = this.simulateActivity.icon || ICON_ACTIVITY_DEFAULT;
+      this.iconUrl = this.simulateActivity.icon;
     }
   }
 

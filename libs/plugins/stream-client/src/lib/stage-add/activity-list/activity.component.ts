@@ -9,7 +9,6 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Highlightable } from '@angular/cdk/a11y';
-import { ICON_ACTIVITY_DEFAULT } from '@flogo-web/core';
 
 @Component({
   selector: 'flogo-stream-stage-add-activity',
@@ -20,12 +19,14 @@ export class ActivityComponent implements Highlightable, OnChanges {
   @Input() activity;
   @Output() selected = new EventEmitter();
   @HostBinding('class.is-active') isHighlighted = false;
+  @Input() iconUrl: string;
   disabled = false;
-  iconUrl: string;
 
   ngOnChanges({ activity: activityChange }: SimpleChanges) {
     if (activityChange) {
-      this.iconUrl = this.activity.icon || ICON_ACTIVITY_DEFAULT;
+      if (this.activity.icon) {
+        this.iconUrl = this.activity.icon;
+      }
     }
   }
 

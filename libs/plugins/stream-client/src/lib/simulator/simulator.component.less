@@ -1,4 +1,5 @@
 @import '~@flogo-web/assets/styles/_variables';
+@import (reference) './_variables';
 
 ::ng-deep {
   perspective-viewer {
@@ -104,8 +105,8 @@
 }
 
 .activity__icon {
-  width: 40px;
-  height: auto;
+  width: @activity-icon-width;
+  height: @activity-icon-width;
   float: left;
 }
 

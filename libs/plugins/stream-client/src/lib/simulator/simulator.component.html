@@ -1,6 +1,11 @@
 <div *ngIf="simulateActivity" class="activity column">
   <div class="activity__details">
-    <img class="activity__icon" [src]="iconUrl" alt="Activity icon" />
+    <flogo-activity-icon
+        [iconUrl]="iconUrl"
+        [customAltText]="'Activity icon'"
+        [isTerminal]="isTerminal"
+        class="activity__icon">
+    ></flogo-activity-icon>
     <div class="activity__name">
       <span>{{ simulateActivity.name }}</span>
       <a
