@@ -1,7 +1,11 @@
 import * as nodePath from 'path';
 import resolvePath from 'resolve-path';
-import * as isSvg from 'is-svg';
 import { isBinaryFile } from 'isbinaryfile';
+
+const TYPE_SVG = '.svg';
+const TYPE_PNG = '.png';
+const TYPE_JPG = '.jpg';
+const ICON_TYPES = [TYPE_SVG, TYPE_PNG, TYPE_JPG];
 
 export async function ensureValidIcon<T extends { display?: { icon?: string } }>({
   contribSchemaPath,
@@ -43,9 +47,12 @@ async function validateAndResolveIconPath({
   schemaRef,
   iconPath,
 }): Promise<null | string> {
-  if (nodePath.extname(iconPath) !== '.svg') {
+  const fileExt = nodePath.extname(iconPath).toLowerCase();
+  if (!ICON_TYPES.includes(fileExt)) {
     console.warn(
-      `warning: could not load "${iconPath}" as icon for "${schemaRef}". Only .svg files are supported.
+      `warning: could not load "${iconPath}" as icon for "${schemaRef}". Only ${ICON_TYPES.join(
+        ', '
+      )} files are supported.
       )}".`
     );
     return null;
@@ -76,18 +83,19 @@ async function validateAndResolveIconPath({
     return null;
   }
 
-  if (!isPlaintext) {
+  if (fileExt === TYPE_SVG && !isPlaintext) {
     console.warn(
-      `warning: won't load icon "${iconPath}" for "${schemaRef} (${nodePath.basename(
+      `warning: invalid svg, won't load icon "${iconPath}" for "${schemaRef} (${nodePath.basename(
         contribFolder
-      )})". "${iconPath}" seems to be a binary file, only .svg files are supported.`
+      )})". "${iconPath}" seems to be a binary file.`
+    );
+  } else if (fileExt !== TYPE_SVG && isPlaintext) {
+    console.warn(
+      `warning: invalid icon, won't load icon "${iconPath}" for "${schemaRef} (${nodePath.basename(
+        contribFolder
+      )})". "${iconPath}" doesn't seems to be a binary file.`
     );
   }
-
-  // todo use isSvg()?
-  // caveats: we have to load the whole file to determine is it is valid svg
-  // is it really necessary? or should we just assume it is valid svg and assume contributors will verify the icon works in the UI
-  // also is there really a reason for preventing people from using pngs?
 
   resolvedIconPath = nodePath.relative(process.env.GOPATH, resolvedIconPath);
   return resolvedIconPath;
