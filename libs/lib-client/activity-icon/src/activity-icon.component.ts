@@ -20,26 +20,26 @@ enum Mode {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActivityIconComponent implements OnChanges {
-  @Input() isSubflow?: boolean;
   @Input() iconUrl?: string;
+  @Input() isTerminal?: boolean;
+  @Input() isSubflow?: boolean;
   @Input() customAltText?: string;
+
   Mode = Mode;
   mode: Mode = Mode.Default;
 
-  @Input()
-  @HostBinding('class.is-terminal')
-  get isTerminal() {
-    return this.mode === Mode.Terminal;
-  }
-  set isTerminal(isTerminal: boolean) {
-    if (isTerminal) {
-      this.mode = Mode.Terminal;
-    }
-  }
-
-  @HostBinding('class.is-default')
-  get isDefault() {
-    return this.mode === Mode.Default;
+  // the following code before ngOnChanges() is needed because of a bug in angular that overrides the class name defined by the component parent
+  // the bug has already been solved but the angular version we're using at the moment is outdated
+  // see: https://github.com/angular/angular/issues/7289
+  // todo: replace with simpler hostbinding
+  @Input() class = ''; // override the standard class attr with a new one.
+  @HostBinding('class')
+  get hostClasses(): string {
+    return [
+      this.class, // include our new one
+      this.mode === Mode.Default ? 'is-default' : '',
+      this.mode === Mode.Terminal ? 'is-terminal' : '',
+    ].join(' ');
   }
 
   ngOnChanges() {
