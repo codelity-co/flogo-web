@@ -26,20 +26,20 @@ export class ActivityIconComponent implements OnChanges {
   Mode = Mode;
   mode: Mode = Mode.Default;
 
-  @HostBinding('class.is-default')
-  get isDefault() {
-    return this.mode === Mode.Default;
-  }
-
   @Input()
   @HostBinding('class.is-terminal')
   get isTerminal() {
     return this.mode === Mode.Terminal;
   }
-  set isTerminal(isTerminal) {
+  set isTerminal(isTerminal: boolean) {
     if (isTerminal) {
       this.mode = Mode.Terminal;
     }
+  }
+
+  @HostBinding('class.is-default')
+  get isDefault() {
+    return this.mode === Mode.Default;
   }
 
   ngOnChanges() {
