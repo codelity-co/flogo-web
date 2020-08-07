@@ -11,7 +11,7 @@
         (click)="onTriggerSelectionFinish(shimTrigger)"
       >
         <div class="shim-trigger-item">
-          <i class="flogo-icon-trigger shim-trigger-icon"></i>
+          <flogo-trigger-icon class="shim-trigger-icon" [iconUrl]="iconUrl"></flogo-trigger-icon>
           <span class="shim-trigger-item__name">{{
             shimTrigger.configuredTrigger.name
           }}</span>
@@ -30,7 +30,7 @@
   <div *ngIf="!isLambdaTrigger && isTriggerSelected">
     <div class="shim-trigger-selected">
       <div class="shim-trigger-item">
-        <i class="flogo-icon-trigger shim-trigger-icon"></i>
+        <flogo-trigger-icon class="shim-trigger-icon" [iconUrl]="iconUrl"></flogo-trigger-icon>
         <span class="shim-trigger-item__name">{{ displayOptions.triggerName }}</span>
       </div>
       <div class="shim-trigger-flow">

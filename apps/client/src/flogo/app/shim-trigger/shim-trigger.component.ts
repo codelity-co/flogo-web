@@ -1,8 +1,9 @@
 import { flatMap, map, defaults } from 'lodash';
 import { Component, HostBinding, Inject } from '@angular/core';
-import { CONTRIB_REFS } from '@flogo-web/core';
+import { CONTRIB_REFS, TriggerSchema } from '@flogo-web/core';
 import { LanguageService } from '@flogo-web/lib-client/language';
 import { MODAL_TOKEN, modalAnimate, ModalControl } from '@flogo-web/lib-client/modal';
+import { ContributionsService, HttpUtilsService } from '@flogo-web/lib-client/core';
 
 export interface ShimTriggerData {
   shimTriggersList: any[];
@@ -20,12 +21,27 @@ export class TriggerShimBuildComponent {
   displayOptions: any;
   isLambdaTrigger: boolean;
   isTriggerSelected: boolean;
+  triggerSchema: TriggerSchema;
+
+  get iconUrl() {
+    if (this.triggerSchema?.icon) {
+      return this.httpUtilsService.apiPrefix(this.triggerSchema.icon);
+    }
+    return null;
+  }
 
   constructor(
     @Inject(MODAL_TOKEN) public shimTriggerData: ShimTriggerData,
     public control: ModalControl,
-    public translate: LanguageService
+    public translate: LanguageService,
+    private contribService: ContributionsService,
+    private httpUtilsService: HttpUtilsService
   ) {
+    const triggerRef = this.shimTriggerData.shimTriggersList[0].trigger.ref;
+    this.contribService.getContributionDetails(triggerRef).then((triggerSchema: TriggerSchema) => {
+      this.triggerSchema = triggerSchema;
+    })
+
     this.shimTriggerData.shimTriggersList = flatMap(
       this.shimTriggerData.shimTriggersList,
       shimTriggerList =>

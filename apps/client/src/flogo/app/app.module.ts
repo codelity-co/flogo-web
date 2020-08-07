@@ -10,6 +10,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SharedModule as FlogoSharedModule } from '@flogo-web/lib-client/common';
 import { ConfirmationModule } from '@flogo-web/lib-client/confirmation';
 import { ModalModule as FlogoModalModule } from '@flogo-web/lib-client/modal';
+import { TriggerIconModule } from '@flogo-web/lib-client/trigger-icon';
 
 import { AppDetailService, AppResourcesStateService } from './core';
 import { FlogoApplicationComponent } from './app.component';
@@ -41,6 +42,7 @@ import {
     PortalModule,
     ScrollingModule,
     ConfirmationModule,
+    TriggerIconModule
   ],
   declarations: [
     FlogoApplicationDetailComponent,
