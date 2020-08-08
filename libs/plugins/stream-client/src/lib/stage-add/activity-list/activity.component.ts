@@ -19,14 +19,12 @@ export class ActivityComponent implements Highlightable, OnChanges {
   @Input() activity;
   @Output() selected = new EventEmitter();
   @HostBinding('class.is-active') isHighlighted = false;
-  @Input() iconUrl: string;
+  iconUrl: string;
   disabled = false;
 
   ngOnChanges({ activity: activityChange }: SimpleChanges) {
     if (activityChange) {
-      if (this.activity.icon) {
-        this.iconUrl = this.activity.icon;
-      }
+      this.iconUrl = this.activity.icon;
     }
   }
 
