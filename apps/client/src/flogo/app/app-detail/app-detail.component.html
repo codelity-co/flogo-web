@@ -282,6 +282,7 @@
   <flogo-apps-resource-views-by-trigger
     *ngFor="let resourceGroup of appDetailService.groupsByTrigger$ | async"
     [trigger]="resourceGroup.trigger"
+    [iconUrl]="getTriggerIconUrl(resourceGroup.trigger?.ref)"
     [resources]="resourceGroup.flows"
     (resourceSelected)="onResourceSelected($event)"
     (deleteResource)="onFlowDelete($event)"

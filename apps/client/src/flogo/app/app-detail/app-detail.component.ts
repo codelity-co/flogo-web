@@ -23,7 +23,7 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 
-import { App, Trigger, CONTRIB_REFS } from '@flogo-web/core';
+import { App, Trigger, CONTRIB_REFS, TriggerSchema } from '@flogo-web/core';
 import {
   ResourceSummary,
   ERROR_CODE,
@@ -32,6 +32,9 @@ import {
   ShimTriggerBuildService,
   SingleEmissionSubject,
   ResourcePluginManifest,
+  FLOGO_CONTRIB_TYPE,
+  ContributionsService,
+  HttpUtilsService,
 } from '@flogo-web/lib-client/core';
 import { LanguageService } from '@flogo-web/lib-client/language';
 import { ModalService } from '@flogo-web/lib-client/modal';
@@ -86,6 +89,7 @@ export class FlogoApplicationDetailComponent implements OnDestroy, OnChanges, On
   @Output() appDeleted = new EventEmitter<void>();
 
   application: App;
+  triggerSchemas: TriggerSchema[];
 
   nameUiState: FieldUiState = {
     inEditMode: false,
@@ -109,6 +113,14 @@ export class FlogoApplicationDetailComponent implements OnDestroy, OnChanges, On
 
   private destroyed$ = SingleEmissionSubject.create();
 
+  getTriggerIconUrl = ref => {
+    const triggerSchema = this.triggerSchemas.find(schema => schema.ref === ref);
+    if (triggerSchema?.icon) {
+      return this.httpUtilsService.apiPrefix(triggerSchema.icon);
+    }
+    return null;
+  };
+
   constructor(
     @Inject(RESOURCE_PLUGINS_CONFIG) private resourcePlugins: ResourcePluginManifest[],
     public appDetailService: AppDetailService,
@@ -118,7 +130,9 @@ export class FlogoApplicationDetailComponent implements OnDestroy, OnChanges, On
     private shimTriggersApiService: ShimTriggerBuildService,
     private notificationsService: NotificationsService,
     private modalService: ModalService,
-    private localStorage: LocalStorageService
+    private localStorage: LocalStorageService,
+    private contribService: ContributionsService,
+    private httpUtilsService: HttpUtilsService
   ) {}
 
   ngOnChanges({ appId: appIdChange }: SimpleChanges) {
@@ -128,6 +142,12 @@ export class FlogoApplicationDetailComponent implements OnDestroy, OnChanges, On
   }
 
   ngOnInit() {
+    this.contribService
+      .listContribs(FLOGO_CONTRIB_TYPE.TRIGGER)
+      .then((schemas: TriggerSchema[]) => {
+        this.triggerSchemas = schemas;
+      });
+
     this.appDetailService.app$.subscribe(app => {
       this.application = app;
       this.descriptionUiState = {

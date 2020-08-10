@@ -38,9 +38,11 @@ export class TriggerShimBuildComponent {
     private httpUtilsService: HttpUtilsService
   ) {
     const triggerRef = this.shimTriggerData.shimTriggersList[0].trigger.ref;
-    this.contribService.getContributionDetails(triggerRef).then((triggerSchema: TriggerSchema) => {
-      this.triggerSchema = triggerSchema;
-    })
+    this.contribService
+      .getContributionDetails(triggerRef)
+      .then((triggerSchema: TriggerSchema) => {
+        this.triggerSchema = triggerSchema;
+      });
 
     this.shimTriggerData.shimTriggersList = flatMap(
       this.shimTriggerData.shimTriggersList,

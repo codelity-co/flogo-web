@@ -19,6 +19,7 @@ import { ResourceWithPlugin } from '../../core/resource-with-plugin';
 export class ResourcesGroupByTriggerComponent {
   @Input() public resources: Array<ResourceWithPlugin> = [];
   @Input() public trigger: Trigger;
+  @Input() public iconUrl?: string;
   @Output() public resourceSelected = new EventEmitter<ResourceWithPlugin>();
   @Output() public deleteResource = new EventEmitter<DeleteEvent>();
   @Output() public addResource = new EventEmitter<Trigger>();
