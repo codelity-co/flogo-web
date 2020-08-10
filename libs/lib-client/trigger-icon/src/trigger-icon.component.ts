@@ -11,6 +11,10 @@ import { ICON_TRIGGER_DEFAULT } from '@flogo-web/core';
         height: auto;
       }
 
+      .default-icon {
+        padding: 0 4px;
+      }
+
       :host {
         display: flex;
         padding: 4px;
