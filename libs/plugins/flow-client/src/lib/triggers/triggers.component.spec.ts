@@ -216,7 +216,7 @@ describe('Component: TriggersComponent', () => {
     );
     fixture.detectChanges();
     const res: Array<DebugElement> = fixture.debugElement.queryAll(
-      By.css('.flogo-icon-trigger')
+      By.css('flogo-trigger-icon')
     );
     expect(res.length).toEqual(0);
   });
