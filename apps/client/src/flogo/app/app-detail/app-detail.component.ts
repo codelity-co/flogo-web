@@ -32,8 +32,6 @@ import {
   ShimTriggerBuildService,
   SingleEmissionSubject,
   ResourcePluginManifest,
-  FLOGO_CONTRIB_TYPE,
-  ContributionsService,
   HttpUtilsService,
 } from '@flogo-web/lib-client/core';
 import { LanguageService } from '@flogo-web/lib-client/language';
@@ -131,7 +129,6 @@ export class FlogoApplicationDetailComponent implements OnDestroy, OnChanges, On
     private notificationsService: NotificationsService,
     private modalService: ModalService,
     private localStorage: LocalStorageService,
-    private contribService: ContributionsService,
     private httpUtilsService: HttpUtilsService
   ) {}
 
@@ -142,8 +139,8 @@ export class FlogoApplicationDetailComponent implements OnDestroy, OnChanges, On
   }
 
   ngOnInit() {
-    this.contribService
-      .listContribs(FLOGO_CONTRIB_TYPE.TRIGGER)
+    this.appDetailService
+      .getTriggersSchemas()
       .then((schemas: TriggerSchema[]) => {
         this.triggerSchemas = schemas;
       });

@@ -42,6 +42,7 @@ interface IMockDetailService {
   load: AppDetailService['load'];
   updateProperty: AppDetailService['updateProperty'];
   getAvailableShimBuildOptions: AppDetailService['getAvailableShimBuildOptions'];
+  getTriggersSchemas: AppDetailService['getTriggersSchemas'];
 }
 
 class MockAppDetailService implements IMockDetailService {
@@ -52,6 +53,7 @@ class MockAppDetailService implements IMockDetailService {
   load = (appId: string) => {};
   updateProperty = (prop: 'name' | 'description', value: any) => EMPTY;
   getAvailableShimBuildOptions = () => of([]);
+  getTriggersSchemas = () => Promise.resolve([]);
 }
 
 describe('FlogoApplicationDetailComponent component', () => {

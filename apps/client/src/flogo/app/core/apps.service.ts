@@ -26,6 +26,7 @@ import {
   TriggersService,
   AppResourceService,
   ContributionsService,
+  FLOGO_CONTRIB_TYPE,
 } from '@flogo-web/lib-client/core';
 import { AppResourcesStateService } from './app-resources-state.service';
 import { FlowGroup } from './flow-group.interface';
@@ -231,6 +232,10 @@ export class AppDetailService {
         )
       )
     );
+  }
+
+  public getTriggersSchemas() {
+    return this.contributionService.listContribs(FLOGO_CONTRIB_TYPE.TRIGGER);
   }
 
   public toEngineSpec() {
