@@ -36,8 +36,8 @@ export class EngineLogStreamer {
       if (err) {
         console.log(err);
       }
-      const docs = results['file'].reverse() || [];
-      client.emit('on-connecting', JSON.stringify(docs));
+      const docs = results['file'] || [];
+      client.emit('on-connecting', JSON.stringify(docs.reverse()));
     });
   }
 
