@@ -5,8 +5,10 @@ import EventEmitter = NodeJS.EventEmitter;
 export class EngineLogStreamer {
   private cleanup: Function;
   private readonly firstConnectionQuery = {
-    limit: 10,
     start: 0,
+    limit: 10,
+    from: 'now',
+    until: '-24hr',
     order: 'desc' as 'desc',
     fields: ['level', 'timestamp', 'message'],
   };
@@ -34,7 +36,7 @@ export class EngineLogStreamer {
       if (err) {
         console.log(err);
       }
-      const docs = results['file'] || [];
+      const docs = results['file'].reverse() || [];
       client.emit('on-connecting', JSON.stringify(docs));
     });
   }
