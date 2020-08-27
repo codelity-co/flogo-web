@@ -28,6 +28,8 @@ export function normalizeValueType(type) {
       return FLOGO_TASK_ATTRIBUTE_TYPE.PARAMS;
     case 'datetime':
       return FLOGO_TASK_ATTRIBUTE_TYPE.DATETIME;
+    case 'connection':
+      return FLOGO_TASK_ATTRIBUTE_TYPE.CONNECTION;
     default:
       return FLOGO_TASK_ATTRIBUTE_TYPE.ANY;
   }
