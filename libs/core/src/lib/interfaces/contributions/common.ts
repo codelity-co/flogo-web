@@ -1,4 +1,4 @@
-import { ValueType } from '../../value-types';
+import { ValueType, TYPE_CONNECTION } from '../../value-types';
 
 export interface BaseContributionSchema {
   name: string;
@@ -18,8 +18,7 @@ export interface SchemaOutput {
 
 export interface SchemaAttributeDescriptor {
   name: string;
-  // todo: use enum
-  type: ValueType;
+  type: ValueType | TYPE_CONNECTION;
   required?: boolean;
   allowed?: any[];
   value?: any;

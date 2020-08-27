@@ -12,6 +12,10 @@ export enum ValueType {
   Datetime = 'datetime',
 }
 
+export enum TYPE_CONNECTION {
+  Connection = 'connection',
+}
+
 const _allTypes: ReadonlyArray<ValueType> = Object.values(
   ValueType
 ) as readonly ValueType[];
