@@ -1,6 +1,7 @@
 import { ContributionType } from '../../constants';
 import {
   SchemaAttributeDescriptor,
+  SchemaSettingAttributeDescriptor,
   SchemaOutput,
   BaseContributionSchema,
 } from './common';
@@ -8,7 +9,7 @@ import { FunctionsSchema } from './functions';
 
 export interface ActivitySchema extends BaseContributionSchema {
   type: ContributionType.Activity;
-  settings?: SchemaAttributeDescriptor[];
+  settings?: SchemaSettingAttributeDescriptor[];
   input?: SchemaAttributeDescriptor[];
   output?: SchemaOutput[];
   return?: boolean;
@@ -26,7 +27,7 @@ export interface TriggerSchema extends BaseContributionSchema {
   type: ContributionType.Trigger;
   reply?: SchemaAttributeDescriptor[];
   output?: SchemaAttributeDescriptor[];
-  settings?: SchemaAttributeDescriptor[];
+  settings?: SchemaSettingAttributeDescriptor[];
   handler?: {
     settings: SchemaAttributeDescriptor[];
   };

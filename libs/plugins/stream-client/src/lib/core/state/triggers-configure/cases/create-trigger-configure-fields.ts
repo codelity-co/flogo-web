@@ -1,5 +1,5 @@
 import {
-  SchemaAttributeDescriptor as SchemaAttribute,
+  SchemaSettingAttributeDescriptor as SchemaAttribute,
   TriggerSchema,
 } from '@flogo-web/core';
 import { Dictionary, Trigger, TriggerHandler } from '@flogo-web/lib-client/core';

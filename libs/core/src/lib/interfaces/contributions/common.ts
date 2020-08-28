@@ -18,6 +18,19 @@ export interface SchemaOutput {
 
 export interface SchemaAttributeDescriptor {
   name: string;
+  type: ValueType;
+  required?: boolean;
+  allowed?: any[];
+  value?: any;
+  display?: {
+    name?: string;
+    type: string;
+    mapperOutputScope?: string;
+  };
+}
+
+export interface SchemaSettingAttributeDescriptor {
+  name: string;
   type: ValueType | TYPE_CONNECTION;
   required?: boolean;
   allowed?: any[];

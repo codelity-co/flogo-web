@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 import { Injectable } from '@angular/core';
 import {
-  SchemaAttributeDescriptor as SchemaAttribute,
+  SchemaSettingAttributeDescriptor as SchemaAttribute,
   TriggerSchema,
 } from '@flogo-web/core';
 import { Dictionary, TriggerHandler } from '@flogo-web/lib-client/core';

@@ -223,7 +223,7 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
           this.settingsController.getCurrentState().mappings
         )
       : undefined;
-    activitySettings = this.translateConnectionTypeSettings(activitySettings);
+    activitySettings = this.transformConnectionTypeSettings(activitySettings);
     createSaveAction(this.store, {
       tileId: this.currentTile.id,
       name: this.title,
@@ -243,7 +243,7 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
     });
   }
 
-  translateConnectionTypeSettings(activitySettings) {
+  transformConnectionTypeSettings(activitySettings) {
     const connectionSettings = this.activitySchema.settings.filter(
       setting => setting.type === TYPE_CONNECTION.Connection
     );
