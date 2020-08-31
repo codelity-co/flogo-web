@@ -5,6 +5,8 @@ import {
   Resource,
   MapperUtils,
   ContributionType,
+  ContributionSchema,
+  TYPE_CONNECTION,
 } from '@flogo-web/core';
 import { TASK_TYPE, ExportRefAgent } from '@flogo-web/lib-server/core';
 import { Task, isSubflowTask, isIterableTask } from '@flogo-web/plugins/flow-core';
@@ -39,7 +41,7 @@ export class TaskFormatter {
     return this;
   }
 
-  convert(isMapperType: boolean) {
+  convert(isMapperType: boolean, contributionSchema: ContributionSchema) {
     const { id, name, description, activityRef } = this.sourceTask;
     const {
       type,
@@ -47,7 +49,7 @@ export class TaskFormatter {
       activitySettings,
       input,
     } = this.resolveActivityProperties(isMapperType);
-    return {
+    const task = {
       id,
       type,
       name: !isEmpty(name) ? name : undefined,
@@ -59,6 +61,14 @@ export class TaskFormatter {
         settings: !isEmpty(activitySettings) ? activitySettings : undefined,
       },
     };
+    const taskActivitySettings = task.activity.settings;
+    if (taskActivitySettings) {
+      task.activity.settings = this.aliasConnectionRef(
+        taskActivitySettings,
+        contributionSchema
+      );
+    }
+    return task;
   }
 
   resolveActivityProperties(isMapperType) {
@@ -91,6 +101,24 @@ export class TaskFormatter {
     this.accumulateFunctions(this.sourceTask.inputMappings);
     this.accumulateFunctions(this.sourceTask.activitySettings);
     return { type, taskSettings, activitySettings, input };
+  }
+
+  aliasConnectionRef(activitySettings, contributionSchema) {
+    const connectionTypeSettings = contributionSchema.settings?.filter(
+      setting => setting.type === TYPE_CONNECTION.Connection
+    );
+    if (connectionTypeSettings && connectionTypeSettings.length) {
+      connectionTypeSettings.forEach(connection => {
+        const connectionSetting = activitySettings[connection.name];
+        if (connectionSetting) {
+          connectionSetting.ref = this.refAgent.getAliasRef(
+            ContributionType.Activity,
+            connectionSetting.ref
+          );
+        }
+      });
+    }
+    return activitySettings;
   }
 
   convertSubflowPath() {

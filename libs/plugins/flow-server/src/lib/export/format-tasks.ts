@@ -14,7 +14,8 @@ export function formatTasks(
     if (isSubflowTask(task)) {
       task = { ...task, activityRef: CONTRIB_REFS.SUBFLOW };
     }
-    const isMapperType = isMapperActivity(contributions.get(task.activityRef));
-    return taskFormatter.setSourceTask(task).convert(isMapperType);
+    const contributionSchema = contributions.get(task.activityRef);
+    const isMapperType = isMapperActivity(contributionSchema);
+    return taskFormatter.setSourceTask(task).convert(isMapperType, contributionSchema);
   });
 }

@@ -244,13 +244,15 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
   }
 
   transformConnectionTypeSettings(activitySettings) {
-    const connectionSettings = this.activitySchema.settings.filter(
+    const connectionSettings = this.activitySchema.settings?.filter(
       setting => setting.type === TYPE_CONNECTION.Connection
     );
-    if (connectionSettings.length) {
+    if (connectionSettings && connectionSettings.length) {
       connectionSettings.forEach(connection => {
         const connectionSetting = activitySettings[connection.name];
-        activitySettings[connection.name] = connectionSetting.mapping;
+        if (connectionSetting) {
+          activitySettings[connection.name] = connectionSetting.mapping;
+        }
       });
     }
     return activitySettings;
