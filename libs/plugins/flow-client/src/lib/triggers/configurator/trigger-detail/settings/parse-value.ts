@@ -1,6 +1,6 @@
 import { isBoolean, isUndefined, toNumber } from 'lodash';
 
-import { ValueType } from '@flogo-web/core';
+import { TYPE_CONNECTION, ValueType } from '@flogo-web/core';
 import { parseResolver } from '@flogo-web/parser';
 
 import { SettingValue } from '../settings-value';
@@ -21,7 +21,7 @@ export function parseValue(type: ValueType, viewValue: string): SettingValue {
   }
 }
 
-function coerce(type: ValueType, inputValue: string) {
+function coerce(type: ValueType | TYPE_CONNECTION, inputValue: string) {
   switch (type) {
     case ValueType.Double:
     case ValueType.Integer:
@@ -32,6 +32,7 @@ function coerce(type: ValueType, inputValue: string) {
     case ValueType.Array:
     case ValueType.Object:
     case ValueType.Params:
+    case TYPE_CONNECTION.Connection:
       return coerceToJsonOrUndefined(inputValue);
     case ValueType.Any:
       return attemptAnyCoercion(inputValue);
