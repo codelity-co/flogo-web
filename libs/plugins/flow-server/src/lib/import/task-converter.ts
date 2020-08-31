@@ -1,6 +1,11 @@
 import { isUndefined, isArray, isPlainObject } from 'lodash';
 
-import { EXPR_PREFIX, CONTRIB_REFS } from '@flogo-web/core';
+import {
+  EXPR_PREFIX,
+  CONTRIB_REFS,
+  TYPE_CONNECTION,
+  ContributionType,
+} from '@flogo-web/core';
 import {
   TASK_TYPE,
   EXPRESSION_TYPE,
@@ -56,14 +61,16 @@ export class TaskConverter {
     this.activitySchema = activitySchema;
   }
 
-  convert() {
+  convert(importsRefAgent) {
     const {
       id,
       name,
       description,
       activity: { ref: activityRef },
     } = this.resourceTask;
-    const { type, settings, activitySettings } = this.resolveTypeAndSettings();
+    const { type, settings, activitySettings } = this.resolveTypeAndSettings(
+      importsRefAgent
+    );
     const inputMappings = this.prepareInputMappings();
     return {
       id,
@@ -77,7 +84,7 @@ export class TaskConverter {
     };
   }
 
-  resolveTypeAndSettings() {
+  resolveTypeAndSettings(importsRefAgent) {
     const settings: { [key: string]: any } = {};
     let activitySettings: { [settingName: string]: any } = {};
     let type = FLOGO_TASK_TYPE.TASK;
@@ -86,11 +93,35 @@ export class TaskConverter {
       settings.flowPath = this.extractSubflowPath();
     } else if (!isMapperActivity(this.activitySchema)) {
       activitySettings = this.resourceTask.activity.settings;
+      if (activitySettings) {
+        activitySettings = this.transformConnectionSettingsRefs(
+          activitySettings,
+          importsRefAgent
+        );
+      }
     }
     if (this.isIteratorTask()) {
       settings.iterate = normalizeIteratorValue(this.resourceTask.settings.iterate);
     }
     return { type, settings, activitySettings };
+  }
+
+  transformConnectionSettingsRefs(activitySettings, importsRefAgent) {
+    const connectionTypeSettings = this.activitySchema.settings?.filter(
+      setting => setting.type === TYPE_CONNECTION.Connection
+    );
+    if (connectionTypeSettings && connectionTypeSettings.length) {
+      connectionTypeSettings.forEach(connection => {
+        const connectionSetting = activitySettings[connection.name];
+        if (connectionSetting) {
+          connectionSetting.ref = importsRefAgent.getPackageRef(
+            ContributionType.Activity,
+            connectionSetting.ref
+          );
+        }
+      });
+    }
+    return activitySettings;
   }
 
   prepareInputMappings() {

@@ -118,7 +118,9 @@ export class ActionImporter {
       resourceTask.activity.ref
     );
     const activitySchema = this.activitySchemasByRef.get(resourceTask.activity.ref);
-    return this.taskConverterFactory(resourceTask, activitySchema).convert();
+    return this.taskConverterFactory(resourceTask, activitySchema).convert(
+      importsRefAgent
+    );
   }
 }
 
