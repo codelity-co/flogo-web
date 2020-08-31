@@ -151,7 +151,7 @@ function getFlowToExport(): Resource<FlowData> {
 function getContributions(): Array<[string, ContributionSchema]> {
   return [
     [
-      'github-com-tibco-software-flogo-contrib-tibco-log',
+      'some_path_to_repo/activity/log',
       {
         name: 'tibco-log',
         type: ContributionType.Activity,
@@ -176,6 +176,25 @@ function getContributions(): Array<[string, ContributionSchema]> {
           {
             name: 'message',
             type: ValueType.String,
+          },
+        ],
+      },
+    ],
+    [
+      CONTRIB_REFS.SUBFLOW,
+      {
+        ref: 'github.com/project-flogo/flow/activity/subflow',
+        homepage: 'https://github.com/project-flogo/flow/tree/master/activity/subflow',
+        name: 'flogo-subflow',
+        type: ContributionType.Activity,
+        version: '0.9.0',
+        title: 'Start a SubFlow',
+        description: 'Activity to start a sub-flow in an existing flow',
+        settings: [
+          {
+            name: 'flowURI',
+            type: ValueType.String,
+            required: true,
           },
         ],
       },
