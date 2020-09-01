@@ -112,7 +112,7 @@ export class TaskFormatter {
         const connectionSetting = activitySettings[connection.name];
         if (connectionSetting) {
           connectionSetting.ref = this.refAgent.getAliasRef(
-            ContributionType.Activity,
+            ContributionType.Connection,
             connectionSetting.ref
           );
         }

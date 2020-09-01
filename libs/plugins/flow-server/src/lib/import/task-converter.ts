@@ -115,7 +115,7 @@ export class TaskConverter {
         const connectionSetting = activitySettings[connection.name];
         if (connectionSetting) {
           connectionSetting.ref = importsRefAgent.getPackageRef(
-            ContributionType.Activity,
+            ContributionType.Connection,
             connectionSetting.ref
           );
         }

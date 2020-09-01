@@ -13,6 +13,7 @@ import {
   ContributionType,
   Handler,
   Trigger,
+  TYPE_CONNECTION,
 } from '@flogo-web/core';
 
 import { ResourceExporterFn, HandlerExporterFn } from '../resource-exporter-fn';
@@ -59,6 +60,7 @@ export class AppFormatter {
     const formattedTriggers = this.formatTriggers(
       app.triggers,
       refAgent,
+      this.contributionSchemas,
       this.makeHandlerFormatter(
         resourceIdReconciler,
         resourceInfoLookup,
@@ -103,21 +105,47 @@ export class AppFormatter {
   formatTriggers(
     triggers: Trigger[],
     refAgent: ExportRefAgent,
+    contributionSchemas: Map<string, ContributionSchema>,
     handlerFormatter: (trigger: Trigger) => (handler: Handler) => FlogoAppModel.Handler
   ): FlogoAppModel.Trigger[] {
     return triggers
       .filter(trigger => !isEmpty(trigger.handlers))
       .map(trigger => {
+        const triggerSettings = !isEmpty(trigger.settings)
+          ? this.aliasConnectionRefs(
+              trigger.settings,
+              this.contributionSchemas.get(trigger.ref),
+              refAgent
+            )
+          : undefined;
         return pick(
           {
             ...trigger,
-            settings: !isEmpty(trigger.settings) ? trigger.settings : undefined,
+            settings: triggerSettings,
             handlers: trigger.handlers.map(handlerFormatter(trigger)),
             ref: refAgent.getAliasRef(ContributionType.Trigger, trigger.ref),
           },
           TRIGGER_KEYS
         ) as FlogoAppModel.Trigger;
       });
+  }
+
+  aliasConnectionRefs(triggerSettings, triggerSchema, refAgent) {
+    const connectionTypeSettings = triggerSchema.settings?.filter(
+      setting => setting.type === TYPE_CONNECTION.Connection
+    );
+    if (connectionTypeSettings && connectionTypeSettings.length) {
+      connectionTypeSettings.forEach(connection => {
+        const connectionSetting = triggerSettings[connection.name];
+        if (connectionSetting) {
+          connectionSetting.ref = refAgent.getAliasRef(
+            ContributionType.Connection,
+            connectionSetting.ref
+          );
+        }
+      });
+    }
+    return triggerSettings;
   }
 
   private makeHandlerFormatter(
