@@ -15,6 +15,7 @@ const CONTRIBUTION_TYPE = new Map([
   ['activity', 'flogo:activity'],
   ['trigger', 'flogo:trigger'],
   ['function', 'flogo:function'],
+  ['connection', 'flogo:connection'],
 ]);
 
 export function contribs(router, container: Container) {

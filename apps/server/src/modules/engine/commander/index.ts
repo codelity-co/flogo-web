@@ -1,3 +1,4 @@
+import { ContributionType } from '@flogo-web/core';
 import { parseJSON } from '../../../common/utils';
 import { logger } from '../../../common/logging';
 import { runShellCMD } from '../../../common/utils/process';
@@ -7,8 +8,7 @@ import * as path from 'path';
 
 export interface ListContributionDetails {
   name: string;
-  //TODO: Maintain it as a type in core?
-  type: 'flogo:action' | 'flogo:activity' | 'flogo:trigger' | 'flogo:function';
+  type: ContributionType;
   ref: string;
   path: string;
   descriptor: string;

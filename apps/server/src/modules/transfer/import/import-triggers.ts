@@ -1,6 +1,14 @@
 import { flow, map, filter } from 'lodash/fp';
 
-import { FlogoAppModel, Handler, Trigger, ContributionType } from '@flogo-web/core';
+import {
+  FlogoAppModel,
+  Handler,
+  Trigger,
+  ContributionType,
+  TYPE_CONNECTION,
+  ContributionSchema,
+  TriggerSchema,
+} from '@flogo-web/core';
 import { ImportsRefAgent, ValidationErrorDetail } from '@flogo-web/lib-server/core';
 
 import { normalizeHandlerMappings } from '../common/normalize-handler-mappings';
@@ -16,6 +24,7 @@ type ImportHandlerFn = (
 export function importTriggers(
   rawTriggers: FlogoAppModel.Trigger[],
   normalizedResourceIds: Map<string, string>,
+  contributions: Map<string, ContributionSchema>,
   importHandler: ImportHandlerFn,
   generateId: () => string,
   createdAt: string = null,
@@ -42,9 +51,16 @@ export function importTriggers(
       updatedAt: null,
       settings: normalizeSettingsWithPrefix(rawTrigger.settings),
     };
-    newTrigger.ref = importsRefAgent.getPackageRef(
+    newTrigger.ref = getPackageRef(
+      importsRefAgent,
       ContributionType.Trigger,
       newTrigger.ref
+    );
+    const triggerSchema = <TriggerSchema>contributions.get(newTrigger.ref);
+    newTrigger.settings = transformConnectionSettingsRefs(
+      newTrigger.settings,
+      importsRefAgent,
+      triggerSchema
     );
     const { errors: handlerErrors, handlers } = importAllHandlers(
       rawTrigger.id,
@@ -121,4 +137,34 @@ function preNormalizeHandler(
     createdAt,
     updatedAt: null,
   };
+}
+
+function transformConnectionSettingsRefs(
+  settings: FlogoAppModel.Settings,
+  importsRefAgent: ImportsRefAgent,
+  schema: TriggerSchema
+) {
+  const connectionTypeSettings = schema.settings?.filter(
+    setting => setting.type === TYPE_CONNECTION.Connection
+  );
+  if (connectionTypeSettings && connectionTypeSettings.length) {
+    connectionTypeSettings.forEach(connection => {
+      const connectionSetting = settings[connection.name];
+      if (connectionSetting) {
+        connectionSetting.ref = importsRefAgent.getPackageRef(
+          ContributionType.Connection,
+          connectionSetting.ref
+        );
+      }
+    });
+  }
+  return settings;
+}
+
+function getPackageRef(
+  importsRefAgent: ImportsRefAgent,
+  contribType: ContributionType,
+  ref: string
+) {
+  return importsRefAgent.getPackageRef(contribType, ref);
 }

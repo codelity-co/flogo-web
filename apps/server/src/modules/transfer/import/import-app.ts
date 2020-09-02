@@ -67,6 +67,7 @@ export function importApp(
   const { triggers, normalizedTriggerIds, errors: handlerErrors } = importTriggers(
     rawApp.triggers || [],
     normalizedResourceIds,
+    contributions,
     createHandlerImportResolver(
       resolveImporter,
       contributions,
