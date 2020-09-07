@@ -8,6 +8,7 @@ import {
   TYPE_CONNECTION,
   ContributionSchema,
   TriggerSchema,
+  SchemaSettingAttributeDescriptor,
 } from '@flogo-web/core';
 import { ImportsRefAgent, ValidationErrorDetail } from '@flogo-web/lib-server/core';
 
@@ -57,10 +58,17 @@ export function importTriggers(
       newTrigger.ref
     );
     const triggerSchema = <TriggerSchema>contributions.get(newTrigger.ref);
-    newTrigger.settings = transformConnectionSettingsRefs(
-      newTrigger.settings,
-      importsRefAgent,
-      triggerSchema
+    if (newTrigger.settings) {
+      newTrigger.settings = transformConnectionSettingsRefs(
+        newTrigger.settings,
+        triggerSchema?.settings,
+        importsRefAgent
+      );
+    }
+    newTrigger.handlers = transformHandlerSettings(
+      newTrigger.handlers,
+      triggerSchema,
+      importsRefAgent
     );
     const { errors: handlerErrors, handlers } = importAllHandlers(
       rawTrigger.id,
@@ -139,19 +147,33 @@ function preNormalizeHandler(
   };
 }
 
+function transformHandlerSettings(handlers, triggerSchema, importsRefAgent) {
+  return handlers.map(handler => {
+    if (handler?.settings) {
+      handler.settings = transformConnectionSettingsRefs(
+        handler.settings,
+        triggerSchema?.handler?.settings,
+        importsRefAgent
+      );
+    }
+    return handler;
+  });
+}
+
 function transformConnectionSettingsRefs(
   settings: FlogoAppModel.Settings,
-  importsRefAgent: ImportsRefAgent,
-  schema: TriggerSchema
+  schemaSettings: SchemaSettingAttributeDescriptor[],
+  importsRefAgent: ImportsRefAgent
 ) {
-  const connectionTypeSettings = schema.settings?.filter(
+  const connectionTypeSettings = schemaSettings?.filter(
     setting => setting.type === TYPE_CONNECTION.Connection
   );
   if (connectionTypeSettings && connectionTypeSettings.length) {
     connectionTypeSettings.forEach(connection => {
       const connectionSetting = settings[connection.name];
       if (connectionSetting) {
-        connectionSetting.ref = importsRefAgent.getPackageRef(
+        connectionSetting.ref = getPackageRef(
+          importsRefAgent,
           ContributionType.Connection,
           connectionSetting.ref
         );

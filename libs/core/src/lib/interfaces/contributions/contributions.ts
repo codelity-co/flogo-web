@@ -29,7 +29,7 @@ export interface TriggerSchema extends BaseContributionSchema {
   output?: SchemaAttributeDescriptor[];
   settings?: SchemaSettingAttributeDescriptor[];
   handler?: {
-    settings: SchemaAttributeDescriptor[];
+    settings: SchemaSettingAttributeDescriptor[];
   };
   /**
    * @deprecated should use 'output'
