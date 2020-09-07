@@ -12,6 +12,7 @@ import {
   SingleEmissionSubject,
   HttpUtilsService,
 } from '@flogo-web/lib-client/core';
+import { formatConnectionTypeSettings } from '@flogo-web/lib-client/activity-configuration';
 import { hasStageWithSameName } from '@flogo-web/plugins/stream-core';
 
 import {
@@ -73,6 +74,7 @@ export class StageConfiguratorComponent implements OnInit, OnDestroy {
 
   streamState: FlogoStreamState;
   activitySchemaUrl: string;
+  activitySchema: ActivitySchema;
   currentTile: Item;
   inputScope: any[];
   outputScope: any[];
@@ -128,17 +130,16 @@ export class StageConfiguratorComponent implements OnInit, OnDestroy {
     this.contextChange$ = SingleEmissionSubject.create();
 
     this.currentTile = cloneDeep(state.mainItems[itemId]);
-    const activitySchema: ActivitySchema = (state.schemas[this.currentTile.ref] ||
-      {}) as ActivitySchema;
-    this.activitySchemaUrl = activitySchema.homepage;
+    this.activitySchema = (state.schemas[this.currentTile.ref] || {}) as ActivitySchema;
+    this.activitySchemaUrl = this.activitySchema.homepage;
     this.title = this.currentTile.name;
 
     this.isValidTaskName = true;
     this.isTaskDetailEdited = false;
 
     this.iconUrl = ICON_ACTIVITY_DEFAULT;
-    if (activitySchema && activitySchema.icon) {
-      this.iconUrl = this.httpUtilsService.apiPrefix(activitySchema.icon);
+    if (this.activitySchema && this.activitySchema.icon) {
+      this.iconUrl = this.httpUtilsService.apiPrefix(this.activitySchema.icon);
     }
 
     this.resetState();
@@ -146,15 +147,15 @@ export class StageConfiguratorComponent implements OnInit, OnDestroy {
     const streamMetadata = this.getStreamMetadata(state);
 
     this.inputScope = this.getInputScope(itemId, state, streamMetadata);
-    const { propsToMap, mappings } = this.getInputMappingsInfo(activitySchema);
+    const { propsToMap, mappings } = this.getInputMappingsInfo(this.activitySchema);
     this.initInputMappings(propsToMap, this.inputScope, mappings);
 
     const { settingPropsToMap, activitySettings } = this.getActivitySettingsInfo(
-      activitySchema
+      this.activitySchema
     );
     this.initActivitySettings(settingPropsToMap, activitySettings);
 
-    this.outputScope = this.getOutputScope(activitySchema);
+    this.outputScope = this.getOutputScope(this.activitySchema);
     const { outputPropsToMap, outputMappings } = this.getOutputMappingsInfo(
       streamMetadata
     );
@@ -369,6 +370,17 @@ export class StageConfiguratorComponent implements OnInit, OnDestroy {
   }
 
   save() {
+    let activitySettings = this.settingsController
+      ? MapperTranslator.translateMappingsOut(
+          this.settingsController.getCurrentState().mappings
+        )
+      : undefined;
+    if (activitySettings) {
+      activitySettings = formatConnectionTypeSettings(
+        activitySettings,
+        this.activitySchema
+      );
+    }
     const item: Partial<Item> = {
       id: this.currentTile.id,
       name: this.title,
@@ -376,11 +388,7 @@ export class StageConfiguratorComponent implements OnInit, OnDestroy {
       inputMappings: MapperTranslator.translateMappingsOut(
         this.inputMapperController.getCurrentState().mappings
       ),
-      activitySettings: this.settingsController
-        ? MapperTranslator.translateMappingsOut(
-            this.settingsController.getCurrentState().mappings
-          )
-        : undefined,
+      activitySettings,
       output: MapperTranslator.translateMappingsOut(
         this.outputMapperController.getCurrentState().mappings
       ),

@@ -5,24 +5,20 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { trigger, transition, style, animate } from '@angular/animations';
 
-import {
-  Resource,
-  ActivitySchema,
-  ICON_ACTIVITY_DEFAULT,
-  TYPE_CONNECTION,
-} from '@flogo-web/core';
+import { Resource, ActivitySchema, ICON_ACTIVITY_DEFAULT } from '@flogo-web/core';
 import {
   SingleEmissionSubject,
   Dictionary,
   HttpUtilsService,
 } from '@flogo-web/lib-client/core';
+import { NotificationsService } from '@flogo-web/lib-client/notifications';
+import { formatConnectionTypeSettings } from '@flogo-web/lib-client/activity-configuration';
 import {
   isMapperActivity,
   isAcceptableIterateValue,
   isIterableTask,
   hasTaskWithSameName,
 } from '@flogo-web/plugins/flow-core';
-import { NotificationsService } from '@flogo-web/lib-client/notifications';
 
 import {
   MapperTranslator,
@@ -223,7 +219,12 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
           this.settingsController.getCurrentState().mappings
         )
       : undefined;
-    activitySettings = this.formatConnectionTypeSettings(activitySettings);
+    if (activitySettings) {
+      activitySettings = formatConnectionTypeSettings(
+        activitySettings,
+        this.activitySchema
+      );
+    }
     createSaveAction(this.store, {
       tileId: this.currentTile.id,
       name: this.title,
@@ -241,21 +242,6 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
     }).subscribe(action => {
       this.store.dispatch(action);
     });
-  }
-
-  formatConnectionTypeSettings(activitySettings) {
-    const connectionSettings = this.activitySchema.settings?.filter(
-      setting => setting.type === TYPE_CONNECTION.Connection
-    );
-    if (connectionSettings && connectionSettings.length) {
-      connectionSettings.forEach(connection => {
-        const connectionSetting = activitySettings[connection.name];
-        if (connectionSetting) {
-          activitySettings[connection.name] = connectionSetting.mapping;
-        }
-      });
-    }
-    return activitySettings;
   }
 
   selectTab(name: string) {
