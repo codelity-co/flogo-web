@@ -5,7 +5,7 @@ import {
   Handler,
   Trigger,
   ContributionType,
-  TYPE_CONNECTION,
+  TypeConnection,
   ContributionSchema,
   TriggerSchema,
   SchemaSettingAttributeDescriptor,
@@ -170,7 +170,7 @@ function transformConnectionSettingsRefs(
   importsRefAgent: ImportsRefAgent
 ) {
   const connectionTypeSettings = schemaSettings?.filter(
-    setting => setting.type === TYPE_CONNECTION.Connection
+    setting => setting.type === TypeConnection.Connection
   );
   if (connectionTypeSettings && connectionTypeSettings.length) {
     connectionTypeSettings.forEach(connection => {

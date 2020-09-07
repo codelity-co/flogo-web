@@ -13,7 +13,7 @@ import {
   ContributionType,
   Handler,
   Trigger,
-  TYPE_CONNECTION,
+  TypeConnection,
 } from '@flogo-web/core';
 
 import { ResourceExporterFn, HandlerExporterFn } from '../resource-exporter-fn';
@@ -132,7 +132,7 @@ export class AppFormatter {
 
   aliasConnectionRefs(triggerSettings, triggerSchema, refAgent) {
     const connectionTypeSettings = triggerSchema.settings?.filter(
-      setting => setting.type === TYPE_CONNECTION.Connection
+      setting => setting.type === TypeConnection.Connection
     );
     if (connectionTypeSettings && connectionTypeSettings.length) {
       connectionTypeSettings.forEach(connection => {

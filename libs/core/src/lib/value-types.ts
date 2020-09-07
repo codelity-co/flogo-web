@@ -12,7 +12,7 @@ export enum ValueType {
   Datetime = 'datetime',
 }
 
-export enum TYPE_CONNECTION {
+export enum TypeConnection {
   Connection = 'connection',
 }
 

@@ -1,4 +1,4 @@
-import { ValueType, TYPE_CONNECTION } from '../../value-types';
+import { ValueType, TypeConnection } from '../../value-types';
 
 export interface BaseContributionSchema {
   name: string;
@@ -31,7 +31,7 @@ export interface SchemaAttributeDescriptor {
 
 export interface SchemaSettingAttributeDescriptor {
   name: string;
-  type: ValueType | TYPE_CONNECTION;
+  type: ValueType | TypeConnection;
   required?: boolean;
   allowed?: any[];
   value?: any;

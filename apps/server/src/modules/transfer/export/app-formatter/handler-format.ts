@@ -6,7 +6,7 @@ import {
   ContributionSchema,
   ContributionType,
   MapperUtils,
-  TYPE_CONNECTION,
+  TypeConnection,
   TriggerSchema,
 } from '@flogo-web/core';
 import { ExportRefAgent, ExportActionAgent } from '@flogo-web/lib-server/core';
@@ -91,7 +91,7 @@ function extractFunctions(mappings: { [name: string]: any }): string[] {
 
 function aliasConnectionRefs(settings, triggerSchema, refAgent) {
   const connectionTypeSettings = triggerSchema.handler?.settings?.filter(
-    setting => setting.type === TYPE_CONNECTION.Connection
+    setting => setting.type === TypeConnection.Connection
   );
   if (connectionTypeSettings && connectionTypeSettings.length) {
     connectionTypeSettings.forEach(connection => {

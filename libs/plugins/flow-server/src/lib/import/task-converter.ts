@@ -3,7 +3,7 @@ import { isUndefined, isArray, isPlainObject } from 'lodash';
 import {
   EXPR_PREFIX,
   CONTRIB_REFS,
-  TYPE_CONNECTION,
+  TypeConnection,
   ContributionType,
 } from '@flogo-web/core';
 import {
@@ -108,7 +108,7 @@ export class TaskConverter {
 
   transformConnectionSettingsRefs(activitySettings, importsRefAgent) {
     const connectionTypeSettings = this.activitySchema.settings?.filter(
-      setting => setting.type === TYPE_CONNECTION.Connection
+      setting => setting.type === TypeConnection.Connection
     );
     if (connectionTypeSettings && connectionTypeSettings.length) {
       connectionTypeSettings.forEach(connection => {

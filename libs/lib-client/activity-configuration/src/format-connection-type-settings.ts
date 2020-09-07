@@ -1,8 +1,8 @@
-import { TYPE_CONNECTION } from '@flogo-web/core';
+import { TypeConnection } from '@flogo-web/core';
 
 export function formatConnectionTypeSettings(activitySettings, schema) {
   const connectionSettings = schema.settings?.filter(
-    setting => setting.type === TYPE_CONNECTION.Connection
+    setting => setting.type === TypeConnection.Connection
   );
   if (connectionSettings && connectionSettings.length) {
     connectionSettings.forEach(connection => {

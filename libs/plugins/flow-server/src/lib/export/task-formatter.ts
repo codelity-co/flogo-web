@@ -6,7 +6,7 @@ import {
   MapperUtils,
   ContributionType,
   ContributionSchema,
-  TYPE_CONNECTION,
+  TypeConnection,
 } from '@flogo-web/core';
 import { TASK_TYPE, ExportRefAgent } from '@flogo-web/lib-server/core';
 import { Task, isSubflowTask, isIterableTask } from '@flogo-web/plugins/flow-core';
@@ -105,7 +105,7 @@ export class TaskFormatter {
 
   aliasConnectionRef(activitySettings, contributionSchema) {
     const connectionTypeSettings = contributionSchema.settings?.filter(
-      setting => setting.type === TYPE_CONNECTION.Connection
+      setting => setting.type === TypeConnection.Connection
     );
     if (connectionTypeSettings && connectionTypeSettings.length) {
       connectionTypeSettings.forEach(connection => {

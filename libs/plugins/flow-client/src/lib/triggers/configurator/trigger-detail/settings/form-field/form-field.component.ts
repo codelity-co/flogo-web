@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { TYPE_CONNECTION, ValueType } from '@flogo-web/core';
+import { TypeConnection, ValueType } from '@flogo-web/core';
 
 import { SettingValue } from '../../settings-value';
 import { SettingControlInfo } from '../../../interfaces';
@@ -21,7 +21,7 @@ const COMPLEX_TYPES = [
   ValueType.Any,
   ValueType.Object,
   ValueType.Params,
-  TYPE_CONNECTION.Connection,
+  TypeConnection.Connection,
 ];
 
 @Component({
