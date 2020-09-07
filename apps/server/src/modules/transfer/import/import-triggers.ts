@@ -147,7 +147,11 @@ function preNormalizeHandler(
   };
 }
 
-function transformHandlerSettings(handlers, triggerSchema, importsRefAgent) {
+function transformHandlerSettings(
+  handlers: Handler[],
+  triggerSchema: TriggerSchema,
+  importsRefAgent: ImportsRefAgent
+) {
   return handlers.map(handler => {
     if (handler?.settings) {
       handler.settings = transformConnectionSettingsRefs(

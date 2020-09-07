@@ -1,4 +1,4 @@
-import { FlogoAppModel } from '@flogo-web/core';
+import { ContributionType, FlogoAppModel, TriggerSchema } from '@flogo-web/core';
 import { preFormatHandler } from './handler-format';
 
 it('should work with empty input/output mappings', function() {
@@ -18,7 +18,8 @@ it('should work with empty input/output mappings', function() {
           return '#aliasedHandlerRef';
         },
         registerFunctionName(functionName: string): void {},
-      }
+      },
+      { type: ContributionType.Trigger } as TriggerSchema
     );
   }).not.toThrow();
   expect(handler.action.input).toBeFalsy();
