@@ -11,7 +11,11 @@ export function exportStreamResource(
   context: ResourceExportContext
 ): FlogoAppModel.Resource<StreamResourceModel.StreamResourceData> {
   const formattedMetadata = formatMetadata(fromResource.metadata || {});
-  const formattedStages = formatStages(fromResource.data || {}, context.refAgent);
+  const formattedStages = formatStages(
+    fromResource.data || {},
+    context.contributions,
+    context.refAgent
+  );
   return {
     id: fromResource.id,
     data: {

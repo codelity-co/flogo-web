@@ -1,4 +1,9 @@
-import { Resource, ContributionType } from '@flogo-web/core';
+import {
+  Resource,
+  ContributionType,
+  ContributionSchema,
+  ActivitySchema,
+} from '@flogo-web/core';
 import {
   StreamData,
   StreamMetadata,
@@ -7,7 +12,12 @@ import {
   StreamResourceModel,
   uniqueStageName,
 } from '@flogo-web/plugins/stream-core';
-import { ResourceImportContext, ValidationError } from '@flogo-web/lib-server/core';
+import {
+  ImportsRefAgent,
+  ResourceImportContext,
+  transformConnectionTypeSettings,
+  ValidationError,
+} from '@flogo-web/lib-server/core';
 
 import { PIPELINE_POINTER, STREAM_POINTER } from '../constants';
 import { makeResourceValidator } from './make-resource-validator';
@@ -66,7 +76,7 @@ function extractStages(
   return rawStages.map((stage, index) => {
     stage.ref = getStageReference(stage.ref);
     stage.name = stage.name || generateStageName(stage, rawStages, context.contributions);
-    return formatStage(stage, index);
+    return formatStage(stage, index, context.contributions, context.importsRefAgent);
   });
 }
 
@@ -79,16 +89,32 @@ function getOriginalId(source: Map<string, string>, newId: string): string {
   return Array.from(source.entries()).find(([, resourceId]) => resourceId === newId)[0];
 }
 
-function formatStage(stage: StreamResourceModel.Stage, idx: number): InternalStage {
+function formatStage(
+  stage: StreamResourceModel.Stage,
+  idx: number,
+  contributions: Map<string, ContributionSchema>,
+  importsRefAgent: ImportsRefAgent
+): InternalStage {
   const { ref, name, description, output } = stage;
   // ref may have the full path of the contribution and we just need the name of the contribution.
   const contribName = ref.split('/').pop();
+  let activitySettings = stage.settings;
+  if (activitySettings) {
+    const activitySettingsSchema = (<ActivitySchema>contributions.get(stage.ref))
+      ?.settings;
+    activitySettings = transformConnectionTypeSettings(
+      activitySettings,
+      activitySettingsSchema,
+      importsRefAgent,
+      true
+    );
+  }
   return {
     id: `${contribName}_${idx + KEY_STAGE_INDEX}`,
     ref,
     name,
     description,
-    activitySettings: stage.settings,
+    activitySettings,
     inputMappings: stage.input,
     output,
   };
