@@ -63,7 +63,8 @@ export function importTriggers(
       newTrigger.settings = transformConnectionTypeSettings(
         newTrigger.settings,
         triggerSchema?.settings,
-        importsRefAgent.getPackageRef
+        importsRefAgent,
+        true
       );
     }
     newTrigger.handlers = transformHandlerSettings(
@@ -158,7 +159,8 @@ function transformHandlerSettings(
       handler.settings = transformConnectionTypeSettings(
         handler.settings,
         triggerSchema?.handler?.settings,
-        importsRefAgent.getPackageRef
+        importsRefAgent,
+        true
       );
     }
     return handler;

@@ -69,7 +69,8 @@ export class TaskFormatter {
       task.activity.settings = transformConnectionTypeSettings(
         taskActivitySettings,
         contributionSchema?.settings,
-        this.refAgent.getAliasRef
+        this.refAgent,
+        false
       );
     }
     return task;

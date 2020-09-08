@@ -93,7 +93,8 @@ export class TaskConverter {
         activitySettings = transformConnectionTypeSettings(
           activitySettings,
           this.activitySchema?.settings,
-          importsRefAgent.getPackageRef
+          importsRefAgent,
+          true
         );
       }
     }

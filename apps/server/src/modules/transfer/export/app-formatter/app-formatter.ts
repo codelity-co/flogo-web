@@ -117,7 +117,8 @@ export class AppFormatter {
           ? transformConnectionTypeSettings(
               trigger.settings,
               triggerSchema?.settings,
-              refAgent.getAliasRef
+              refAgent,
+              false
             )
           : undefined;
         return pick(

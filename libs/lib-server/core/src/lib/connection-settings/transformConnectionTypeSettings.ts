@@ -4,11 +4,13 @@ import {
   SchemaSettingAttributeDescriptor,
   TypeConnection,
 } from '@flogo-web/core';
+import { ExportRefAgent, ImportsRefAgent } from '../extensions';
 
 export function transformConnectionTypeSettings(
   settings: FlogoAppModel.Settings,
   settingsSchema: SchemaSettingAttributeDescriptor[],
-  transformRef: (contribType: ContributionType, ref: string) => string | undefined
+  refAgent: ImportsRefAgent | ExportRefAgent,
+  isImport: boolean
 ) {
   const connectionSettings = settingsSchema?.filter(
     setting => setting.type === TypeConnection.Connection
@@ -17,10 +19,15 @@ export function transformConnectionTypeSettings(
     connectionSettings.forEach(connection => {
       const connectionSetting = settings[connection.name];
       if (connectionSetting) {
-        connectionSetting.ref = transformRef(
-          ContributionType.Connection,
-          connectionSetting.ref
-        );
+        connectionSetting.ref = isImport
+          ? (<ImportsRefAgent>refAgent).getPackageRef(
+              ContributionType.Connection,
+              connectionSetting.ref
+            )
+          : (<ExportRefAgent>refAgent).getAliasRef(
+              ContributionType.Connection,
+              connectionSetting.ref
+            );
       }
     });
   }

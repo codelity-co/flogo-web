@@ -70,7 +70,8 @@ export function preFormatHandler(
     handlerSettings = transformConnectionTypeSettings(
       handlerSettings,
       triggerSchema.handler?.settings,
-      refAgent.getAliasRef
+      refAgent,
+      false
     );
   }
   return {
