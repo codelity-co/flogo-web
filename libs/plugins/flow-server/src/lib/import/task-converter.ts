@@ -1,13 +1,11 @@
 import { isUndefined, isArray, isPlainObject } from 'lodash';
 
-import {
-  EXPR_PREFIX,
-  CONTRIB_REFS,
-} from '@flogo-web/core';
+import { EXPR_PREFIX, CONTRIB_REFS } from '@flogo-web/core';
 import {
   TASK_TYPE,
   EXPRESSION_TYPE,
-  parseResourceIdFromResourceUri, transformConnectionTypeSettings,
+  parseResourceIdFromResourceUri,
+  transformConnectionTypeSettings,
 } from '@flogo-web/lib-server/core';
 import {
   isMapperActivity,

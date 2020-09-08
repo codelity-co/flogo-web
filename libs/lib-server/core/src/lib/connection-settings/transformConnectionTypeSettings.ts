@@ -1,9 +1,15 @@
-import { ContributionType, FlogoAppModel, SchemaSettingAttributeDescriptor, TypeConnection } from '@flogo-web/core';
+import {
+  ContributionType,
+  FlogoAppModel,
+  SchemaSettingAttributeDescriptor,
+  TypeConnection,
+} from '@flogo-web/core';
 
 export function transformConnectionTypeSettings(
   settings: FlogoAppModel.Settings,
   settingsSchema: SchemaSettingAttributeDescriptor[],
-  transformRef: (contribType: ContributionType, ref: string) => string | undefined) {
+  transformRef: (contribType: ContributionType, ref: string) => string | undefined
+) {
   const connectionSettings = settingsSchema?.filter(
     setting => setting.type === TypeConnection.Connection
   );

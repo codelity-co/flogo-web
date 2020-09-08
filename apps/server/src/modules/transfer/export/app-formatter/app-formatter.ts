@@ -4,7 +4,8 @@ import {
   Resource,
   ExportRefAgent,
   ExportActionAgent,
-  ResourceConfiguration, transformConnectionTypeSettings,
+  ResourceConfiguration,
+  transformConnectionTypeSettings,
 } from '@flogo-web/lib-server/core';
 import {
   App,
@@ -114,10 +115,10 @@ export class AppFormatter {
         const triggerSchema = <TriggerSchema>this.contributionSchemas.get(trigger.ref);
         const triggerSettings = !isEmpty(trigger.settings)
           ? transformConnectionTypeSettings(
-            trigger.settings,
-            triggerSchema?.settings,
-            refAgent.getAliasRef
-          )
+              trigger.settings,
+              triggerSchema?.settings,
+              refAgent.getAliasRef
+            )
           : undefined;
         return pick(
           {

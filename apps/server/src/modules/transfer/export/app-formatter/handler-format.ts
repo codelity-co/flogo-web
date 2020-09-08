@@ -8,7 +8,11 @@ import {
   MapperUtils,
   TriggerSchema,
 } from '@flogo-web/core';
-import { ExportRefAgent, ExportActionAgent, transformConnectionTypeSettings } from '@flogo-web/lib-server/core';
+import {
+  ExportRefAgent,
+  ExportActionAgent,
+  transformConnectionTypeSettings,
+} from '@flogo-web/lib-server/core';
 import { HandlerExporterFn } from '../resource-exporter-fn';
 import { ExportedResourceInfo } from './exported-resource-info';
 
@@ -67,7 +71,7 @@ export function preFormatHandler(
       handlerSettings,
       triggerSchema.handler?.settings,
       refAgent.getAliasRef
-    )
+    );
   }
   return {
     settings: handlerSettings,

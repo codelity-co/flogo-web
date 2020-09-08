@@ -7,7 +7,11 @@ import {
   ContributionType,
   ActivitySchema,
 } from '@flogo-web/core';
-import { TASK_TYPE, ExportRefAgent, transformConnectionTypeSettings } from '@flogo-web/lib-server/core';
+import {
+  TASK_TYPE,
+  ExportRefAgent,
+  transformConnectionTypeSettings,
+} from '@flogo-web/lib-server/core';
 import { Task, isSubflowTask, isIterableTask } from '@flogo-web/plugins/flow-core';
 
 interface Mappings {

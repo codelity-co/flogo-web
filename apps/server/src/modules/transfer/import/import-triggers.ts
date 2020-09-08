@@ -8,7 +8,11 @@ import {
   ContributionSchema,
   TriggerSchema,
 } from '@flogo-web/core';
-import { ImportsRefAgent, transformConnectionTypeSettings, ValidationErrorDetail } from '@flogo-web/lib-server/core';
+import {
+  ImportsRefAgent,
+  transformConnectionTypeSettings,
+  ValidationErrorDetail,
+} from '@flogo-web/lib-server/core';
 
 import { normalizeHandlerMappings } from '../common/normalize-handler-mappings';
 import { tryAndAccumulateValidationErrors } from '../common/try-validation-errors';
@@ -50,7 +54,10 @@ export function importTriggers(
       updatedAt: null,
       settings: normalizeSettingsWithPrefix(rawTrigger.settings),
     };
-    newTrigger.ref = importsRefAgent.getPackageRef(ContributionType.Trigger, newTrigger.ref);
+    newTrigger.ref = importsRefAgent.getPackageRef(
+      ContributionType.Trigger,
+      newTrigger.ref
+    );
     const triggerSchema = <TriggerSchema>contributions.get(newTrigger.ref);
     if (newTrigger.settings) {
       newTrigger.settings = transformConnectionTypeSettings(

@@ -1,1 +1,1 @@
-export  * from './transformConnectionTypeSettings.js';
+export * from './transformConnectionTypeSettings.js';
