@@ -3,13 +3,11 @@ import { isUndefined, isArray, isPlainObject } from 'lodash';
 import {
   EXPR_PREFIX,
   CONTRIB_REFS,
-  TypeConnection,
-  ContributionType,
 } from '@flogo-web/core';
 import {
   TASK_TYPE,
   EXPRESSION_TYPE,
-  parseResourceIdFromResourceUri,
+  parseResourceIdFromResourceUri, transformConnectionTypeSettings,
 } from '@flogo-web/lib-server/core';
 import {
   isMapperActivity,
@@ -94,9 +92,10 @@ export class TaskConverter {
     } else if (!isMapperActivity(this.activitySchema)) {
       activitySettings = this.resourceTask.activity.settings;
       if (activitySettings) {
-        activitySettings = this.transformConnectionSettingsRefs(
+        activitySettings = transformConnectionTypeSettings(
           activitySettings,
-          importsRefAgent
+          this.activitySchema?.settings,
+          importsRefAgent.getPackageRef
         );
       }
     }
@@ -104,24 +103,6 @@ export class TaskConverter {
       settings.iterate = normalizeIteratorValue(this.resourceTask.settings.iterate);
     }
     return { type, settings, activitySettings };
-  }
-
-  transformConnectionSettingsRefs(activitySettings, importsRefAgent) {
-    const connectionTypeSettings = this.activitySchema.settings?.filter(
-      setting => setting.type === TypeConnection.Connection
-    );
-    if (connectionTypeSettings && connectionTypeSettings.length) {
-      connectionTypeSettings.forEach(connection => {
-        const connectionSetting = activitySettings[connection.name];
-        if (connectionSetting) {
-          connectionSetting.ref = importsRefAgent.getPackageRef(
-            ContributionType.Connection,
-            connectionSetting.ref
-          );
-        }
-      });
-    }
-    return activitySettings;
   }
 
   prepareInputMappings() {

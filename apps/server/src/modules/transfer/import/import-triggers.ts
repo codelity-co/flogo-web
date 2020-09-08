@@ -5,12 +5,10 @@ import {
   Handler,
   Trigger,
   ContributionType,
-  TypeConnection,
   ContributionSchema,
   TriggerSchema,
-  SchemaSettingAttributeDescriptor,
 } from '@flogo-web/core';
-import { ImportsRefAgent, ValidationErrorDetail } from '@flogo-web/lib-server/core';
+import { ImportsRefAgent, transformConnectionTypeSettings, ValidationErrorDetail } from '@flogo-web/lib-server/core';
 
 import { normalizeHandlerMappings } from '../common/normalize-handler-mappings';
 import { tryAndAccumulateValidationErrors } from '../common/try-validation-errors';
@@ -52,17 +50,13 @@ export function importTriggers(
       updatedAt: null,
       settings: normalizeSettingsWithPrefix(rawTrigger.settings),
     };
-    newTrigger.ref = getPackageRef(
-      importsRefAgent,
-      ContributionType.Trigger,
-      newTrigger.ref
-    );
+    newTrigger.ref = importsRefAgent.getPackageRef(ContributionType.Trigger, newTrigger.ref);
     const triggerSchema = <TriggerSchema>contributions.get(newTrigger.ref);
     if (newTrigger.settings) {
-      newTrigger.settings = transformConnectionSettingsRefs(
+      newTrigger.settings = transformConnectionTypeSettings(
         newTrigger.settings,
         triggerSchema?.settings,
-        importsRefAgent
+        importsRefAgent.getPackageRef
       );
     }
     newTrigger.handlers = transformHandlerSettings(
@@ -154,43 +148,12 @@ function transformHandlerSettings(
 ) {
   return handlers.map(handler => {
     if (handler?.settings) {
-      handler.settings = transformConnectionSettingsRefs(
+      handler.settings = transformConnectionTypeSettings(
         handler.settings,
         triggerSchema?.handler?.settings,
-        importsRefAgent
+        importsRefAgent.getPackageRef
       );
     }
     return handler;
   });
-}
-
-function transformConnectionSettingsRefs(
-  settings: FlogoAppModel.Settings,
-  schemaSettings: SchemaSettingAttributeDescriptor[],
-  importsRefAgent: ImportsRefAgent
-) {
-  const connectionTypeSettings = schemaSettings?.filter(
-    setting => setting.type === TypeConnection.Connection
-  );
-  if (connectionTypeSettings && connectionTypeSettings.length) {
-    connectionTypeSettings.forEach(connection => {
-      const connectionSetting = settings[connection.name];
-      if (connectionSetting) {
-        connectionSetting.ref = getPackageRef(
-          importsRefAgent,
-          ContributionType.Connection,
-          connectionSetting.ref
-        );
-      }
-    });
-  }
-  return settings;
-}
-
-function getPackageRef(
-  importsRefAgent: ImportsRefAgent,
-  contribType: ContributionType,
-  ref: string
-) {
-  return importsRefAgent.getPackageRef(contribType, ref);
 }

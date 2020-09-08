@@ -4,7 +4,7 @@ import {
   Resource,
   ExportRefAgent,
   ExportActionAgent,
-  ResourceConfiguration,
+  ResourceConfiguration, transformConnectionTypeSettings,
 } from '@flogo-web/lib-server/core';
 import {
   App,
@@ -13,7 +13,7 @@ import {
   ContributionType,
   Handler,
   Trigger,
-  TypeConnection,
+  TriggerSchema,
 } from '@flogo-web/core';
 
 import { ResourceExporterFn, HandlerExporterFn } from '../resource-exporter-fn';
@@ -111,12 +111,13 @@ export class AppFormatter {
     return triggers
       .filter(trigger => !isEmpty(trigger.handlers))
       .map(trigger => {
+        const triggerSchema = <TriggerSchema>this.contributionSchemas.get(trigger.ref);
         const triggerSettings = !isEmpty(trigger.settings)
-          ? this.aliasConnectionRefs(
-              trigger.settings,
-              this.contributionSchemas.get(trigger.ref),
-              refAgent
-            )
+          ? transformConnectionTypeSettings(
+            trigger.settings,
+            triggerSchema?.settings,
+            refAgent.getAliasRef
+          )
           : undefined;
         return pick(
           {
@@ -128,24 +129,6 @@ export class AppFormatter {
           TRIGGER_KEYS
         ) as FlogoAppModel.Trigger;
       });
-  }
-
-  aliasConnectionRefs(triggerSettings, triggerSchema, refAgent) {
-    const connectionTypeSettings = triggerSchema.settings?.filter(
-      setting => setting.type === TypeConnection.Connection
-    );
-    if (connectionTypeSettings && connectionTypeSettings.length) {
-      connectionTypeSettings.forEach(connection => {
-        const connectionSetting = triggerSettings[connection.name];
-        if (connectionSetting) {
-          connectionSetting.ref = refAgent.getAliasRef(
-            ContributionType.Connection,
-            connectionSetting.ref
-          );
-        }
-      });
-    }
-    return triggerSettings;
   }
 
   private makeHandlerFormatter(
