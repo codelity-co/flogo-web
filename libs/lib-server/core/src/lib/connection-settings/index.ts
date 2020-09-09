@@ -1,1 +1,1 @@
-export * from './transformConnectionTypeSettings';
+export * from './transform-connection-type-settings';
