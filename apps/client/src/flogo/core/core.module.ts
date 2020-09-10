@@ -7,6 +7,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { ContribInstallerModule } from '@flogo-web/lib-client/contrib-installer';
 import { ModalModule } from '@flogo-web/lib-client/modal';
+import { SharedModule } from '@flogo-web/lib-client/common';
 
 @NgModule({
   declarations: [FlogoNavbarComponent],
@@ -18,6 +19,7 @@ import { ModalModule } from '@flogo-web/lib-client/modal';
     TranslateModule,
     ContribInstallerModule,
     ModalModule,
+    SharedModule,
   ],
   exports: [FlogoNavbarComponent],
 })
