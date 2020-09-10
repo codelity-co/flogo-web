@@ -1,5 +1,5 @@
 <form [formGroup]="paramsForm" novalidate (submit)="saveParams()" class="fullscreen">
-  <flogo-modal [showClose]="false">
+  <flogo-modal [showClose]="false" (close)="cancelInputSchemaModel()">
     <flogo-modal-header>
       <div class="stream-input-params-header">
         <div class="stream-input-params-header__title">

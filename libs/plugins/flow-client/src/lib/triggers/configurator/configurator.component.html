@@ -2,6 +2,7 @@
   @configurationPanel
   class="trigger-configuration__main"
   *ngIf="isOpen && selectedTriggerId"
+  (fgOnEscape)="onCloseOrDismiss()"
 >
   <div class="background"></div>
   <div class="mapper-modal__header header" @triggerConfiguratorLayoutElement>
