@@ -1,4 +1,4 @@
-<div>
+<div (fgOnEscape)="closeModal()">
   <i class="flogo-installer-modal-close" (click)="closeModal()"></i>
   <div *ngIf="_status == showBlock.standByMode">
     <header class="container-fluid">

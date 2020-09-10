@@ -1,4 +1,4 @@
-import { Component, Inject, InjectionToken } from '@angular/core';
+import { Component, HostListener, Inject, InjectionToken } from '@angular/core';
 import { ConfirmationControl } from '../confirmation-control';
 import { ConfirmationContent } from '../confirmation-content';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -33,4 +33,8 @@ export class ConfirmationModalComponent implements ConfirmationContent {
     @Inject(CONFIRMATION_MODAL_TOKEN) public data: ConfirmationModal,
     public control: ConfirmationControl
   ) {}
+
+  @HostListener('document:keydown.escape') closeModal() {
+    this.control.cancel();
+  }
 }
