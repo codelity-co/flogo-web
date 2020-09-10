@@ -31,12 +31,6 @@ export class ModalComponent {
    */
   @HostBinding('class') @Input() size: ModalSize = 'large';
   /**
-   * close the modal on escape keypress
-   */
-  @HostListener('document:keydown.escape') closeModal() {
-    this.close.emit();
-  }
-  /**
    * Control the visibility of the close button
    * @default true
    */
@@ -48,4 +42,10 @@ export class ModalComponent {
 
   @HostBinding('@modalAnimate') animate = true;
 
+  /**
+   * close the modal on escape keypress
+   */
+  @HostListener('document:keydown.escape') closeModal() {
+    this.close.emit();
+  }
 }
