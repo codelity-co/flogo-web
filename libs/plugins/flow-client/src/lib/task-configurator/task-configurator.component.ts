@@ -557,7 +557,7 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
     this.isActive = true;
   }
 
-  private close() {
+  close() {
     if (!this.contextChange$.closed) {
       this.contextChange$.emitAndComplete();
     }

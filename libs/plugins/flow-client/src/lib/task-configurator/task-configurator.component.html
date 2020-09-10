@@ -1,4 +1,4 @@
-<div class="modal-wrapper" *ngIf="isActive" [@dialog]>
+<div class="modal-wrapper test-class" *ngIf="isActive" [@dialog] (fgOnEscape)="close()">
   <div class="mapper-modal qa-transform-modal">
     <div class="mapper-modal__header header">
       <img [src]="iconUrl" class="header__icon" alt="Activity icon" />

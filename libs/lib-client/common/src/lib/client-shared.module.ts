@@ -12,6 +12,7 @@ import {
   EditableInputDirective,
   JsonDownloaderDirective,
   ClickOutsideDirective,
+  ActionOnEscapeDirective,
 } from './directives';
 import { LoadingIndicatorComponent, FlogoDeletePopupComponent } from './components';
 
@@ -25,6 +26,7 @@ const ALL_MODULE_DECLARABLES = [
   EditableInputDirective,
   TimeFromNowPipe,
   ClickOutsideDirective,
+  ActionOnEscapeDirective,
   FlogoDeletePopupComponent,
   ObjectPropertiesPipe,
 ];
