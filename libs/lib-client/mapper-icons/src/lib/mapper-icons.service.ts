@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ValueType } from '@flogo-web/core';
+import { TypeConnection, ValueType } from '@flogo-web/core';
 import { MapperTreeNodeType } from './mapper-treenode-type.interface';
 
 @Injectable()
@@ -20,6 +20,7 @@ export class MapperIconsService {
     [`${ValueType.Double}Array`]: '#flogo-mapper-icon-double-array',
     [`${ValueType.Boolean}Array`]: '#flogo-mapper-icon-boolean-array',
     [`${ValueType.Object}Array`]: '#flogo-mapper-icon-object-array',
+    [TypeConnection.Connection]: '#flogo-mapper-icon-connection',
   };
 
   getIcon(node: MapperTreeNodeType) {
