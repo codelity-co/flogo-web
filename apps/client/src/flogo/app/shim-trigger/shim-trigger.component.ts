@@ -89,4 +89,8 @@ export class TriggerShimBuildComponent {
       env: { os: env.os, arch: env.arch },
     });
   }
+
+  closeModal() {
+    this.control.close();
+  }
 }

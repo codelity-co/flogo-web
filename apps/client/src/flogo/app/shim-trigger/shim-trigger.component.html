@@ -1,5 +1,9 @@
-<div [class]="'flogo-common-modal shim-trigger__modal'" #shimTriggersModal>
-  <i class="flogo-icon-close shim-trigger__modal-close" (click)="control.close()"></i>
+<div
+  [class]="'flogo-common-modal shim-trigger__modal'"
+  #shimTriggersModal
+  (fgOnEscape)="closeModal()"
+>
+  <i class="flogo-icon-close shim-trigger__modal-close" (click)="closeModal()"></i>
   <div *ngIf="!isTriggerSelected">
     <div class="shim-trigger__modal-header">
       {{ 'TRIGGER-SHIM:MULTIPLE-TRIGGERS' | translate }}
