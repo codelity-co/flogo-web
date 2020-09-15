@@ -1,4 +1,4 @@
-import { Component, HostListener, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
   ConfirmationControl,
   ConfirmationContent,
@@ -12,13 +12,12 @@ import { TRIGGER_STATUS_TOKEN } from './status.token';
   styleUrls: ['./confirmation.component.less'],
 })
 export class ConfirmationComponent implements ConfirmationContent {
-  @HostListener('document:keydown.escape')
-  closeModal() {
-    this.control.cancel();
-  }
-
   constructor(
     @Inject(TRIGGER_STATUS_TOKEN) public status: TriggerStatus,
     public control: ConfirmationControl
   ) {}
+
+  closeModal() {
+    this.control.cancel();
+  }
 }

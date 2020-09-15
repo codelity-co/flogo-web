@@ -1,5 +1,5 @@
-<div class="flogo-export-flow-modal">
-  <i class="flogo-icon-close flogo-export-flow-close" (click)="control.close()"></i>
+<div class="flogo-export-flow-modal" (fgOnEscape)="closeModal()">
+  <i class="flogo-icon-close flogo-export-flow-close" (click)="closeModal()"></i>
   <div *ngIf="exportFlowsData.flows?.length === 0" class="content-empty__message">
     No actions to export
   </div>
@@ -43,7 +43,7 @@
         <button
           type="button"
           class="flogo-button--secondary flogo-flows-add-cancel"
-          (click)="control.close()"
+          (click)="closeModal()"
         >
           {{ 'DETAILS:EXPORT-CANCEL' | translate }}
         </button>

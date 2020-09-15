@@ -1,12 +1,12 @@
-<button class="uxpl-modal__close" (click)="control.cancel()">
+<button class="uxpl-modal__close" (click)="closeModal()">
   <span class="sr-only" aria-hidden="true">Close</span>
 </button>
 
-<div class="uxpl-modal-confirmation__body">
+<div class="uxpl-modal-confirmation__body" (fgOnEscape)="closeModal()">
   <p class="uxpl-modal-confirmation__lead">
     Save or discard your changes before leaving this trigger
   </p>
-  <p><a role="button" (click)="control.cancel()">Continue editing this trigger</a></p>
+  <p><a role="button" (click)="closeModal()">Continue editing this trigger</a></p>
 </div>
 
 <div class="uxpl-modal-confirmation__footer footer">

@@ -94,6 +94,10 @@ export class FlogoExportFlowsComponent {
         });
   }
 
+  public closeModal() {
+    this.control.close();
+  }
+
   private resetForm() {
     this.unselectAllFlows();
   }
