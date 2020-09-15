@@ -5,8 +5,9 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 
 import { SingleEmissionSubject } from '@flogo-web/lib-client/core';
 import {
-  ConfirmationService,
+  ConfirmationControl,
   ConfirmationResult,
+  ConfirmationService,
 } from '@flogo-web/lib-client/confirmation';
 
 import { TriggerConfigureSelectors } from '../../core/state/triggers-configure';
@@ -34,6 +35,7 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
   currentTriggerDetailStatus: TriggerStatus;
   selectedTriggerId: string;
   isOpen: boolean;
+  confirmationModalRef: ConfirmationControl;
 
   private ngDestroy$ = SingleEmissionSubject.create();
 
@@ -81,11 +83,18 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
   }
 
   changeTriggerSelection(triggerId: string) {
-    const switchTrigger = () =>
+    if (this.isConfirmationModalOpen()) {
+      return;
+    }
+    const switchTrigger = () => {
+      this.disposeConfirmationModalRef();
       this.store.dispatch(new TriggerConfigureActions.SelectTrigger(triggerId));
+    };
     this.checkForContextSwitchConfirmation((result?: ConfirmationResult) => {
       if (!result || result === ConfirmationResult.Discard) {
         switchTrigger();
+      } else if (result === ConfirmationResult.Cancel) {
+        this.disposeConfirmationModalRef();
       } else if (result === ConfirmationResult.Confirm) {
         this.triggerConfiguratorService.save().subscribe(() => {});
         switchTrigger();
@@ -99,10 +108,18 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
   }
 
   onCloseOrDismiss() {
-    const close = () => this.store.dispatch(new TriggerConfigureActions.CloseConfigure());
+    if (this.isConfirmationModalOpen()) {
+      return;
+    }
+    const close = () => {
+      this.disposeConfirmationModalRef();
+      this.store.dispatch(new TriggerConfigureActions.CloseConfigure());
+    };
     this.checkForContextSwitchConfirmation((result?: ConfirmationResult) => {
       if (!result || result === ConfirmationResult.Discard) {
         close();
+      } else if (result === ConfirmationResult.Cancel) {
+        this.disposeConfirmationModalRef();
       } else if (result === ConfirmationResult.Confirm) {
         this.triggerConfiguratorService.save().subscribe(() => {});
         close();
@@ -119,11 +136,11 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
     }
     const injectionTokens = new WeakMap();
     injectionTokens.set(TRIGGER_STATUS_TOKEN, status);
-    const confirmation = this.confirmationService.openModal(
+    this.confirmationModalRef = this.confirmationService.openModal(
       ConfirmationComponent,
       injectionTokens
     );
-    confirmation.result.subscribe(onResult);
+    this.confirmationModalRef.result.subscribe(onResult);
   }
 
   private observeWhileConfiguratorIsActive<T>(
@@ -136,5 +153,13 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
       ),
       takeUntil(this.ngDestroy$)
     );
+  }
+
+  private isConfirmationModalOpen() {
+    return this.confirmationModalRef;
+  }
+
+  private disposeConfirmationModalRef() {
+    this.confirmationModalRef = null;
   }
 }

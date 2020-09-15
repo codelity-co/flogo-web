@@ -16,4 +16,8 @@ export class ConfirmationComponent implements ConfirmationContent {
     @Inject(TRIGGER_STATUS_TOKEN) public status: TriggerStatus,
     public control: ConfirmationControl
   ) {}
+
+  closeModal() {
+    this.control.cancel();
+  }
 }
