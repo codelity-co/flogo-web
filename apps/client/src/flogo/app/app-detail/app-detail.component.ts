@@ -139,11 +139,9 @@ export class FlogoApplicationDetailComponent implements OnDestroy, OnChanges, On
   }
 
   ngOnInit() {
-    this.appDetailService
-      .getTriggersSchemas()
-      .then((schemas: TriggerSchema[]) => {
-        this.triggerSchemas = schemas;
-      });
+    this.appDetailService.getTriggersSchemas().then((schemas: TriggerSchema[]) => {
+      this.triggerSchemas = schemas;
+    });
 
     this.appDetailService.app$.subscribe(app => {
       this.application = app;

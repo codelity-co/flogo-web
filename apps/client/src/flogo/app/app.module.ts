@@ -42,7 +42,7 @@ import {
     PortalModule,
     ScrollingModule,
     ConfirmationModule,
-    TriggerIconModule
+    TriggerIconModule,
   ],
   declarations: [
     FlogoApplicationDetailComponent,

@@ -134,16 +134,15 @@ export class FlogoStreamTriggersPanelComponent implements OnInit, OnDestroy {
 
   private openTriggerMapper(selectedTrigger: Trigger) {
     let allContribSchemas: Dictionary<ContributionSchema>;
-    this.store.pipe(
-      select(selectSchemas),
-      takeUntil(this.ngDestroy$)
-    ).subscribe(schemas => {
-      allContribSchemas = schemas;
-    })
+    this.store
+      .pipe(select(selectSchemas), takeUntil(this.ngDestroy$))
+      .subscribe(schemas => {
+        allContribSchemas = schemas;
+      });
 
     const refs = uniq(this.triggersList.map(trigger => trigger.ref));
     const triggerSchemas = refs.reduce((schemas, ref) => {
-      if(this.converterService.validateTriggerSchema( {ref})) {
+      if (this.converterService.validateTriggerSchema({ ref })) {
         const triggerSchema = <TriggerSchema>allContribSchemas[ref];
         schemas[ref] = this.converterService.normalizeTriggerSchema(triggerSchema);
       }
