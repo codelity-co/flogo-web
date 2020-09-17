@@ -3,7 +3,7 @@
 @import '~@flogo-web/assets/styles/_mixins';
 
 :host {
-  background-color: #eaeaea;;
+  background-color: #eaeaea;
   overflow: auto;
   flex: 1;
   display: flex;
@@ -17,14 +17,14 @@
   position: relative;
 }
 
-.tiles-wrapper{
+.tiles-wrapper {
   display: flex;
   padding: 8px 15px;
   margin-top: 24px;
   width: 100%;
   z-index: 0;
   &:hover {
-    background-color:rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.3);
     .visible-on-hover {
       opacity: 1;
     }
@@ -61,7 +61,7 @@ flogo-diagram {
     z-index: -1;
   }
 }
-.add-button{
+.add-button {
   margin: 0 4px 0 48px;
   min-width: 44px;
   &:before {
@@ -73,16 +73,16 @@ flogo-diagram {
     opacity: 0.5;
   }
 }
-.tile-placeholders{
+.tile-placeholders {
   display: flex;
   margin-left: 2px;
- .tile-placeholder:first-child {
+  .tile-placeholder:first-child {
     &:before {
       width: 54px;
     }
   }
 }
-.tile-placeholder{
+.tile-placeholder {
   position: relative;
   display: flex;
   align-items: center;
@@ -101,7 +101,7 @@ flogo-diagram {
     top: 42%;
     right: 84px;
   }
-  &:after{
+  &:after {
     background-color: #96a7f8;
     opacity: 0.5;
     display: block;
@@ -112,7 +112,7 @@ flogo-diagram {
   }
 }
 
-.visible-on-hover{
+.visible-on-hover {
   opacity: 0;
   transition: opacity 0.25s ease-out;
 }

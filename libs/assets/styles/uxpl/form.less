@@ -1,4 +1,4 @@
-@import "../_variables";
+@import '../_variables';
 
 @uxpl-input: {
   line-height: 1.5;
@@ -7,8 +7,8 @@
   };
   @field: {
     font-size: 1rem;
-  }
-}
+  };
+};
 
 .uxpl-input-field {
   display: flex;
@@ -16,7 +16,7 @@
 
   .input-field__label,
   label {
-    font-size: @uxpl-input[@label][font-size];
+    font-size: @uxpl-input[ @label][font-size];
     line-height: @uxpl-input[line-height];
     color: @warm-grey;
     transform-origin: left;
@@ -30,7 +30,7 @@
     background: transparent;
     width: 100%;
     border: none;
-    font-size: @uxpl-input[@field][font-size];
+    font-size: @uxpl-input[ @field][font-size];
     line-height: @uxpl-input[line-height];
     border-bottom: 1px solid @warm-grey;
 
@@ -52,8 +52,8 @@
       & ~ label,
       &.input-field__label {
         pointer-events: none;
-        @translate: @uxpl-input[@field][font-size] * @uxpl-input[line-height];
-        @scale: unit(@uxpl-input[@field][font-size] /@uxpl-input[@label][font-size]);
+        @translate: @uxpl-input[ @field][font-size] * @uxpl-input[line-height];
+        @scale: unit(@uxpl-input[ @field][font-size] / @uxpl-input[ @label][font-size]);
         transform: translateY(@translate) scale(@scale);
       }
     }
@@ -62,9 +62,7 @@
       border-bottom-style: dashed;
       border-bottom-style: @color-medium-gray;
     }
-
   }
-
 }
 
 /**
@@ -123,5 +121,4 @@
     border-bottom-style: dashed;
     border-bottom-style: @color-medium-gray;
   }
-
 }

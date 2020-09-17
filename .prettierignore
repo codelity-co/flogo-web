@@ -1,7 +1,5 @@
 # Add files here to ignore them from prettier formatting
 *.json
 *.yml
-# todo: re-enable and format all
-*.less
 tools/schematics/**/files/**
 dist
