@@ -67,9 +67,6 @@ import {
     SettingsFormBuilder,
     TriggerNameValidatorService,
   ],
-  entryComponents: [
-    AutoCompleteContentComponent,
-    ConfirmEditionComponent,
-  ],
+  entryComponents: [AutoCompleteContentComponent, ConfirmEditionComponent],
 })
 export class ConfiguratorModule {}

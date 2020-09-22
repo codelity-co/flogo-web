@@ -15,6 +15,6 @@ export interface TriggerStatus {
   name?: string;
 }
 
-export interface CurrentTriggerState extends TriggerState{
+export interface CurrentTriggerState extends TriggerState {
   streamMetadata: StreamMetadata;
 }

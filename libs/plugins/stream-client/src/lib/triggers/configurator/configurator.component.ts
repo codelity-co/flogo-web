@@ -9,7 +9,10 @@ import {
   ConfirmationResult,
   ConfirmationService,
 } from '@flogo-web/lib-client/confirmation';
-import { ConfirmationComponent, TRIGGER_STATUS_TOKEN } from '@flogo-web/lib-client/trigger-shared';
+import {
+  ConfirmationComponent,
+  TRIGGER_STATUS_TOKEN,
+} from '@flogo-web/lib-client/trigger-shared';
 
 import { TriggerConfigureSelectors } from '../../core/state/triggers-configure';
 import * as TriggerConfigureActions from '../../core/state/triggers-configure/trigger-configure.actions';

@@ -1,7 +1,5 @@
 import { TriggerState } from '@flogo-web/lib-client/trigger-shared';
-import {
-  FlowMetadata,
-} from '../../../core';
+import { FlowMetadata } from '../../../core';
 
 export interface ConfiguratorStatus {
   disableSave?: boolean;
@@ -17,6 +15,6 @@ export interface TriggerStatus {
   name?: string;
 }
 
-export interface CurrentTriggerState extends TriggerState{
+export interface CurrentTriggerState extends TriggerState {
   flowMetadata: FlowMetadata;
 }
