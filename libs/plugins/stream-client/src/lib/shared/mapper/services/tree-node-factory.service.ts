@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import * as lodash from 'lodash';
 
+import { InstalledFunctionSchema } from '@flogo-web/lib-client/core';
+
 import { TreeNode } from 'primeng/components/common/api';
 import { MapperTreeNode } from '../models';
 import { ArrayMappingInfo } from '../models/array-mapping';
-import { InstalledFunctionSchema } from '../../../core';
 
 @Injectable()
 export class TreeNodeFactoryService {

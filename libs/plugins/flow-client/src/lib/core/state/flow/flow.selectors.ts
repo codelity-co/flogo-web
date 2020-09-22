@@ -6,7 +6,12 @@ import {
   CONTRIB_REFS,
   ActivitySchema,
 } from '@flogo-web/core';
-import { Dictionary, FlowGraph, GraphNodeDictionary } from '@flogo-web/lib-client/core';
+import {
+  Dictionary,
+  FlowGraph,
+  GraphNodeDictionary,
+  InstalledFunctionSchema,
+} from '@flogo-web/lib-client/core';
 import { DiagramSelectionType } from '@flogo-web/lib-client/diagram';
 
 import { getGraphName, getItemsDictionaryName, nodesContainErrors } from '../utils';
@@ -18,7 +23,7 @@ import {
   SelectionType,
 } from '../../models';
 import { Activity } from '../../../task-add';
-import { InstalledFunctionSchema, Item, ItemActivityTask } from '../../interfaces';
+import { Item, ItemActivityTask } from '../../interfaces';
 import { FLOGO_TASK_TYPE } from '../../constants';
 
 import { FlowState } from './flow.state';

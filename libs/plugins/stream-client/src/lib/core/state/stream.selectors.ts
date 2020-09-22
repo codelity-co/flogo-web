@@ -2,7 +2,11 @@ import { isEmpty } from 'lodash';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { DiagramSelectionType } from '@flogo-web/lib-client/diagram';
-import { Dictionary, DiagramGraph } from '@flogo-web/lib-client/core';
+import {
+  Dictionary,
+  DiagramGraph,
+  InstalledFunctionSchema,
+} from '@flogo-web/lib-client/core';
 import {
   ContributionType,
   FunctionsSchema,
@@ -11,7 +15,6 @@ import {
 } from '@flogo-web/core';
 
 import { FlogoStreamState } from './stream.state';
-import { InstalledFunctionSchema } from '../interfaces';
 import { CurrentSelection, SelectionType, TaskSelection } from '../models';
 import { Activity } from '../../stage-add';
 import { GRAPH_NAME } from '../constants';

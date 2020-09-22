@@ -11,6 +11,7 @@ import {
   Dictionary,
   SingleEmissionSubject,
   HttpUtilsService,
+  InstalledFunctionSchema,
 } from '@flogo-web/lib-client/core';
 import { formatConnectionTypeSettings } from '@flogo-web/lib-client/activity-configuration';
 import { hasStageWithSameName } from '@flogo-web/plugins/stream-core';
@@ -20,7 +21,6 @@ import {
   selectStreamState,
   selectStageConfigure,
   getInstalledFunctions,
-  InstalledFunctionSchema,
   CancelStageConfiguration,
   Item,
   CommitStageConfiguration,

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { InstalledFunctionSchema } from '@flogo-web/lib-client/core';
 import { ROOT_TYPES } from '../../constants';
 import {
   MapperContext,
@@ -15,7 +16,6 @@ import { TreeService } from '../tree.service';
 import { TreeNodeFactoryService } from '../tree-node-factory.service';
 import { MapperController } from './mapper-controller';
 import { createMapperContext } from './create-mapper-context';
-import { InstalledFunctionSchema } from '../../../../core/interfaces';
 
 @Injectable()
 export class MapperControllerFactory {

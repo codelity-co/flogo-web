@@ -10,6 +10,7 @@ import {
   SingleEmissionSubject,
   Dictionary,
   HttpUtilsService,
+  InstalledFunctionSchema,
 } from '@flogo-web/lib-client/core';
 import { NotificationsService } from '@flogo-web/lib-client/notifications';
 import { formatConnectionTypeSettings } from '@flogo-web/lib-client/activity-configuration';
@@ -28,7 +29,6 @@ import {
 import { Tabs } from '../shared/tabs/models/tabs.model';
 import {
   FlogoFlowService as FlowsService,
-  InstalledFunctionSchema,
   Item,
   ItemActivityTask,
   ItemSubflow,

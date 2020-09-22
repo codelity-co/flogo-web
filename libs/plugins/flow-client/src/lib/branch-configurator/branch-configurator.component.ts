@@ -4,16 +4,15 @@ import { cloneDeep } from 'lodash';
 import { Subscription } from 'rxjs';
 import { skip, takeUntil } from 'rxjs/operators';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { GraphNode, SingleEmissionSubject } from '@flogo-web/lib-client/core';
+import {
+  GraphNode,
+  SingleEmissionSubject,
+  InstalledFunctionSchema,
+} from '@flogo-web/lib-client/core';
 import { LanguageService } from '@flogo-web/lib-client/language';
 import { FlowState } from '../core/state';
 import { AppState } from '../core/state/app.state';
-import {
-  FlogoFlowService as FlowsService,
-  InstalledFunctionSchema,
-  ItemBranch,
-  FLOGO_TASK_TYPE,
-} from '../core';
+import { FlogoFlowService as FlowsService, ItemBranch, FLOGO_TASK_TYPE } from '../core';
 import { MapperController, MapperControllerFactory } from '../shared/mapper';
 import { getStateWhenConfigureChanges } from '../shared/configurator/configurator.selector';
 import { getInputContext } from '../core/models/task-configure/get-input-context';
