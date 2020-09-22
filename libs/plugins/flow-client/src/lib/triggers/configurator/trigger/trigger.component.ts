@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { IconProvider } from '@flogo-web/lib-client/diagram';
-import { TriggerStatus } from '../interfaces';
+import { TriggerStatus } from '@flogo-web/lib-client/trigger-shared';
 
 @Component({
   selector: 'flogo-triggers-configure-trigger',

@@ -2,11 +2,10 @@ import { createSelector, select, Store } from '@ngrx/store';
 import { switchMap, map } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs';
 
+import { TriggerStatus } from '@flogo-web/lib-client/trigger-shared';
+
 // todo: move to shared location
-import {
-  TriggerStatus,
-  CurrentTriggerState,
-} from '../../../triggers/configurator/interfaces';
+import { CurrentTriggerState } from '../../../triggers/configurator/interfaces';
 import {
   selectStreamMetadata,
   selectHandlers,

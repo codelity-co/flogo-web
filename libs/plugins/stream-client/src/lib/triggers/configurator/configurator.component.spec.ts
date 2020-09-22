@@ -4,11 +4,11 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Store, StoreModule } from '@ngrx/store';
 import { FakeRootLanguageModule } from '@flogo-web/lib-client/language/testing';
+import { ConfiguratorStatus } from '@flogo-web/lib-client/trigger-shared';
 
 import { featureReducer, FlogoStreamState, INITIAL_STREAM_STATE } from '../../core/state';
 import { ConfiguratorModule } from './configurator.module';
 import { TriggersMock } from './mocks/triggers.mock';
-import { ConfiguratorStatus } from './interfaces';
 import { OpenConfigureWithSelection } from '../../core/state/triggers-configure/trigger-configure.actions';
 
 const TEST_STATE: FlogoStreamState = {

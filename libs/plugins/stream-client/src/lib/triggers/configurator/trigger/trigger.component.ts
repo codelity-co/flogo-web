@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { TriggerStatus } from '../interfaces';
+import { TriggerStatus } from '@flogo-web/lib-client/trigger-shared';
 
 @Component({
   selector: 'flogo-stream-triggers-configure-trigger',
