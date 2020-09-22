@@ -8,13 +8,13 @@ import { PortalModule } from '@angular/cdk/portal';
 import { MonacoEditorModule } from '@flogo-web/editor';
 import { SharedModule as FlogoSharedModule } from '@flogo-web/lib-client/common';
 import { TriggerIconModule } from '@flogo-web/lib-client/trigger-icon';
+import { TriggerSharedModule } from '@flogo-web/lib-client/trigger-shared';
 
 import { MapperModule } from '../../shared/mapper';
 
 import { ConfiguratorService } from './services/configurator.service';
 import { ConfiguratorComponent } from './configurator.component';
 import { ConfigureTriggerComponent } from './trigger/trigger.component';
-import { ConfirmationComponent } from './confirmation';
 import {
   TriggerDetailComponent,
   TabsComponent,
@@ -43,6 +43,7 @@ import {
     MapperModule,
     MonacoEditorModule,
     TriggerIconModule,
+    TriggerSharedModule,
   ],
   declarations: [
     TriggerDetailComponent,
@@ -54,7 +55,6 @@ import {
     FieldValueAccesorDirective,
     AutoCompleteContentComponent,
     ActionButtonsComponent,
-    ConfirmationComponent,
     SettingsHelpComponent,
     SettingsFormFieldComponent,
     FieldErrorComponent,
@@ -69,7 +69,6 @@ import {
   ],
   entryComponents: [
     AutoCompleteContentComponent,
-    ConfirmationComponent,
     ConfirmEditionComponent,
   ],
 })

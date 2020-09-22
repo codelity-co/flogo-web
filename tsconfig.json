@@ -55,6 +55,7 @@
         "libs/lib-client/trigger-selector/src/index.ts"
       ],
       "@flogo-web/lib-client/trigger-icon": ["libs/lib-client/trigger-icon/src/index.ts"],
+      "@flogo-web/lib-client/trigger-shared": ["libs/lib-client/trigger-shared/src/index.ts"],
       "@flogo-web/lib-client/select": ["libs/lib-client/select/src/index.ts"],
       "@flogo-web/plugins/flow-core": ["libs/plugins/flow-core/src/index.ts"],
       "@flogo-web/plugins/flow-server": ["libs/plugins/flow-server/src/index.ts"],

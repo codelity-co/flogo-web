@@ -7,7 +7,6 @@ import { TriggerStatus } from '../interfaces';
 import { TRIGGER_STATUS_TOKEN } from './status.token';
 
 @Component({
-  selector: 'flogo-triggers-configuration-settings-confirmation',
   templateUrl: './confirmation.component.html',
   styleUrls: ['./confirmation.component.less'],
 })

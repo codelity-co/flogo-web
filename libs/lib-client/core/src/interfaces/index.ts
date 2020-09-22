@@ -6,3 +6,4 @@ export * from './graph';
 export * from './resource';
 export * from './trigger';
 export * from './renderable-trigger';
+export * from './installed-functions';
