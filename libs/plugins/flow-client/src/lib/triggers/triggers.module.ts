@@ -3,17 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { CoreModule as FlogoCoreModule } from '@flogo-web/lib-client/core';
 import { SharedModule as FlogoSharedModule } from '@flogo-web/lib-client/common';
+import { TriggerSharedModule, TriggerSelectorComponent } from '@flogo-web/lib-client/trigger-shared';
 
 import { CoreModule as FlowCoreModule } from '../core';
 import { ContribInstallerModule } from '@flogo-web/lib-client/contrib-installer';
 import { FlogoFlowTriggersPanelComponent } from './triggers.component';
 import { TriggerBlockComponent } from './trigger-block';
 import { ConfiguratorModule as TriggersConfiguratorModule } from './configurator';
-import {
-  TriggerSelectorComponent,
-  TriggerSelectorModule,
-} from '@flogo-web/lib-client/trigger-selector';
-import { TriggerIconModule } from '@flogo-web/lib-client/trigger-icon';
 
 @NgModule({
   imports: [
@@ -23,8 +19,7 @@ import { TriggerIconModule } from '@flogo-web/lib-client/trigger-icon';
     FlowCoreModule,
     TriggersConfiguratorModule,
     ContribInstallerModule,
-    TriggerSelectorModule,
-    TriggerIconModule,
+    TriggerSharedModule,
   ],
   declarations: [TriggerBlockComponent, FlogoFlowTriggersPanelComponent],
   exports: [FlogoFlowTriggersPanelComponent],

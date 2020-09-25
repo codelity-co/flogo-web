@@ -7,7 +7,6 @@ import { PortalModule } from '@angular/cdk/portal';
 
 import { MonacoEditorModule } from '@flogo-web/editor';
 import { SharedModule as FlogoSharedModule } from '@flogo-web/lib-client/common';
-import { TriggerIconModule } from '@flogo-web/lib-client/trigger-icon';
 import { TriggerSharedModule } from '@flogo-web/lib-client/trigger-shared';
 
 import { MapperModule } from '../../shared/mapper';
@@ -42,7 +41,6 @@ import {
     FlogoSharedModule,
     MapperModule,
     MonacoEditorModule,
-    TriggerIconModule,
     TriggerSharedModule,
   ],
   declarations: [

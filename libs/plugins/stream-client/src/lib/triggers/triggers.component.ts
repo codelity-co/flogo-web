@@ -30,7 +30,7 @@ import { TriggerConfigureActions } from '../core/state/triggers-configure';
 import {
   TriggerSelectorComponent,
   TriggerSelectorResult,
-} from '@flogo-web/lib-client/trigger-selector';
+} from '@flogo-web/lib-client/trigger-shared';
 
 function settingsToObject(
   settings: { name: string; value?: any }[],

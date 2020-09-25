@@ -32,7 +32,7 @@ import { ModalService, ModalControl } from '@flogo-web/lib-client/modal';
 import {
   TriggerSelectorComponent,
   TriggerSelectorResult,
-} from '@flogo-web/lib-client/trigger-selector';
+} from '@flogo-web/lib-client/trigger-shared';
 import { IconProvider } from '@flogo-web/lib-client/diagram';
 import { selectSchemas } from '../core/state';
 

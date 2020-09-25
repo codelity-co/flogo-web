@@ -3,4 +3,3 @@ export {
   TriggerMetaData,
   TriggerSelectorResult,
 } from './trigger-selector.component';
-export { TriggerSelectorModule } from './trigger-selector.module';

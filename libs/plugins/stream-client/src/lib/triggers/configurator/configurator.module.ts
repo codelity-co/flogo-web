@@ -7,7 +7,6 @@ import { PortalModule } from '@angular/cdk/portal';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 import { SharedModule as FlogoSharedModule } from '@flogo-web/lib-client/common';
-import { TriggerIconModule } from '@flogo-web/lib-client/trigger-icon';
 import { TriggerSharedModule } from '@flogo-web/lib-client/trigger-shared';
 
 import { MapperModule } from '../../shared/mapper';
@@ -43,7 +42,6 @@ import {
     MapperModule,
     MonacoEditorModule,
     OverlayModule,
-    TriggerIconModule,
     TriggerSharedModule,
   ],
   declarations: [
