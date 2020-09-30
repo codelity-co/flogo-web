@@ -1,2 +1,2 @@
 export * from './static-mapper-context-factory';
-export * from './mapper-translator';
+export * from './attribute-descriptor';

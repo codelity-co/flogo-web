@@ -3,12 +3,12 @@ import { resolveExpressionType } from '@flogo-web/parser';
 import { EXPR_PREFIX, ValueType } from '@flogo-web/core';
 import { Dictionary } from '@flogo-web/lib-client/core';
 
-import { ROOT_TYPES } from '../constants';
 import {
   Task,
   FLOGO_ERROR_ROOT_NAME,
   FLOGO_TASK_TYPE,
   MAPPING_TYPE,
+  ROOT_TYPES,
 } from '../../../core';
 // todo: shared models should be moved to core
 import {
@@ -16,15 +16,9 @@ import {
   MapperSchema,
   Properties as MapperSchemaProperties,
 } from '../../../task-configurator/models';
-import { Mappings, MapExpression } from '../models';
+import { Mappings, MapExpression, AttributeDescriptor } from '@flogo-web/lib-client/mapper';
 
 export type MappingsValidatorFn = (mappings: Mappings) => boolean;
-export interface AttributeDescriptor {
-  name: string;
-  type: ValueType;
-  required?: boolean;
-  allowed?: any[];
-}
 
 const stringify = v => JSON.stringify(v, null, 2);
 

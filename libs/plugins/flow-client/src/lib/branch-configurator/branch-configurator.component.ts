@@ -10,16 +10,19 @@ import {
   InstalledFunctionSchema,
 } from '@flogo-web/lib-client/core';
 import { LanguageService } from '@flogo-web/lib-client/language';
+import { MapperController, MapperControllerFactory } from '@flogo-web/lib-client/mapper';
+
 import { FlowState } from '../core/state';
 import { AppState } from '../core/state/app.state';
 import { FlogoFlowService as FlowsService, ItemBranch, FLOGO_TASK_TYPE } from '../core';
-import { MapperController, MapperControllerFactory } from '../shared/mapper';
 import { getStateWhenConfigureChanges } from '../shared/configurator/configurator.selector';
 import { getInputContext } from '../core/models/task-configure/get-input-context';
 import * as FlowActions from '../core/state/flow/flow.actions';
 import { createSaveBranchAction } from '../task-configurator/models/save-action-creator';
 import { createBranchMappingContext } from './branch-configurator-context';
 import * as FlowSelectors from '../core/state/flow/flow.selectors';
+import { makeSnippet } from '../shared/mapper/make-snippet';
+import { MapperTranslator } from '../shared/mapper';
 
 @Component({
   selector: 'flogo-flow-branch-configurator',
@@ -122,7 +125,9 @@ export class BranchConfiguratorComponent implements OnInit {
       propsToMap,
       inputScope,
       mappings,
-      this.installedFunctions
+      this.installedFunctions,
+      makeSnippet,
+      MapperTranslator
     );
     this.inputMapperStateSubscription = this.inputMapperController.state$
       .pipe(skip(1), takeUntil(this.contextChange$))

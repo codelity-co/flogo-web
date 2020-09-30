@@ -109,11 +109,11 @@ export class MapperComponent implements OnInit, OnChanges, OnDestroy {
     this.editorService.insertText(node.snippet);
   }
 
-  onDragEnter(event: DragEvent) {
+  onDragEnter() {
     this.isDraggingOver = true;
   }
 
-  onDragLeave(event?: DragEvent) {
+  onDragLeave() {
     this.isDraggingOver = false;
   }
 

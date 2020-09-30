@@ -3,9 +3,9 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 
 import { SharedModule as FlogoSharedModule } from '@flogo-web/lib-client/common';
 import { SearchModule } from '@flogo-web/lib-client/search';
-import { SettingsComponent } from './settings/settings.component';
+import { MapperModule } from '@flogo-web/lib-client/mapper';
 
-import { MapperModule } from '../shared/mapper';
+import { SettingsComponent } from './settings/settings.component';
 import { FlowsListModule } from '../shared/flows-list';
 import { TaskConfiguratorComponent } from './task-configurator.component';
 import { IteratorComponent } from './iterator/iterator.component';

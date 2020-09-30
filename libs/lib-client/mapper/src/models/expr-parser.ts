@@ -8,7 +8,6 @@ import {
   ITokenLocation,
 } from './map-model';
 import { EnumMapperErrorCodes, IMappingError } from './imapping-error';
-// import * as mapparser from 'wi-mapper-parser';
 
 /**
  * Parse Location Wrapper

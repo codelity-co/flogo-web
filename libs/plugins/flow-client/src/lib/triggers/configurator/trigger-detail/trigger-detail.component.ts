@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { filter, switchMap, take, takeUntil } from 'rxjs/operators';
 
 import { SingleEmissionSubject } from '@flogo-web/lib-client/core';
+import { MapperController } from '@flogo-web/lib-client/mapper';
 
-import { MapperController } from '../../../shared/mapper/services/mapper-controller';
 import {
   TriggerConfigureSelectors,
   TriggerConfigureActions,

@@ -50,3 +50,11 @@ export const MAPPING_TYPE = {
 };
 
 export const ICON_SUBFLOW = '/assets/svg/subflow.svg';
+
+export const ROOT_TYPES = {
+  FLOW: 'flow',
+  ACTIVITY: 'activity',
+  TRIGGER: 'trigger',
+  ERROR: 'error',
+  ITERATOR: 'iterator',
+};

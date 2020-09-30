@@ -22,10 +22,9 @@ import {
 } from '@flogo-web/plugins/flow-core';
 
 import {
-  MapperTranslator,
   MapperControllerFactory,
   MapperController,
-} from '../shared/mapper';
+} from '@flogo-web/lib-client/mapper';
 import { Tabs } from '../shared/tabs/models/tabs.model';
 import {
   FlogoFlowService as FlowsService,
@@ -55,6 +54,8 @@ import {
 } from '../core/models/task-configure/get-input-context';
 import { getStateWhenConfigureChanges } from '../shared/configurator/configurator.selector';
 import { createSaveAction } from './models/save-action-creator';
+import { makeSnippet } from '../shared/mapper/make-snippet';
+import { MapperTranslator } from '../shared/mapper';
 
 const TASK_TABS = {
   SUBFLOW: 'subFlow',
@@ -415,7 +416,8 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
 
   private enableIteratorInInputMapper() {
     const iteratorNode = this.mapperControllerFactory.createNodeFromSchema(
-      getIteratorOutputSchema()
+      getIteratorOutputSchema(),
+      makeSnippet
     );
     this.inputMapperController.appendOutputNode(iteratorNode);
   }
@@ -442,7 +444,9 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
       iteratorContext.inputContext,
       this.inputScope,
       iteratorContext.mappings,
-      this.installedFunctions
+      this.installedFunctions,
+      makeSnippet,
+      MapperTranslator
     );
     this.adjustIteratorInInputMapper();
   }
@@ -472,7 +476,9 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
       propsToMap,
       inputScope,
       mappings,
-      this.installedFunctions
+      this.installedFunctions,
+      makeSnippet,
+      MapperTranslator
     );
     const subscription = controller.status$
       .pipe(skip(1), takeUntil(this.contextChange$))
