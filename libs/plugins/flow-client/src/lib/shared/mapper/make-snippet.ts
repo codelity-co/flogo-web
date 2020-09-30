@@ -1,6 +1,5 @@
-import { MapperTreeNode } from "@flogo-web/lib-client/mapper";
+import { MapperTreeNode } from '@flogo-web/lib-client/mapper';
 import { ROOT_TYPES } from '../../core';
-
 
 export function makeSnippet(nodes: MapperTreeNode[]) {
   const [root, propName] = nodes;
@@ -32,7 +31,5 @@ export function makeSnippet(nodes: MapperTreeNode[]) {
     expressionHead = nodeName.indexOf('$') === -1 ? '$.' + nodeName : nodeName;
     expressionTailParts = nodes.slice(1);
   }
-  return [expressionHead]
-    .concat(expressionTailParts.map(n => n.data.nodeName))
-    .join('.');
+  return [expressionHead].concat(expressionTailParts.map(n => n.data.nodeName)).join('.');
 }

@@ -31,7 +31,13 @@ export class MapperControllerFactory {
     makeSnippet: (nodes) => string,
     MapperTranslator
   ): MapperController {
-    const context = createMapperContext(input, output, mappings, functions, MapperTranslator);
+    const context = createMapperContext(
+      input,
+      output,
+      mappings,
+      functions,
+      MapperTranslator
+    );
     return new MapperController(
       this.createStateFromContext(context, makeSnippet),
       this.nodeFactory,
@@ -39,7 +45,10 @@ export class MapperControllerFactory {
     );
   }
 
-  createNodeFromSchema(schema: MapperSchema, makeSnippet: (nodes) => string): MapperTreeNode {
+  createNodeFromSchema(
+    schema: MapperSchema,
+    makeSnippet: (nodes) => string
+  ): MapperTreeNode {
     const [node] = this.createOutputTree(schema, makeSnippet);
     return node;
   }
@@ -84,7 +93,12 @@ export class MapperControllerFactory {
     makeSnippet: (nodes) => string
   ): { functions: MapperTreeNode[]; outputs: MapperTreeNode[] } {
     if (node) {
-      const outputContext = this.makeOutputContext(node, context.outputSchemas, mappings, makeSnippet);
+      const outputContext = this.makeOutputContext(
+        node,
+        context.outputSchemas,
+        mappings,
+        makeSnippet
+      );
       return {
         outputs: outputContext.tree,
         functions: this.nodeFactory.fromFunctions(context.functions),

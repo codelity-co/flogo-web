@@ -21,10 +21,7 @@ import {
   hasTaskWithSameName,
 } from '@flogo-web/plugins/flow-core';
 
-import {
-  MapperControllerFactory,
-  MapperController,
-} from '@flogo-web/lib-client/mapper';
+import { MapperControllerFactory, MapperController } from '@flogo-web/lib-client/mapper';
 import { Tabs } from '../shared/tabs/models/tabs.model';
 import {
   FlogoFlowService as FlowsService,

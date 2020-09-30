@@ -1,12 +1,13 @@
 import { ValueType } from '@flogo-web/core';
-import { MapperControllerFactory } from '../../../shared/mapper';
+import { MapperControllerFactory } from '@flogo-web/lib-client/mapper';
 import { CurrentTriggerState } from '../interfaces';
 import { ConfigureTriggerSchema, ConfigureTriggersMock } from '../mocks/triggers.mock';
 import { ConfigureDetailsService } from './details.service';
 import { SettingsFormBuilder } from './settings-form-builder';
+import { makeSnippet, MapperTranslator } from '../../../shared/mapper';
 import SpyObj = jasmine.SpyObj;
 
-describe('Serive: ConfigureDetailsService', function(this: {
+describe('Service: ConfigureDetailsService', function(this: {
   testService: ConfigureDetailsService;
   settingsFormBuilder: SpyObj<SettingsFormBuilder>;
   mapperControllerFactory: SpyObj<MapperControllerFactory>;
@@ -68,6 +69,8 @@ describe('Serive: ConfigureDetailsService', function(this: {
       MockData.flowMetadata.output,
       MockData.handler.actionMappings.output,
       MockData.functions,
+      makeSnippet,
+      MapperTranslator,
     ]);
   });
 });

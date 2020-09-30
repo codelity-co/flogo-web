@@ -16,7 +16,11 @@ import {
   MapperSchema,
   Properties as MapperSchemaProperties,
 } from '../../../task-configurator/models';
-import { Mappings, MapExpression, AttributeDescriptor } from '@flogo-web/lib-client/mapper';
+import {
+  Mappings,
+  MapExpression,
+  AttributeDescriptor,
+} from '@flogo-web/lib-client/mapper';
 
 export type MappingsValidatorFn = (mappings: Mappings) => boolean;
 

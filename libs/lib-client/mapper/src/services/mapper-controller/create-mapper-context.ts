@@ -1,8 +1,5 @@
 import { InstalledFunctionSchema } from '@flogo-web/lib-client/core';
-import {
-  AttributeDescriptor,
-  StaticMapperContextFactory,
-} from '../../utils';
+import { AttributeDescriptor, StaticMapperContextFactory } from '../../utils';
 
 export function createMapperContext(
   input: AttributeDescriptor[],
