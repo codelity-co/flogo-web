@@ -16,6 +16,8 @@ import { TreeNodeFactoryService } from '../tree-node-factory.service';
 import { MapperController } from './mapper-controller';
 import { createMapperContext } from './create-mapper-context';
 
+type CreateSnippetFn = (nodes: MapperTreeNode[]) => string;
+
 @Injectable()
 export class MapperControllerFactory {
   constructor(
@@ -28,7 +30,7 @@ export class MapperControllerFactory {
     output: AttributeDescriptor[],
     mappings: any,
     functions: InstalledFunctionSchema[],
-    makeSnippet: (nodes) => string,
+    makeSnippet: CreateSnippetFn,
     MapperTranslator
   ): MapperController {
     const context = createMapperContext(
@@ -47,13 +49,13 @@ export class MapperControllerFactory {
 
   createNodeFromSchema(
     schema: MapperSchema,
-    makeSnippet: (nodes) => string
+    makeSnippet: CreateSnippetFn
   ): MapperTreeNode {
     const [node] = this.createOutputTree(schema, makeSnippet);
     return node;
   }
 
-  private createStateFromContext(context: MapperContext, makeSnippet: (nodes) => string) {
+  private createStateFromContext(context: MapperContext, makeSnippet: CreateSnippetFn) {
     const newState = this.getInitialState();
     newState.mappings = context.mappings || {};
     const flattenedMappings = this.nodeFactory.flatMappings(newState.mappings);
@@ -90,7 +92,7 @@ export class MapperControllerFactory {
     node: MapperTreeNode,
     mappings: Mappings,
     context: MapperContext,
-    makeSnippet: (nodes) => string
+    makeSnippet: CreateSnippetFn
   ): { functions: MapperTreeNode[]; outputs: MapperTreeNode[] } {
     if (node) {
       const outputContext = this.makeOutputContext(
@@ -112,7 +114,7 @@ export class MapperControllerFactory {
     selectedNode: MapperTreeNode,
     outputSchemas: any,
     allMappings: Mappings,
-    makeSnippet: (nodes) => string
+    makeSnippet: CreateSnippetFn
   ): OutputContext {
     const arrayParentsOfSelectedNode = this.treeService.extractArrayParents(selectedNode);
     let mappings = allMappings;
@@ -169,7 +171,7 @@ export class MapperControllerFactory {
     };
   }
 
-  private createOutputTree(outputSchemas: MapperSchema, makeSnippet: (nodes) => string) {
+  private createOutputTree(outputSchemas: MapperSchema, makeSnippet: CreateSnippetFn) {
     return this.nodeFactory.fromJsonSchema(
       outputSchemas,
       (
