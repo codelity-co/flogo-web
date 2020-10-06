@@ -13,7 +13,7 @@ export interface IMapperTranslator {
     tiles,
     additionalSchemas?: MapperSchemaProperties,
     includeEmptySchemas?: boolean
-  ): MapperSchema
+  ): MapperSchema;
 
   attributesToObjectDescriptor(
     attributes: AttributeDescriptor[],

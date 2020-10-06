@@ -18,12 +18,13 @@ import {
   ContribInstallerModule,
   ContribInstallerService,
 } from '@flogo-web/lib-client/contrib-installer';
+import { ModalService } from '@flogo-web/lib-client/modal';
 import { MicroServiceModelConverter } from '../core';
 import { featureReducer, FlowState, Init, INITIAL_STATE } from '../core/state';
 import { FlogoFlowTriggersPanelComponent } from './triggers.component';
 import { TriggerBlockComponent } from './trigger-block';
 import { ConfiguratorModule as TriggersConfiguratorModule } from './configurator';
-import { ModalService } from '@flogo-web/lib-client/modal';
+import { MapperTranslatorModule } from '../shared/mapper/mapper-translator';
 
 const TEST_STATE: FlowState = {
   ...INITIAL_STATE,
@@ -179,6 +180,7 @@ describe('Component: TriggersComponent', () => {
         StoreModule.forRoot({
           flow: featureReducer,
         }),
+        MapperTranslatorModule,
       ],
       declarations: [FlogoFlowTriggersPanelComponent, TriggerBlockComponent],
       providers: [

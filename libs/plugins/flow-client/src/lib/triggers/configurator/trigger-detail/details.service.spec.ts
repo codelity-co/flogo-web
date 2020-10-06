@@ -11,6 +11,7 @@ describe('Service: ConfigureDetailsService', function(this: {
   testService: ConfigureDetailsService;
   settingsFormBuilder: SpyObj<SettingsFormBuilder>;
   mapperControllerFactory: SpyObj<MapperControllerFactory>;
+  mapperTranslator: SpyObj<MapperTranslator>;
 }) {
   const MockData: CurrentTriggerState = {
     appId: 'test_app',
@@ -44,10 +45,12 @@ describe('Service: ConfigureDetailsService', function(this: {
     const nameAsyncValidator = jasmine.createSpyObj('triggerNameValidatorService', [
       'create',
     ]);
+    this.mapperTranslator = jasmine.createSpyObj('mapperTranslator', ['']);
     this.testService = new ConfigureDetailsService(
       this.settingsFormBuilder,
       this.mapperControllerFactory,
-      nameAsyncValidator
+      nameAsyncValidator,
+      this.mapperTranslator
     );
   });
 
@@ -70,7 +73,7 @@ describe('Service: ConfigureDetailsService', function(this: {
       MockData.handler.actionMappings.output,
       MockData.functions,
       makeSnippet,
-      MapperTranslator,
+      this.mapperTranslator,
     ]);
   });
 });
