@@ -12,14 +12,12 @@ import {
   ROOT_TYPES,
 } from '../../../core';
 // todo: shared models should be moved to core
-import {
-  FlowMetadata,
-  MapperSchema,
-  Properties as MapperSchemaProperties,
-} from '../../../task-configurator/models';
+import { FlowMetadata } from '../../../task-configurator/models';
 import {
   Mappings,
   MapExpression,
+  MapperSchema,
+  Properties as MapperSchemaProperties,
   AttributeDescriptor,
   IMapperTranslator,
   MappingsValidatorFn,

@@ -1,9 +1,10 @@
-import { AttributeDescriptor, Mappings } from '@flogo-web/lib-client/mapper';
 import {
-  FlowMetadata,
+  AttributeDescriptor,
+  Mappings,
   MapperSchema,
   Properties as MapperSchemaProperties,
-} from '../../../../plugins/flow-client/src/lib/task-configurator/models';
+} from '@flogo-web/lib-client/mapper';
+import { FlowMetadata } from '../../../../plugins/flow-client/src/lib/task-configurator/models';
 import { Task } from '../../../../plugins/flow-client/src/lib/core';
 import { Dictionary } from '@flogo-web/lib-client/core';
 
