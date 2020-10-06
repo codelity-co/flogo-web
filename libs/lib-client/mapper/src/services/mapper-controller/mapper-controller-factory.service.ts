@@ -10,7 +10,7 @@ import {
   OutputContext,
 } from '../../models';
 import { ArrayMappingHelper, ArrayMappingInfo } from '../../models/array-mapping';
-import { AttributeDescriptor } from '../../utils';
+import { AttributeDescriptor, IMapperTranslator } from '../../utils';
 import { TreeService } from '../tree.service';
 import { TreeNodeFactoryService } from '../tree-node-factory.service';
 import { MapperController } from './mapper-controller';
@@ -31,14 +31,14 @@ export class MapperControllerFactory {
     mappings: any,
     functions: InstalledFunctionSchema[],
     makeSnippet: CreateSnippetFn,
-    MapperTranslator
+    mapperTranslator: IMapperTranslator
   ): MapperController {
     const context = createMapperContext(
       input,
       output,
       mappings,
       functions,
-      MapperTranslator
+      mapperTranslator
     );
     return new MapperController(
       this.createStateFromContext(context, makeSnippet),

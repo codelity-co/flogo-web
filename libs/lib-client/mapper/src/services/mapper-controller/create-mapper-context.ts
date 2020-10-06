@@ -1,16 +1,20 @@
 import { InstalledFunctionSchema } from '@flogo-web/lib-client/core';
-import { AttributeDescriptor, StaticMapperContextFactory } from '../../utils';
+import {
+  AttributeDescriptor,
+  IMapperTranslator,
+  StaticMapperContextFactory,
+} from '../../utils';
 
 export function createMapperContext(
   input: AttributeDescriptor[],
   output: any[],
   handlerMappings: any[],
   functions: InstalledFunctionSchema[],
-  MapperTranslator
+  mapperTranslator: IMapperTranslator
 ) {
-  const inputSchema = MapperTranslator.attributesToObjectDescriptor(input || []);
-  const outputSchema = MapperTranslator.createOutputSchema(output || []);
-  const mappings = MapperTranslator.translateMappingsIn(handlerMappings || []);
+  const inputSchema = mapperTranslator.attributesToObjectDescriptor(input || []);
+  const outputSchema = mapperTranslator.createOutputSchema(output || []);
+  const mappings = mapperTranslator.translateMappingsIn(handlerMappings || []);
   return StaticMapperContextFactory.create(
     inputSchema,
     outputSchema,

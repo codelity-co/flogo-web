@@ -4,6 +4,7 @@ import { SharedModule as FlogoSharedModule } from '@flogo-web/lib-client/common'
 import { MapperModule } from '@flogo-web/lib-client/mapper';
 
 import { BranchConfiguratorComponent } from './branch-configurator.component';
+import { MapperTranslatorModule } from '../shared/mapper';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { BranchConfiguratorComponent } from './branch-configurator.component';
     NgCommonModule,
     FlogoSharedModule,
     MapperModule,
+    MapperTranslatorModule,
   ],
   declarations: [BranchConfiguratorComponent],
   exports: [BranchConfiguratorComponent],

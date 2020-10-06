@@ -51,8 +51,7 @@ import {
 } from '../core/models/task-configure/get-input-context';
 import { getStateWhenConfigureChanges } from '../shared/configurator/configurator.selector';
 import { createSaveAction } from './models/save-action-creator';
-import { makeSnippet } from '../shared/mapper/make-snippet';
-import { MapperTranslator } from '../shared/mapper';
+import { MapperTranslator, makeSnippet } from '../shared/mapper';
 
 const TASK_TABS = {
   SUBFLOW: 'subFlow',
@@ -136,7 +135,8 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
     private flowsService: FlowsService,
     private mapperControllerFactory: MapperControllerFactory,
     private notificationsService: NotificationsService,
-    private httpUtilsService: HttpUtilsService
+    private httpUtilsService: HttpUtilsService,
+    private mapperTranslator: MapperTranslator
   ) {
     this.isSubflowType = false;
     this.resetState();
@@ -213,7 +213,7 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
     const isIterable =
       this.iteratorModeOn && isAcceptableIterateValue(this.iterableValue);
     let activitySettings = this.settingsController
-      ? MapperTranslator.translateMappingsOut(
+      ? this.mapperTranslator.translateMappingsOut(
           this.settingsController.getCurrentState().mappings
         )
       : undefined;
@@ -233,7 +233,7 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
         isIterable,
         iterableValue: isIterable ? this.iterableValue : undefined,
       },
-      inputMappings: MapperTranslator.translateMappingsOut(
+      inputMappings: this.mapperTranslator.translateMappingsOut(
         this.inputMapperController.getCurrentState().mappings
       ),
       activitySettings,
@@ -280,7 +280,7 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
   }
 
   private onIteratorValueChange(newValue: any) {
-    this.tabs.get(TASK_TABS.ITERATOR).isValid = MapperTranslator.isValidExpression(
+    this.tabs.get(TASK_TABS.ITERATOR).isValid = this.mapperTranslator.isValidExpression(
       newValue
     );
     this.iterableValue = newValue;
@@ -392,7 +392,7 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
       this.iteratorController.state$
         .pipe(takeUntil(this.contextChange$))
         .subscribe(mapperState => {
-          const iterableMapping = MapperTranslator.translateMappingsOut(
+          const iterableMapping = this.mapperTranslator.translateMappingsOut(
             mapperState.mappings
           );
           if (iterableMapping.hasOwnProperty(ITERABLE_VALUE_KEY)) {
@@ -443,7 +443,7 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
       iteratorContext.mappings,
       this.installedFunctions,
       makeSnippet,
-      MapperTranslator
+      this.mapperTranslator
     );
     this.adjustIteratorInInputMapper();
   }
@@ -475,7 +475,7 @@ export class TaskConfiguratorComponent implements OnInit, OnDestroy {
       mappings,
       this.installedFunctions,
       makeSnippet,
-      MapperTranslator
+      this.mapperTranslator
     );
     const subscription = controller.status$
       .pipe(skip(1), takeUntil(this.contextChange$))

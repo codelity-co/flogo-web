@@ -10,6 +10,7 @@ import { FlowsListModule } from '../shared/flows-list';
 import { TaskConfiguratorComponent } from './task-configurator.component';
 import { IteratorComponent } from './iterator/iterator.component';
 import { SubFlowComponent } from './subflow/subflow.component';
+import { MapperTranslatorModule } from '../shared/mapper/mapper-translator';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { SubFlowComponent } from './subflow/subflow.component';
     MapperModule,
     FlowsListModule,
     SearchModule,
+    MapperTranslatorModule,
   ],
   declarations: [
     IteratorComponent,

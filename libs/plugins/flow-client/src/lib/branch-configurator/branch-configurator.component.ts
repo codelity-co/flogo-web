@@ -21,8 +21,7 @@ import * as FlowActions from '../core/state/flow/flow.actions';
 import { createSaveBranchAction } from '../task-configurator/models/save-action-creator';
 import { createBranchMappingContext } from './branch-configurator-context';
 import * as FlowSelectors from '../core/state/flow/flow.selectors';
-import { makeSnippet } from '../shared/mapper/make-snippet';
-import { MapperTranslator } from '../shared/mapper';
+import { MapperTranslator, makeSnippet } from '../shared/mapper';
 
 @Component({
   selector: 'flogo-flow-branch-configurator',
@@ -57,7 +56,8 @@ export class BranchConfiguratorComponent implements OnInit {
     private store: Store<AppState>,
     private _flowService: FlowsService,
     private translate: LanguageService,
-    private mapperControllerFactory: MapperControllerFactory
+    private mapperControllerFactory: MapperControllerFactory,
+    private mapperTranslator: MapperTranslator
   ) {}
 
   ngOnInit() {
@@ -127,7 +127,7 @@ export class BranchConfiguratorComponent implements OnInit {
       mappings,
       this.installedFunctions,
       makeSnippet,
-      MapperTranslator
+      this.mapperTranslator
     );
     this.inputMapperStateSubscription = this.inputMapperController.state$
       .pipe(skip(1), takeUntil(this.contextChange$))
