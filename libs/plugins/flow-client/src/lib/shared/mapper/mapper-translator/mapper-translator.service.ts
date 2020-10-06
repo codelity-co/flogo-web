@@ -1,18 +1,9 @@
 import { Injectable } from '@angular/core';
 import { isString, isObject, isArray, fromPairs } from 'lodash';
+
 import { resolveExpressionType } from '@flogo-web/parser';
 import { EXPR_PREFIX, ValueType } from '@flogo-web/core';
 import { Dictionary } from '@flogo-web/lib-client/core';
-
-import {
-  Task,
-  FLOGO_ERROR_ROOT_NAME,
-  FLOGO_TASK_TYPE,
-  MAPPING_TYPE,
-  ROOT_TYPES,
-} from '../../../core';
-// todo: shared models should be moved to core
-import { FlowMetadata } from '../../../task-configurator/models';
 import {
   Mappings,
   MapExpression,
@@ -22,6 +13,15 @@ import {
   IMapperTranslator,
   MappingsValidatorFn,
 } from '@flogo-web/lib-client/mapper';
+
+import {
+  Task,
+  FLOGO_ERROR_ROOT_NAME,
+  FLOGO_TASK_TYPE,
+  MAPPING_TYPE,
+  ROOT_TYPES,
+} from '../../../core';
+import { FlowMetadata } from '../../../task-configurator/models';
 
 const stringify = v => JSON.stringify(v, null, 2);
 
@@ -39,14 +39,6 @@ function getEnumDescriptor(attr: AttributeDescriptor) {
 
 @Injectable()
 export class MapperTranslator implements IMapperTranslator {
-  createInputSchema(tile: Task): MapperSchema {
-    let attributes = [];
-    if (tile.attributes && tile.attributes.inputs) {
-      attributes = tile.attributes.inputs;
-    }
-    return this.attributesToObjectDescriptor(attributes);
-  }
-
   createOutputSchema(
     tiles: Array<Task | FlowMetadata>,
     additionalSchemas?: MapperSchemaProperties,
@@ -177,7 +169,7 @@ export class MapperTranslator implements IMapperTranslator {
     return { mappingType, value };
   }
 
-  getRootType(tile: Task | FlowMetadata) {
+  getRootType(tile: Task | FlowMetadata): string {
     if (tile.type === FLOGO_TASK_TYPE.TASK_ROOT) {
       return tile.triggerType === FLOGO_ERROR_ROOT_NAME
         ? ROOT_TYPES.ERROR
@@ -200,7 +192,7 @@ export class MapperTranslator implements IMapperTranslator {
     };
   }
 
-  isValidExpression(expression: any) {
+  isValidExpression(expression: any): boolean {
     return isValidExpression(this.rawExpressionToString(expression));
   }
 
