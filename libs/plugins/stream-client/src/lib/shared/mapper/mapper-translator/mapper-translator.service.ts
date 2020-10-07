@@ -1,22 +1,22 @@
+import { Injectable } from '@angular/core';
 import { isString, isObject, isArray, fromPairs } from 'lodash';
+
 import { resolveExpressionType } from '@flogo-web/parser';
 import { EXPR_PREFIX, ValueType } from '@flogo-web/core';
 import { Dictionary } from '@flogo-web/lib-client/core';
 import {
   Mappings,
   MapExpression,
-  AttributeDescriptor,
   MapperSchema,
   Properties as MapperSchemaProperties,
+  AttributeDescriptor,
+  IMapperTranslator,
+  MappingsValidatorFn,
 } from '@flogo-web/lib-client/mapper';
 
 import { MAPPING_TYPE, ROOT_TYPES } from '../../../core';
-import {
-  StreamMetadata,
-} from '../../../stage-configurator/models';
+import { StreamMetadata } from '../../../stage-configurator/models';
 import { FLOGO_ACTIVITY_TYPE, SchemaOutputs } from '../../../core/interfaces';
-
-export type MappingsValidatorFn = (mappings: Mappings) => boolean;
 
 const stringify = v => JSON.stringify(v, null, 2);
 
@@ -32,8 +32,9 @@ function getEnumDescriptor(attr: AttributeDescriptor) {
   return Array.from(new Set(allowed).values());
 }
 
-export class MapperTranslator {
-  static createOutputSchema(
+@Injectable()
+export class MapperTranslator implements IMapperTranslator {
+  createOutputSchema(
     tiles: Array<StreamMetadata | SchemaOutputs>,
     additionalSchemas?: MapperSchemaProperties
   ): MapperSchema {
@@ -41,10 +42,10 @@ export class MapperTranslator {
     tiles.forEach(tile => {
       switch (tile.type) {
         case FLOGO_ACTIVITY_TYPE:
-          MapperTranslator.addTileToOutputContext(rootSchema, tile);
+          this.addTileToOutputContext(rootSchema, tile);
           break;
         case 'metadata':
-          MapperTranslator.addStreamMetadataToOutputSchema(rootSchema, tile);
+          this.addStreamMetadataToOutputSchema(rootSchema, tile);
           break;
         default:
           rootSchema.properties[tile['name']] = { type: tile.type };
@@ -56,18 +57,16 @@ export class MapperTranslator {
     return rootSchema;
   }
 
-  private static addStreamMetadataToOutputSchema(rootSchema, streamMetadata) {
+  private addStreamMetadataToOutputSchema(rootSchema, streamMetadata) {
     const streamInputs = streamMetadata.input;
     if (streamInputs && streamInputs.length > 0) {
-      const streamInputsSchema = MapperTranslator.attributesToObjectDescriptor(
-        streamInputs
-      );
-      streamInputsSchema.rootType = MapperTranslator.getRootType(streamMetadata);
+      const streamInputsSchema = this.attributesToObjectDescriptor(streamInputs);
+      streamInputsSchema.rootType = this.getRootType(streamMetadata);
       rootSchema.properties[ROOT_TYPES.PIPELINE] = streamInputsSchema;
     }
   }
 
-  static attributesToObjectDescriptor(
+  attributesToObjectDescriptor(
     attributes: AttributeDescriptor[],
     additionalProps?: { [key: string]: any }
   ): MapperSchema {
@@ -94,18 +93,16 @@ export class MapperTranslator {
     };
   }
 
-  static translateMappingsIn(inputMappings: any) {
+  translateMappingsIn(inputMappings: any) {
     inputMappings = inputMappings || {};
     return Object.keys(inputMappings).reduce((mappings, input) => {
-      const { value, mappingType } = MapperTranslator.processInputValue(
-        inputMappings[input]
-      );
+      const { value, mappingType } = this.processInputValue(inputMappings[input]);
       mappings[input] = { expression: value, mappingType };
       return mappings;
     }, {});
   }
 
-  static rawExpressionToString(
+  rawExpressionToString(
     rawExpression: any,
     inputType: number = MAPPING_TYPE.LITERAL_ASSIGNMENT
   ) {
@@ -128,7 +125,7 @@ export class MapperTranslator {
     }
   }
 
-  static translateMappingsOut(mappings: {
+  translateMappingsOut(mappings: {
     [attr: string]: { expression: string; mappingType?: number };
   }): Dictionary<any> {
     return (
@@ -140,14 +137,14 @@ export class MapperTranslator {
         )
         .reduce((inputs, attrName) => {
           const mapping = mappings[attrName];
-          const { value } = MapperTranslator.parseExpression(mapping.expression);
+          const { value } = this.parseExpression(mapping.expression);
           inputs[attrName] = value;
           return inputs;
         }, {})
     );
   }
 
-  static parseExpression(expression: string) {
+  parseExpression(expression: string) {
     const mappingType = mappingTypeFromExpression(expression);
     let value: any = expression;
     if (mappingType === MAPPING_TYPE.LITERAL_ASSIGNMENT) {
@@ -163,14 +160,14 @@ export class MapperTranslator {
     return { mappingType, value };
   }
 
-  static getRootType(tile: SchemaOutputs | StreamMetadata) {
+  getRootType(tile: SchemaOutputs | StreamMetadata): string {
     if (tile.type === 'metadata') {
       return ROOT_TYPES.PIPELINE;
     }
     return ROOT_TYPES.STAGE;
   }
 
-  static makeValidator(): MappingsValidatorFn {
+  makeValidator(): MappingsValidatorFn {
     return (mappings: Mappings) => {
       if (!mappings) {
         return true;
@@ -182,20 +179,20 @@ export class MapperTranslator {
     };
   }
 
-  static isValidExpression(expression: any) {
-    return isValidExpression(MapperTranslator.rawExpressionToString(expression));
+  isValidExpression(expression: any): boolean {
+    return isValidExpression(this.rawExpressionToString(expression));
   }
 
-  private static processInputValue(inputValue: any) {
-    const value = MapperTranslator.rawExpressionToString(inputValue);
+  private processInputValue(inputValue: any) {
+    const value = this.rawExpressionToString(inputValue);
     return { value, mappingType: mappingTypeFromExpression(value) };
   }
 
-  private static addTileToOutputContext(rootSchema, tile) {
+  private addTileToOutputContext(rootSchema, tile) {
     const outputs = tile.outputs;
     if (outputs && outputs.length) {
-      const tileSchema = MapperTranslator.attributesToObjectDescriptor(outputs || []);
-      tileSchema.rootType = MapperTranslator.getRootType(tile);
+      const tileSchema = this.attributesToObjectDescriptor(outputs || []);
+      tileSchema.rootType = this.getRootType(tile);
       const propName = tile.stage;
       rootSchema.properties[propName] = tileSchema;
     }

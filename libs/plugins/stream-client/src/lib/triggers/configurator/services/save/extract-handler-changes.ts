@@ -1,15 +1,16 @@
 import { fromPairs, isEqual } from 'lodash';
 import { FormGroup } from '@angular/forms';
 import { Dictionary, TriggerHandler } from '@flogo-web/lib-client/core';
-import { MapperController} from '@flogo-web/lib-client/mapper';
-import { MapperTranslator } from '../../../../shared/mapper';
+import { MapperController } from '@flogo-web/lib-client/mapper';
+
 import { SettingControlGroup } from '../../interfaces';
 import { SaveParams } from './save-params';
 import { convertSettingsFormValues } from './convert-setting-form-values';
 
 export function extractHandlerChanges(
   oldHandler: TriggerHandler,
-  { settings, streamInputMapper, replyMapper }: SaveParams
+  { settings, streamInputMapper, replyMapper }: SaveParams,
+  extractMappings: (mapperController: MapperController) => Dictionary<any>
 ) {
   const changes = [];
   const settingChanges = checkForSettingChanges(settings);
@@ -18,6 +19,7 @@ export function extractHandlerChanges(
   }
   const mappingChanges = checkForMappingChanges(
     oldHandler,
+    extractMappings,
     streamInputMapper,
     replyMapper
   );
@@ -40,6 +42,7 @@ function checkForSettingChanges(settings: FormGroup) {
 
 function checkForMappingChanges(
   prevHandler: TriggerHandler,
+  extractMappings: (mapperController: MapperController) => Dictionary<any>,
   streamInputMapper?: MapperController,
   replyMapper?: MapperController
 ) {
@@ -52,8 +55,4 @@ function checkForMappingChanges(
     newMappings = { ...newMappings, output: extractMappings(replyMapper) };
   }
   return !isEqual(newMappings, originalMappings) ? newMappings : null;
-}
-
-function extractMappings(mapperController: MapperController): Dictionary<any> {
-  return MapperTranslator.translateMappingsOut(mapperController.getMappings());
 }

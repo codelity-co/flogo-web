@@ -1,9 +1,10 @@
-import { MapperTranslator } from './mapper-translator';
+import { MapperTranslator } from './mapper-translator.service';
 import { MAPPING_TYPE } from '../../../core';
 
-describe('MapperTranslator', function() {
+describe('Service: MapperTranslator', function() {
+  const mapperTranslator = new MapperTranslator();
   describe('#translateMappingsIn', function() {
-    const translatedMappings = MapperTranslator.translateMappingsIn({
+    const translatedMappings = mapperTranslator.translateMappingsIn({
       simpleNumber: '1',
       simpleFalsyValue: 'false',
       simpleString: 'my string',
@@ -59,7 +60,7 @@ describe('MapperTranslator', function() {
   });
 
   describe('#translateMappingsOut', function() {
-    const translatedMappings = MapperTranslator.translateMappingsOut({
+    const translatedMappings = mapperTranslator.translateMappingsOut({
       simpleNumber: { expression: '1.2' },
       simpleString: { expression: '"hello"' },
       backQuoteString: { expression: '`back quote string`' },
@@ -103,7 +104,7 @@ describe('MapperTranslator', function() {
   });
 
   describe('#makeValidator', function() {
-    const isValidMapping = MapperTranslator.makeValidator();
+    const isValidMapping = mapperTranslator.makeValidator();
     it('creates a validator function', function() {
       expect(isValidMapping).toEqual(jasmine.any(Function));
     });

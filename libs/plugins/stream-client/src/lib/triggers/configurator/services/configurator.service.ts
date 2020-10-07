@@ -8,7 +8,9 @@ import {
   TriggerHandler,
   HandlersService,
   TriggersService,
+  Dictionary,
 } from '@flogo-web/lib-client/core';
+import { MapperController } from '@flogo-web/lib-client/mapper';
 
 import { StreamStoreState as AppState } from '../../../core/state';
 import * as TriggerActions from '../../../core/state/triggers/triggers.actions';
@@ -20,6 +22,7 @@ import {
 import { SaveParams } from './save/save-params';
 import { extractTriggerChanges } from './save/extract-trigger-changes';
 import { extractHandlerChanges } from './save/extract-handler-changes';
+import { MapperTranslator } from '../../../shared/mapper/mapper-translator';
 
 @Injectable()
 export class ConfiguratorService {
@@ -28,7 +31,8 @@ export class ConfiguratorService {
   constructor(
     private store: Store<AppState>,
     private triggerService: TriggersService,
-    private handlersService: HandlersService
+    private handlersService: HandlersService,
+    private mapperTranslator: MapperTranslator
   ) {}
 
   setParams(params: SaveParams) {
@@ -67,7 +71,11 @@ export class ConfiguratorService {
     currentHandler: TriggerHandler,
     saveParams: SaveParams
   ) {
-    const changes = extractHandlerChanges(currentHandler, saveParams);
+    const extractMappings = (mapperController: MapperController): Dictionary<any> => {
+      return this.mapperTranslator.translateMappingsOut(mapperController.getMappings());
+    };
+
+    const changes = extractHandlerChanges(currentHandler, saveParams, extractMappings);
     if (changes) {
       return this.handlersService
         .updateHandler(triggerId, actionId, changes)

@@ -21,7 +21,8 @@ export class ConfigureDetailsService {
   constructor(
     private settingsFormBuilder: SettingsFormBuilder,
     private mapperControllerFactory: MapperControllerFactory,
-    private nameValidator: TriggerNameValidatorService
+    private nameValidator: TriggerNameValidatorService,
+    private mapperTranslator: MapperTranslator
   ) {}
 
   build(state: CurrentTriggerState) {
@@ -101,7 +102,7 @@ export class ConfigureDetailsService {
       output,
       functions,
       makeSnippet,
-      MapperTranslator
+      this.mapperTranslator
     );
   }
 
@@ -122,7 +123,7 @@ export class ConfigureDetailsService {
       input,
       functions,
       makeSnippet,
-      MapperTranslator
+      this.mapperTranslator
     );
   }
 
