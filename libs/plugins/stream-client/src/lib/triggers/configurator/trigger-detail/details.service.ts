@@ -5,7 +5,7 @@ import {
   TriggerSchema,
 } from '@flogo-web/core';
 import { Dictionary, TriggerHandler } from '@flogo-web/lib-client/core';
-import { MapperController, MapperControllerFactory } from '../../../shared/mapper';
+import { MapperController, MapperControllerFactory } from '@flogo-web/lib-client/mapper';
 import {
   CurrentTriggerState,
   SettingControlInfo,
@@ -14,6 +14,7 @@ import {
 import { SettingsFormBuilder } from './settings-form-builder';
 import { createValidatorsForSchema } from './settings-validation';
 import { TriggerNameValidatorService } from './trigger-name-validator.service';
+import { makeSnippet, MapperTranslator } from '../../../shared/mapper';
 
 @Injectable()
 export class ConfigureDetailsService {
@@ -98,7 +99,9 @@ export class ConfigureDetailsService {
       triggerSchema.reply || [],
       streamMetadata && streamMetadata.output ? streamMetadata.output : [],
       output,
-      functions
+      functions,
+      makeSnippet,
+      MapperTranslator
     );
   }
 
@@ -117,7 +120,9 @@ export class ConfigureDetailsService {
       streamInput,
       triggerSchema.outputs || [],
       input,
-      functions
+      functions,
+      makeSnippet,
+      MapperTranslator
     );
   }
 

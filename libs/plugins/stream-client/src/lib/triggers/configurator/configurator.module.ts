@@ -8,8 +8,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 
 import { SharedModule as FlogoSharedModule } from '@flogo-web/lib-client/common';
 import { TriggerSharedModule } from '@flogo-web/lib-client/trigger-shared';
+import { MapperModule } from '@flogo-web/lib-client/mapper';
 
-import { MapperModule } from '../../shared/mapper';
 import { MonacoEditorModule } from '@flogo-web/editor';
 import { ConfiguratorService } from './services/configurator.service';
 import { ConfiguratorComponent } from './configurator.component';

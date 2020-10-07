@@ -23,7 +23,7 @@
     cdkScrollable
   >
   </flogo-stream-triggers-configuration-settings>
-  <flogo-stream-mapper
+  <flogo-mapper
     *ngSwitchCase="TAB_TYPES.StreamInputMappings"
     class="mapper content__mapper"
     [controller]="streamInputMapperController"
@@ -32,8 +32,8 @@
     }}"
     outputsSearchPlaceHolder="{{ 'TRIGGER-MAPPER:LABEL-TRIGGER-OUTPUT' | translate }}"
   >
-  </flogo-stream-mapper>
-  <flogo-stream-mapper
+  </flogo-mapper>
+  <flogo-mapper
     *ngSwitchCase="TAB_TYPES.StreamOutputMappings"
     class="mapper content__mapper"
     [controller]="replyMapperController"
@@ -44,5 +44,5 @@
       'STREAMS.TRIGGER-MAPPER:LABEL-STREAM-OUTPUTS' | translate
     }}"
   >
-  </flogo-stream-mapper>
+  </flogo-mapper>
 </ng-container>

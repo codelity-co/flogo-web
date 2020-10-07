@@ -1,5 +1,5 @@
 import { ValueType } from '@flogo-web/core';
-import { MapperControllerFactory } from '../../../shared/mapper';
+import { MapperControllerFactory } from '@flogo-web/lib-client/mapper';
 import { CurrentTriggerState } from '../interfaces';
 import { ConfigureTriggerSchema, ConfigureTriggersMock } from '../mocks/triggers.mock';
 import { ConfigureDetailsService } from './details.service';

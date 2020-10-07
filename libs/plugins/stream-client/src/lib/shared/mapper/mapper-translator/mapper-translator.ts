@@ -2,24 +2,21 @@ import { isString, isObject, isArray, fromPairs } from 'lodash';
 import { resolveExpressionType } from '@flogo-web/parser';
 import { EXPR_PREFIX, ValueType } from '@flogo-web/core';
 import { Dictionary } from '@flogo-web/lib-client/core';
-
-import { MAPPING_TYPE, ROOT_TYPES } from '../../../core';
-// todo: shared models should be moved to core
 import {
-  StreamMetadata,
+  Mappings,
+  MapExpression,
+  AttributeDescriptor,
   MapperSchema,
   Properties as MapperSchemaProperties,
+} from '@flogo-web/lib-client/mapper';
+
+import { MAPPING_TYPE, ROOT_TYPES } from '../../../core';
+import {
+  StreamMetadata,
 } from '../../../stage-configurator/models';
-import { Mappings, MapExpression } from '../models';
 import { FLOGO_ACTIVITY_TYPE, SchemaOutputs } from '../../../core/interfaces';
 
 export type MappingsValidatorFn = (mappings: Mappings) => boolean;
-export interface AttributeDescriptor {
-  name: string;
-  type: ValueType;
-  required?: boolean;
-  allowed?: any[];
-}
 
 const stringify = v => JSON.stringify(v, null, 2);
 

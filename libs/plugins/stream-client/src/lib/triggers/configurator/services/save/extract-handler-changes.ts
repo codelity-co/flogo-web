@@ -1,7 +1,8 @@
 import { fromPairs, isEqual } from 'lodash';
 import { FormGroup } from '@angular/forms';
 import { Dictionary, TriggerHandler } from '@flogo-web/lib-client/core';
-import { MapperController, MapperTranslator } from '../../../../shared/mapper';
+import { MapperController} from '@flogo-web/lib-client/mapper';
+import { MapperTranslator } from '../../../../shared/mapper';
 import { SettingControlGroup } from '../../interfaces';
 import { SaveParams } from './save-params';
 import { convertSettingsFormValues } from './convert-setting-form-values';

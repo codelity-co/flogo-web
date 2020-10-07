@@ -88,7 +88,7 @@
           </li>
         </ul>
       </div>
-      <flogo-stream-mapper
+      <flogo-mapper
         class="content"
         *ngIf="this.tabs.get('inputMappings')?.isSelected"
         [controller]="inputMapperController"
@@ -99,8 +99,8 @@
           'STREAMS.STAGE-CONFIGURATOR:AVAILABLE-DATA' | translate
         }}"
       >
-      </flogo-stream-mapper>
-      <flogo-stream-mapper
+      </flogo-mapper>
+      <flogo-mapper
         class="content"
         *ngIf="this.tabs.get('settings')?.isSelected"
         [controller]="settingsController"
@@ -111,8 +111,8 @@
           'STREAMS.STAGE-CONFIGURATOR:AVAILABLE-DATA' | translate
         }}"
       >
-      </flogo-stream-mapper>
-      <flogo-stream-mapper
+      </flogo-mapper>
+      <flogo-mapper
         class="content"
         *ngIf="this.tabs.get('outputMappings')?.isSelected"
         [controller]="outputMapperController"
@@ -123,7 +123,7 @@
           'STREAMS.STAGE-CONFIGURATOR:AVAILABLE-DATA' | translate
         }}"
       >
-      </flogo-stream-mapper>
+      </flogo-mapper>
     </div>
   </div>
 </div>

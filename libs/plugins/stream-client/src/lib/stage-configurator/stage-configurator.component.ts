@@ -14,6 +14,10 @@ import {
   InstalledFunctionSchema,
 } from '@flogo-web/lib-client/core';
 import { formatConnectionTypeSettings } from '@flogo-web/lib-client/activity-configuration';
+import {
+  MapperControllerFactory,
+  MapperController,
+} from '@flogo-web/lib-client/mapper';
 import { hasStageWithSameName } from '@flogo-web/plugins/stream-core';
 
 import {
@@ -27,9 +31,8 @@ import {
   ROOT_TYPES,
 } from '../core';
 import {
+  makeSnippet,
   MapperTranslator,
-  MapperControllerFactory,
-  MapperController,
 } from '../shared/mapper';
 import { Tabs } from '../shared/tabs/models/tabs.model';
 import { StreamMetadata } from './models';
@@ -301,7 +304,9 @@ export class StageConfiguratorComponent implements OnInit, OnDestroy {
       propsToMap,
       scope,
       mappings,
-      this.installedFunctions
+      this.installedFunctions,
+      makeSnippet,
+      MapperTranslator
     );
     const subscription = controller.status$
       .pipe(skip(1), takeUntil(this.contextChange$))
