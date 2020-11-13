@@ -1,4 +1,4 @@
-ARG GOLANG_VERSION=1.12.6
+ARG GOLANG_VERSION=1.13.15
 FROM golang:$GOLANG_VERSION AS gobase
 
 FROM node:10.16-slim as base
@@ -10,11 +10,11 @@ COPY --from=gobase /usr/local/go/ /usr/local/go/
 RUN set -ex \
   && apt-get update \
   && apt-get install -y --no-install-recommends \
-    gcc \
-    openssl \
-    git \
-    # procps` required`by flogo-web server to execute `ps` command
-    procps \
+  gcc \
+  openssl \
+  git \
+  # procps` required`by flogo-web server to execute `ps` command
+  procps \
   && mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH" \
   && npm install --no-cache -g yarn \
   && rm -rf /var/lib/apt/lists/*
@@ -27,11 +27,11 @@ ENV BUILD_DIR /tmp/build
 ENV FLOGO_WEB_LOCALDIR ${BUILD_DIR}/dist/local
 ENV GO111MODULE on
 RUN GO111MODULE=off go get -u -v github.com/project-flogo/cli/... \
-#    && mkdir -p $GOPATH/src/github.com/project-flogo \
-#    && cd $GOPATH/src/github.com/project-flogo \
-#    && git clone https://github.com/project-flogo/cli.git \
-    && flogo --version \
-    && GO111MODULE=off go get github.com/project-flogo/services/flow-store/...
+  #    && mkdir -p $GOPATH/src/github.com/project-flogo \
+  #    && cd $GOPATH/src/github.com/project-flogo \
+  #    && git clone https://github.com/project-flogo/cli.git \
+  && flogo --version \
+  && GO111MODULE=off go get github.com/project-flogo/services/flow-store/...
 COPY / ${BUILD_DIR}/
 WORKDIR ${BUILD_DIR}
 RUN yarn --pure-lockfile && yarn release && \
